@@ -66,6 +66,11 @@
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"62"</v>
+              <v n="TextDefault">"AUTOMATED A Series Flipper 2"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"979"</v>
               <v n="TextDefault">"BACK"</v>
               <l n="LanguageTexts" t="ArrayList" />
