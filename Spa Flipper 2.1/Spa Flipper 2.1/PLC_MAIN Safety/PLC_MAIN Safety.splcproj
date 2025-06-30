@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Crc="1344057642" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{4e494d0c-d4f4-45c0-b282-92ea7ff3b23c}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>TwinCAT3SafePlcProject</RootNamespace>
+    <AssemblyName>TwinCAT3SafePlcProject</AssemblyName>
+    <FileUpgradeFlags />
+    <UpgradeBackupLocation />
+    <OldToolsVersion>2.0</OldToolsVersion>
+    <TargetSystem>EL6900</TargetSystem>
+    <ProgrammingLanguage>Graphical Editor</ProgrammingLanguage>
+    <Worker>pbodily</Worker>
+    <IntProjName>PLC_MAIN Safety</IntProjName>
+    <IsNewCreated>false</IsNewCreated>
+    <SPlcProjVersion>1.8.0.0</SPlcProjVersion>
+    <NextSdsId>19</NextSdsId>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DebugSymbols>false</DebugSymbols>
+    <OutputPath>bin\Release\</OutputPath>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="TwinSafeGroup1\Alias Devices\bCommErr.sds" />
+    <None Include="TwinSafeGroup1\Alias Devices\bCurtainsMuted.sds" />
+    <None Include="TwinSafeGroup1\Alias Devices\bEstopFbError.sds" />
+    <None Include="TwinSafeGroup1\Alias Devices\bFbErr.sds" />
+    <None Include="TwinSafeGroup1\Alias Devices\bFbRun.sds" />
+    <None Include="TwinSafeGroup1\Alias Devices\bInRun.sds" />
+    <None Include="TwinSafeGroup1\Alias Devices\bLftCurtainFbError.sds" />
+    <None Include="TwinSafeGroup1\Alias Devices\bMuteCurtains.sds" />
+    <None Include="TwinSafeGroup1\Alias Devices\bOtherErr.sds" />
+    <None Include="TwinSafeGroup1\Alias Devices\bResetEstopFb.sds" />
+    <None Include="TwinSafeGroup1\Alias Devices\bResetLftCurtainFb.sds" />
+    <None Include="TwinSafeGroup1\Alias Devices\bResetRhtCurtainFb.sds" />
+    <None Include="TwinSafeGroup1\Alias Devices\bRhtCurtainFbError.sds" />
+    <None Include="TwinSafeGroup1\Alias Devices\bSafetyNotOk.sds" />
+    <None Include="TwinSafeGroup1\Alias Devices\EL1918, 8 digital inputs_1.sds" />
+    <None Include="TwinSafeGroup1\Alias Devices\EL2904, 4 digital outputs_1.sds" />
+    <None Include="TwinSafeGroup1\TwinSafeGroup1.sal" />
+    <None Include="TwinSafeGroup1\TwinSafeGroup1.sal.diagram">
+      <DependentUpon>TwinSafeGroup1\TwinSafeGroup1.sal</DependentUpon>
+      <Visible>false</Visible>
+    </None>
+    <None Include="TargetSystemConfig.xml">
+      <Visible>false</Visible>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="GVLs" />
+    <Folder Include="TwinSafeGroup1" />
+    <Folder Include="TwinSafeGroup1\Alias Devices" />
+    <Folder Include="User FBs" />
+    <None Include="TwinSafeGroup1\Alias Devices\ErrorAcknowledgement.sds" />
+    <None Include="TwinSafeGroup1\Alias Devices\Run.sds" />
+  </ItemGroup>
+</Project>

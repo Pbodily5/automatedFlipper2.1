@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.13">
+  <GVL Name="GVL_persistent" Id="{f3016cea-66c4-4aa1-b388-422a543751a4}">
+    <Declaration><![CDATA[VAR_GLOBAL PERSISTENT
+// === MACHINE SETTINGS ===
+	fClampHomingTorque 		: REAL;
+	fRotationHomingTorque 	: REAL;
+	fTableConveyorHeight 	: REAL := 32.75; 	//Table height to recieve from conveyor
+	fTableClampHeight 		: REAL := 48.5; 	// Table height to clear bottom clamp 
+	fTableHomeHeight 		: REAL := 33.5; 		// Table height to send spa to centering
+	fTableDownHeight		: REAL := 15.85;	// Table height when down all the way
+	fCenteringTorque 		: REAL := 20; 		// % of Torque to center spa
+	fClampOnTorque 			: REAL := 27;		//% of Torque to clamp onto spa
+	fClampOpenDist			: REAL := 6.5;		//Distance to which the clamp is open and clears the lip of the spa
+
+
+END_VAR]]></Declaration>
+  </GVL>
+</TcPlcObject>

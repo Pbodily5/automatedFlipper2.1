@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.13">
+  <DUT Name="E_motorErrorList" Id="{aec71486-dc3e-45ac-8c68-708f0fd47c80}">
+    <Declaration><![CDATA[TYPE E_motorErrorList :
+(
+	LFTROTATION := 0,
+	LFTCLAMP,
+	COLUMN0,
+	COLUMN1,
+	LFTWIDTH,
+	RHTWIDTH,
+	COLUMN2,
+	COLUMN3,
+	RHTCLAMP,
+	RHTROTATION,
+	CUSTOM
+)DINT;
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

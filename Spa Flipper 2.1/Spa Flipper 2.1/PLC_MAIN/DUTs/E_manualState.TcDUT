@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.13">
+  <DUT Name="E_manualState" Id="{33d2abd5-7e62-42e9-990b-d88b5c5b0bc9}">
+    <Declaration><![CDATA[TYPE E_manualState :
+(
+	STEADYSTATE := 0,
+	MOVEAWAYDIRECTION,
+	MOVEHOMEDIRECTION,
+	RESET,
+	HOMING
+)DINT;
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

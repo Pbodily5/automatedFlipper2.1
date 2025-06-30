@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.13">
+  <GVL Name="GVL_machine" Id="{a0afb58b-55f6-45c1-aaa9-7c62110c2d93}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+VAR_GLOBAL
+	bMotorsInitialized : BOOL;
+	sMotorInitState : STRING;
+	bPageChange : BOOL;
+	bLftColumnsLatched : BOOL;
+	bRhtColumnsLatched : BOOL;
+	
+	///////////////////// SAFETY /////////////////////////////////
+	bRunSafety			AT %Q* : BOOL := TRUE; 	// Used to run safety program
+	bSafetyErrorAck 	AT %Q* : BOOL; 			// Sequence to acknowledge safety error : False > True > False.
+	bSafetyBypass		AT %Q* : BOOL;			//Used to Bypass entire safety PLC. Should Only be accessible with high level credentials. 
+	bSafetyOk 			AT %I* : BOOL;			// Safety protocol enacted 
+	bFbRun 				AT %I* : BOOL;			// Safety Function Blocks are running
+	bInRun				AT %I* : BOOL;			// Safety Program is Running
+	bFbErr				AT %I* : BOOL;			// A Safety Function Block contains an error
+	bComErr				AT %I* : BOOL;			// Safety program communication error
+	bOtherErr			AT %I* : BOOL;			// Other safety error exist. (EDM FB)
+	
+	bSafetyInit : BOOL;
+	nPageIndex: INT;
+	nPrevPageIndex: INT;
+	bMotorInitFailedDisp: BOOL;
+	bMuteSafety: BOOL;
+	
+	////////////////////////ERROR HANDLING//////////////////////
+	motorErrorList	: E_motorErrorList;
+	bErrorPresent 	: BOOL;
+	bDispErrorIcon 	: BOOL;
+	
+	///////////////////////SETTINGS SCREEN//////////////////////
+	sEditMessage	: STRING(1024) := 'Changing this value will effect program parameters. Only change this value if you understand what effect this will have.';
+	sEditTitle 		: STRING := 'CAUTION';
+	
+	// === ERROR LOGGING ===
+	aErrorData				: ARRAY[1..5,1..23] OF STRING;
+	nErrorDataRow			: INT := 1;
+	//Custom Errors
+	sBlock	: STRING;
+	sLoc	: STRING;
+	nID		: UDINT;
+	sMsg 	: STRING;
+	
+	bFlashSaveBtn 	: BOOL;
+	bSaveBtnFlashOn : BOOL;
+	bSaveBtn 		: BOOL;
+	
+	bResetMachine: BOOL;
+END_VAR]]></Declaration>
+  </GVL>
+</TcPlcObject>

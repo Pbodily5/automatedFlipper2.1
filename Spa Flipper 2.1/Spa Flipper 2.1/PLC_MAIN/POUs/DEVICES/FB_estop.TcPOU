@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.13">
+  <POU Name="FB_estop" Id="{17167641-fb84-44e0-a1b5-cde62190fc72}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_estop EXTENDS FB_pushBtnNC
+VAR
+	bResetEstopFb 		AT %Q* : BOOL;
+	bEstopFbError 		AT %I* : BOOL;
+	bEstopSigOk 		AT %I* : BOOL;
+	nEstopFbState		AT %I* : USINT; //States : 1 - Running, 2 - PreOp, 3 - Triggered, 6 - Reset 
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="reset" Id="{a2f857f7-8c32-4efc-aee1-ece786c7f1b3}">
+      <Declaration><![CDATA[METHOD reset : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[reset := FALSE;
+bResetEstopFb := TRUE;
+IF NOT bEstopFbError THEN
+	bResetEstopFb := FALSE;
+	reset := TRUE;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="resetEstopFB" Id="{e841fe5c-79b0-47db-aca0-2bbc1160c0a2}">
+      <Declaration><![CDATA[PROPERTY resetEstopFB : BOOL]]></Declaration>
+      <Set Name="Set" Id="{f359c5cd-0778-4107-8338-d864b4e712c5}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[bResetEstopFb := resetEstopFB;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <LineIds Name="FB_estop">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_estop.reset">
+      <LineId Id="3" Count="4" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_estop.resetEstopFB.Set">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

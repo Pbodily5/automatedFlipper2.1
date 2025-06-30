@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.13">
+  <POU Name="FB_ltBar" Id="{5417c8d7-1356-49ab-967c-d3f0ac445e80}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_ltBar
+VAR
+	bGreenLight 	AT %Q* : BOOL;
+	bRedLight 		AT %Q* : BOOL;
+	bYellowLight 	AT %Q* : BOOL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="greenOn" Id="{a9b8a284-2195-4e8e-b537-2f4fa026cdad}">
+      <Declaration><![CDATA[METHOD greenOn : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[bGreenLight 	:= TRUE;
+bRedLight 		:= FALSE;
+bYellowLight 	:= FALSE;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="redOn" Id="{94556ece-180a-4955-be62-60beca4247d4}">
+      <Declaration><![CDATA[METHOD redOn : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[bGreenLight 	:= FALSE;
+bRedLight 		:= TRUE;
+bYellowLight 	:= FALSE;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="yellowOn" Id="{dc4fc304-5289-40ac-9e6d-0730f3de449e}">
+      <Declaration><![CDATA[METHOD yellowOn : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[bGreenLight 	:= FALSE;
+bRedLight 		:= FALSE;
+bYellowLight 	:= TRUE;]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="FB_ltBar">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_ltBar.greenOn">
+      <LineId Id="3" Count="1" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_ltBar.redOn">
+      <LineId Id="3" Count="1" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_ltBar.yellowOn">
+      <LineId Id="3" Count="1" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

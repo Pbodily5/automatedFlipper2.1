@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.13">
+  <DUT Name="E_resetAutoState" Id="{485bf539-ed7f-4348-af33-367312e4b0a6}">
+    <Declaration><![CDATA[TYPE E_resetAutoState :
+(
+	CHECKWIDTH := 0,
+	CHECKCLAMPS,
+	CHECKROTATION,
+	CHECKHEIGHT,
+	MOVETOFLIPHEIGHT,
+	MOVETOUNCLAMPHEIGHT,
+	OPENCLAMPS,
+	RESETDONE
+	
+);
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

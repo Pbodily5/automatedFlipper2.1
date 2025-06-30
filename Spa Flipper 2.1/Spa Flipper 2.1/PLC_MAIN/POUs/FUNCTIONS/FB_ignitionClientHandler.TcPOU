@@ -1,0 +1,146 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.13">
+  <POU Name="FB_ignitionClientHandler" Id="{c653cb8d-9ca4-44dc-892c-8a16cae827f8}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_ignitionClientHandler
+VAR_INPUT
+	sRequestedID 	: STRING(64); //New Session ID to insert
+	sRequestedRole 	: STRING(32); //Role associated with new session
+	sRemoveID 		: STRING(64); //Session ID to remove
+END_VAR
+
+VAR_OUTPUT
+	bSessionAdded 			: BOOL;	//TRUE for 1 cycle if session added
+	bSessionRemoved 		: BOOL; //TRUE for 1 cycle if session removed
+	bSessionAddError 		: BOOL;
+	bSessionRemoveError 	: BOOL;
+END_VAR
+
+VAR
+	bPrevInsertBusy : BOOL; //Edge Detection
+	bPrevRemoveBusy : BOOL;  //Edge Detection 
+	bAlreadyExists : BOOL;	//Insert already exist
+	i: INT;
+	bOwnerExists : BOOL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[// Reset Outputs
+bSessionAdded := FALSE;
+bSessionRemoved := FALSE;
+
+// === INSERT SESSION ===
+IF sRequestedID <> '' AND NOT bPrevInsertBusy THEN
+	bAlreadyExists := FALSE;
+	FOR i:=0 TO 9 DO
+		IF GVL_ignition.aIgnitionClients[i].bActive AND GVL_ignition.aIgnitionClients[i].sSessionId = sRequestedID THEN
+			bAlreadyExists := TRUE;
+			EXIT;
+		END_IF
+	END_FOR
+	
+	IF NOT bAlreadyExists THEN
+		FOR i:=0 TO 9 DO
+			IF NOT GVL_ignition.aIgnitionClients[i].bActive THEN
+				GVL_ignition.aIgnitionClients[i].sSessionID := sRequestedID;
+				GVL_ignition.aIgnitionClients[i].sRole := sRequestedRole;
+				GVL_ignition.aIgnitionClients[i].bActive := TRUE;
+				bSessionAdded := TRUE;
+				EXIT;
+			END_IF
+		END_FOR
+		
+		IF NOT bSessionAdded THEN
+			bSessionAddError := TRUE;
+		END_IF
+	END_IF
+END_IF
+
+IF NOT GVL_ignition.bControlAssigned AND GVL_ignition.sMachineHMISessionID <> '' THEN
+	FOR i := 0 TO 9 DO
+		IF GVL_ignition.aIgnitionClients[i].sSessionId = GVL_ignition.sMachineHMISessionID THEN
+			GVL_ignition.aIgnitionClients[i].bHasControl := TRUE;
+			GVL_ignition.bControlAssigned := TRUE;
+			EXIT;
+		END_IF
+	END_FOR
+END_IF
+
+bPrevInsertBusy := (sRequestedID <> '');
+
+// === REMOVE SESSION ===
+IF sRemoveID <> '' AND NOT bPrevRemoveBusy THEN
+	FOR i:=0 TO 9 DO
+		IF GVL_ignition.aIgnitionClients[i].sSessionID = sRemoveID THEN
+			GVL_ignition.aIgnitionClients[i].sSessionID := '';
+			GVL_ignition.aIgnitionClients[i].sRole := '';
+			GVL_ignition.aIgnitionClients[i].bActive := FALSE;
+			GVL_ignition.aIgnitionClients[i].bHasControl := FALSE;
+			bSessionRemoved := TRUE;
+			EXIT;
+		END_IF
+	END_FOR
+	
+	IF NOT bSessionRemoved THEN
+		bSessionRemoveError := TRUE;
+	END_IF
+END_IF
+
+bPrevRemoveBusy := (sRemoveID <> '');
+
+// === CURRENT SESSION IN CONTROL ===
+FOR i:=0 TO 9 DO
+	IF GVL_ignition.aIgnitionClients[i].bHasControl THEN
+		GVL_ignition.sOwnerSessionID := GVL_ignition.aIgnitionClients[i].sSessionId;
+		EXIT;
+	END_IF
+END_FOR
+
+// === CLIENT CONTROL REQUEST ===
+IF GVL_ignition.bTransferRequested AND GVL_ignition.bTransferApproved THEN
+	FOR i:=0 TO 9 DO
+		IF GVL_ignition.aIgnitionClients[i].sSessionId = GVL_ignition.sOwnerSessionID THEN
+			GVL_ignition.aIgnitionClients[i].bHasControl := FALSE;
+			EXIT;
+		END_IF
+	END_FOR
+	FOR i:=0 TO 9 DO
+		IF GVL_ignition.aIgnitionClients[i].sSessionId = GVL_ignition.sPendingSessionID THEN
+			GVL_ignition.aIgnitionClients[i].bHasControl := TRUE;
+			EXIT;
+		END_IF
+	END_FOR
+	GVL_ignition.bTransferRequested := FALSE;
+	GVL_ignition.bTransferApproved := FALSE;
+	GVL_ignition.sPendingSessionID := '';
+	IF GVL_ignition.sRequestedMode = 'auto' THEN
+		GVL_machine.nPageIndex := 10;
+	ELSIF GVL_ignition.sRequestedMode = 'manual' THEN
+		GVL_machine.nPageIndex := 5;
+	END_IF
+	GVL_ignition.bTransferComplete := TRUE;
+ELSIF GVL_ignition.bTransferRequested THEN
+	bOwnerExists := FALSE;
+	FOR i:=0 TO 9 DO
+		IF GVL_ignition.aIgnitionClients[i].bHasControl THEN
+			bOwnerExists := TRUE;
+			EXIT;
+		END_IF
+	END_FOR
+	IF NOT bOwnerExists THEN
+		GVL_ignition.bTransferApproved := TRUE;
+	END_IF
+END_IF]]></ST>
+    </Implementation>
+    <LineIds Name="FB_ignitionClientHandler">
+      <LineId Id="3" Count="93" />
+      <LineId Id="117" Count="0" />
+      <LineId Id="125" Count="0" />
+      <LineId Id="119" Count="1" />
+      <LineId Id="126" Count="0" />
+      <LineId Id="122" Count="1" />
+      <LineId Id="118" Count="0" />
+      <LineId Id="127" Count="2" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

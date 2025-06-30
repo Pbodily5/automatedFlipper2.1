@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.13">
+  <GVL Name="GVL_devices" Id="{448c46fb-4945-4295-b31a-17a7fd28b3c4}">
+    <Declaration><![CDATA[	{attribute 'qualified_only'}
+VAR_GLOBAL
+	fbLtBars 			: FB_ltBar;
+	fbLtCurtains		: FB_ltCurtains;
+	fbEstop				: FB_estop;
+	fbTable 			: FB_table;
+	
+	fbLftWidthMotor 	: FB_teknicMotorEC;
+	fbRhtWidthMotor 	: FB_teknicMotorEC;
+	
+	fbLftClampMotor 	: FB_teknicMotorEC;
+	fbRhtClampMotor 	: FB_teknicMotorEC;
+	
+	fbLftRotationMotor 	: FB_teknicMotorEC;
+	fbRhtRotationMotor 	: FB_teknicMotorEC;
+	
+	fbColumn0Motor 		: FB_teknicMotorEC;
+	fbColumn1Motor 		: FB_teknicMotorEC;
+	fbColumn2Motor 		: FB_teknicMotorEC;
+	fbColumn3Motor 		: FB_teknicMotorEC;
+	
+	
+END_VAR]]></Declaration>
+  </GVL>
+</TcPlcObject>

@@ -1,0 +1,1463 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.13">
+  <POU Name="auto" Id="{fb29c569-4ccd-42c5-9abf-783e9c933702}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM auto
+VAR
+	//Program
+	eState 				: E_autoState;
+	ePrevState 			: E_autoState;
+	eResetState			: E_resetAutoState;
+	nMoveRotationState 	: INT;
+	nMoveColumnState 	: INT;
+	nHomeMachineState	: INT;
+	fbExecuteStop 		: R_TRIG;
+	
+	aMoveFinish			: ARRAY[0..10] OF BOOL; // Can track the completion of up to 10 simultaneous moves
+	aMoveFinishSecond   : ARRAY[0..10] OF BOOL; // Can track the completion of up to 10 simultaneous moves
+	fTempRhtWidthMove 	: REAL;
+	fTempLftWidthMove 	: REAL;
+	
+	fbMoveDelayTim		: TON;
+	fbMoveDelayTimRot	: TON;
+
+	//HMI
+	bConfirmBtn 		: BOOL;
+	bHideConfirmBtn 	: BOOL;
+	bStartBtn			: BOOL;
+	bHideStartBtn 		: BOOL;
+	bStopBtn			: BOOL;
+	bHideStopBtn		: BOOL;
+	bResetBtn			: BOOL;
+	sPromptDisp 		: STRING;
+	sSetPromptDisp		: STRING;
+	sCheckDisp			: STRING;
+	bHideCheckDisp 		: BOOL := TRUE;
+	fbProcessTimer		: TON;
+	bProcessTimerIn     : BOOL;
+	tProcessTimerPt		: TIME := T#3M;
+	
+	bShowEflex 			: BOOL;
+	bShowAnimation 		: BOOL := TRUE;
+	bDispContinueProg 	: BOOL;
+	bContinueProgBtn 	: BOOL;
+	bRestartProgBtn 	: BOOL;
+	nFrameDisp 			: INT;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[///////////////////////// PAGE CHANGE TO AUTO //////////////////////////////
+IF GVL_machine.bPageChange THEN 
+	F_checkMoveFinish(aMoveFinish,0,TRUE);
+	bShowAnimation := TRUE;
+	bShowEflex := FALSE;
+	
+	IF eState = CONFIRMINITHOMING THEN
+		GVL_eflex.sSpaModel 	:= '';
+		GVL_eflex.bEflexPresent := FALSE; 
+		GVL_machine.bPageChange	:= FALSE;
+	ELSE
+		bDispContinueProg := TRUE;
+	END_IF
+END_IF
+
+///////////////////////// AUTO STEADY STATE //////////////////////////////
+IF GVL_machine.bMuteSafety OR GVL_machine.bSafetyBypass THEN
+	//pass - default is yellow
+ELSIF GVL_devices.fbLtCurtains.curtainsMuted THEN
+	GVL_devices.fbLtBars.greenOn();
+ELSE
+	GVL_devices.fbLtBars.redOn();
+END_IF
+//bHideWarningDisp  	:= TRUE; 	bHideResetBtn 	 	:= FALSE; 
+bHideStopBtn		:= FALSE;	
+bHideConfirmBtn 	:= TRUE;
+bHideStartBtn 	 	:= TRUE; 	
+nFrameDisp 			:= 0;
+sPromptDisp := '';
+fbExecuteStop(CLK := bStopBtn);
+//GVL_machine.bBypassMoveLimits := FALSE;
+//VisuElems.CurrentVisu := 'autoScreen';	
+
+///////////////////////// AUTO PROG //////////////////////////////////////
+IF NOT bDispContinueProg THEN
+	CASE eState OF 
+		CONFIRMINITHOMING:
+			sPromptDisp := 'Safe to home?';
+			nFrameDisp := 0;
+			GVL_devices.fbLtCurtains.mute();
+			bHideConfirmBtn 	:= FALSE;
+			IF bConfirmBtn THEN
+				ePrevState := eState;
+				eState := INITHOMING;
+			END_IF
+			
+		INITHOMING:
+			sPromptDisp := 'Homing';
+			IF homeMachine() THEN
+				
+				ePrevState := eState;
+				eState := SCANEFLEX;
+			END_IF
+			
+		SCANEFLEX:
+			sPromptDisp := 'Scan Eflex';
+			nFrameDisp := 7;
+			GVL_devices.fbLtCurtains.mute();
+			tempEflex();
+			IF GVL_eflex.bEflexPresent THEN 
+				bHideConfirmBtn := FALSE;
+				sPromptDisp := 'Confirm Scan';
+				IF bConfirmBtn THEN
+					GVL_eflex.bEflexPresent := FALSE; 
+					ePrevState := eState;
+					eState := CONFIRMPROGRAM;
+				END_IF
+			END_IF
+		
+		CONFIRMPROGRAM:
+			sPromptDisp := 'Check Program, Select Start';
+			GVL_devices.fbLtCurtains.mute();
+			bHideStartBtn := FALSE;
+			IF bStartBtn THEN
+				bStartBtn := FALSE;
+				ePrevState := eState;
+				eState := TABLETOCONVEYOR;
+			END_IF
+			
+		TABLETOCONVEYOR:
+			sPromptDisp := 'Moving Table';
+			IF GVL_devices.fbTable.moveTo(GVL_persistent.fTableConveyorHeight) THEN
+				ePrevState := eState;
+				eState := CONFIRMLOADED;
+			END_IF
+			
+		CONFIRMLOADED: 
+			sPromptDisp := 'Confirm Spa Loaded';
+			nFrameDisp := 2;
+			GVL_devices.fbLtCurtains.mute();
+			bHideConfirmBtn := FALSE;
+			IF bConfirmBtn THEN
+				ePrevState := eState;
+				eState := TABLETOCLAMP;
+			END_IF
+		
+		TABLETOCLAMP:
+			sPromptDisp := 'Raising Table';
+			IF GVL_devices.fbTable.moveTo(GVL_persistent.fTableClampHeight - 1) THEN
+				ePrevState := eState;
+				eState := CENTERSPA;
+			END_IF
+			
+		CENTERSPA:
+			sPromptDisp := 'Centering Spa';
+			IF NOT aMoveFinish[0] THEN
+				CASE GVL_devices.fbLftWidthMotor.moveToTorque('NULL',GVL_persistent.fCenteringTorque,0) OF 
+					1:// Done
+						aMoveFinish[0] := TRUE;
+					13:// Error
+						GVL_machine.motorErrorList := LFTWIDTH;
+						GVL_machine.bErrorPresent := TRUE;
+				END_CASE
+			END_IF
+			IF NOT aMoveFinish[1] THEN
+				CASE GVL_devices.fbRhtWidthMotor.moveToTorque('NULL',-GVL_persistent.fCenteringTorque,0) OF 
+					1:// Done
+						aMoveFinish[1] := TRUE;
+					13:// Error
+						GVL_machine.motorErrorList := RHTWIDTH;
+						GVL_machine.bErrorPresent := TRUE;
+				END_CASE
+			END_IF
+			
+			IF F_checkMoveFinish(aMoveFinish,2,FALSE) THEN
+				F_checkMoveFinish(aMoveFinish,0,TRUE);
+				ePrevState := eState;
+				eState := OPENCLAMP;
+			END_IF
+			
+		OPENCLAMP: 
+			sPromptDisp := 'Opening Clamps';
+			IF NOT aMoveFinish[0] THEN
+				fTempRhtWidthMove := (ABS(GVL_devices.fbRhtWidthMotor.fbMotor.NcToPlc.ActPos)/25.4)- 2;
+				aMoveFinish[0] := TRUE;
+			END_IF
+			IF NOT aMoveFinish[1] THEN
+				fTempLftWidthMove := (ABS(GVL_devices.fbLftWidthMotor.fbMotor.NcToPlc.ActPos)/25.4)- 2;
+				aMoveFinish[1] := TRUE;
+			END_IF
+			IF NOT aMoveFinish[2] THEN
+				CASE GVL_devices.fbLftWidthMotor.moveTo('NULL',fTempLftWidthMove) OF 
+					1:// Done
+						IF fTempLftWidthMove < GVL_devices.fbLftWidthMotor.distance + 0.5 OR fTempLftWidthMove > GVL_devices.fbLftWidthMotor.distance - 0.5 THEN
+							aMoveFinish[2] := TRUE;
+						END_IF
+					13: //Error
+						GVL_machine.motorErrorList := LFTWIDTH;
+						GVL_machine.bErrorPresent := TRUE;
+					15: //Halfway 
+						aMoveFinish[6] := TRUE;
+				END_CASE
+			END_IF
+			IF NOT aMoveFinish[3] THEN
+				CASE GVL_devices.fbRhtWidthMotor.moveTo('NULL',fTempRhtWidthMove) OF 
+					1:// Done
+						aMoveFinish[3] := TRUE;
+					13:// Error
+						GVL_machine.motorErrorList := RHTWIDTH;
+						GVL_machine.bErrorPresent := TRUE;
+					15: //Halfway 
+						aMoveFinish[7] := TRUE;
+				END_CASE
+			END_IF
+			IF aMoveFinish[6] AND NOT aMoveFinish[4] THEN
+				CASE GVL_devices.fbLftClampMotor.moveTo('NULL',GVL_persistent.fClampOpenDist) OF 
+					1:// Done
+						aMoveFinish[4] := TRUE;
+					13://Error
+						GVL_machine.motorErrorList := LFTCLAMP;
+						GVL_machine.bErrorPresent := TRUE;
+				END_CASE
+			END_IF
+			IF aMoveFinish[7] AND NOT aMoveFinish[5] THEN
+				CASE GVL_devices.fbRhtClampMotor.moveTo('NULL',GVL_persistent.fClampOpenDist) OF 
+					1:// Done
+						aMoveFinish[5] := TRUE;
+					13://Error
+						GVL_machine.motorErrorList := RHTCLAMP;
+						GVL_machine.bErrorPresent := TRUE;
+				END_CASE
+			END_IF
+			IF F_checkMoveFinish(aMoveFinish,8,FALSE) THEN
+				F_checkMoveFinish(aMoveFinish,0,TRUE);
+				ePrevState := eState;
+				eState := MOVETOCLAMP;
+			END_IF
+			
+		MOVETOCLAMP:
+			sPromptDisp := 'Moving Clamps In';
+
+			IF NOT aMoveFinish[3] THEN 
+				IF GVL_devices.fbTable.moveTo(GVL_persistent.fTableClampHeight) THEN
+					aMoveFinish[3] := TRUE;
+				END_IF
+			END_IF
+			IF aMoveFinish[3] THEN
+				IF NOT aMoveFinish[0] THEN
+					CASE GVL_devices.fbLftWidthMotor.moveToSensor(1) OF 
+						1:// Done
+							aMoveFinish[0] := TRUE;
+						13:// Error
+							GVL_machine.motorErrorList := LFTWIDTH;
+							GVL_machine.bErrorPresent := TRUE;
+					END_CASE
+				END_IF
+				IF NOT aMoveFinish[1] THEN
+					CASE GVL_devices.fbRhtWidthMotor.moveToSensor(1) OF 
+						1:// Done
+							aMoveFinish[1] := TRUE;
+						13://Error
+							GVL_machine.motorErrorList := RHTWIDTH;
+							GVL_machine.bErrorPresent := TRUE;
+					END_CASE
+				END_IF
+			END_IF
+			IF aMoveFinish[0] AND aMoveFinish[1] THEN
+				IF NOT aMoveFinish[2] THEN
+					IF GVL_devices.fbTable.moveTo(GVL_persistent.fTableClampHeight - 3.5) THEN
+						aMoveFinish[2] := TRUE;
+					END_IF
+				END_IF
+			END_IF
+			
+ 			IF F_checkMoveFinish(aMoveFinish,4,FALSE) THEN
+				ePrevState := eState;
+				eState := CLAMPSPA;
+			END_IF
+			
+		CLAMPSPA:
+			sPromptDisp := 'Clamping Spa';
+			IF NOT aMoveFinish[0] THEN
+				CASE GVL_devices.fbLftClampMotor.moveToTorque('NULL',GVL_persistent.fClampOnTorque,0) OF 
+					1:// Done
+						aMoveFinish[0] := TRUE;
+					13:// Error
+						GVL_machine.motorErrorList := LFTCLAMP;
+						GVL_machine.bErrorPresent := TRUE;
+				END_CASE
+			END_IF
+			IF NOT aMoveFinish[1] THEN
+				CASE GVL_devices.fbRhtClampMotor.moveToTorque('NULL',GVL_persistent.fClampOnTorque,1) OF
+					1:// Done
+						aMoveFinish[1] := TRUE;
+					13:// Error
+						GVL_machine.motorErrorList := RHTCLAMP;
+						GVL_machine.bErrorPresent := TRUE;
+				END_CASE
+			END_IF
+			(*IF NOT aMoveFinish[2] THEN
+				IF GVL_devices.fbTable.moveTo(GVL_persistent.fTableClampHeight - 2) THEN
+					aMoveFinish[2] := TRUE;
+				END_IF
+			END_IF*)
+			
+			IF F_checkMoveFinish(aMoveFinish,2,FALSE) THEN
+				ePrevState := eState;
+				eState := ROTATESPA;
+			END_IF
+			
+		ROTATESPA:
+			IF GVL_devices.fbLftClampMotor.distance > -20 THEN
+				sSetPromptDisp := 'Lft clamp: $n Spa not clamped';
+				ePrevState := eState;
+				eState := PROGERRORSTOP;
+			ELSIF GVL_devices.fbRhtClampMotor.distance < 20 THEN
+				sSetPromptDisp := 'Rht clamp: $n Spa not clamped';
+				ePrevState := eState;
+				eState := PROGERRORSTOP;
+			END_IF
+			
+			sPromptDisp := 'Rotating Spa';
+			IF NOT aMoveFinish[0] THEN
+				CASE moveColumns('NULL',GVL_eflex.fFlipHeight,1) OF 
+					1:// Done
+						aMoveFinish[0] := TRUE;
+						aMoveFinish[1] := TRUE;
+					13:// Error
+						GVL_devices.fbColumn0Motor.stop();
+						GVL_devices.fbColumn1Motor.stop();
+						GVL_devices.fbColumn2Motor.stop();
+						GVL_devices.fbColumn3Motor.stop();
+						ePrevState := ROTATESPA;
+						eState := PROGERRORSTOP;
+						sSetPromptDisp := 'Column Faulted Retry Start';
+					15:// Move is halway
+						IF GVL_devices.fbColumn0Motor.distance < -25 THEN
+							aMoveFinish[1] := TRUE;
+						END_IF
+				END_CASE
+			END_IF
+			IF aMoveFinish[1] THEN
+				IF NOT aMoveFinish[2] THEN
+					IF GVL_devices.fbColumn0Motor.distance < -25 THEN
+						CASE moveRotation('NULL',270) OF 
+							1:// Done
+								aMoveFinish[2] := TRUE;
+							13:// Error
+								GVL_devices.fbLftRotationMotor.stop();
+								GVL_devices.fbRhtRotationMotor.stop();
+							15:// Move Halfway	
+								aMoveFinish[3] := TRUE;
+						END_CASE
+					END_IF
+				END_IF
+			END_IF
+			
+			IF NOT aMoveFinish[4] THEN
+				IF GVL_devices.fbTable.moveTo(GVL_persistent.fTableDownHeight) THEN
+					aMoveFinish[4] := TRUE;
+				END_IF
+			END_IF
+		
+			
+			IF F_checkMoveFinish(aMoveFinish,5,FALSE) THEN
+				ePrevState := eState;
+				eState := TABLETOBASE;
+			END_IF
+		
+		TABLETOBASE:
+			sPromptDisp := 'Raising Table';
+			IF GVL_devices.fbTable.moveTo(GVL_eflex.fBaseInHeight) THEN
+				ePrevState := eState;
+				eState := CONFIRMSKIIS;
+			END_IF
+			
+		CONFIRMSKIIS:
+			sPromptDisp := 'Remove Skiis'; 
+			GVL_devices.fbLtCurtains.mute();
+			bHideConfirmBtn 	:= FALSE;
+			IF bConfirmBtn THEN
+				bConfirmBtn := FALSE;
+				ePrevState := eState;
+				eState := CONFIRMBASE;
+			END_IF
+			
+		CONFIRMBASE:
+			sPromptDisp := 'Load Base';
+			GVL_devices.fbLtCurtains.mute();
+			bHideConfirmBtn 	:= FALSE;
+			IF bConfirmBtn THEN
+				bConfirmBtn := FALSE;
+				ePrevState := eState;
+				eState := LOWERSPA;
+			END_IF
+			
+		LOWERSPA:
+			sPromptDisp := 'Lowering Spa';
+			IF NOT aMoveFinish[0] THEN 
+				CASE moveColumns('NULL',GVL_eflex.fStudHeight,1) OF 
+					1:// Done
+						aMoveFinish[0] := TRUE;
+					13:// Error
+						GVL_devices.fbColumn0Motor.stop();
+						GVL_devices.fbColumn1Motor.stop();
+						GVL_devices.fbColumn2Motor.stop();
+						GVL_devices.fbColumn3Motor.stop();
+						ePrevState := LOWERSPA;
+						eState := PROGERRORSTOP;
+						sPromptDisp := 'Column Faulted Retry Start';
+					15:// Move Halfway
+						aMoveFinish[1] := TRUE;
+				END_CASE
+			END_IF
+			
+			IF NOT aMoveFinish[4] THEN
+				IF GVL_devices.fbTable.moveTo(GVL_eflex.fSpaOutHeight) THEN
+					aMoveFinish[4] := TRUE;
+				END_IF
+			END_IF
+			
+			IF aMoveFinish[1] THEN
+				IF NOT aMoveFinish[2] THEN
+					CASE GVL_devices.fbLftClampMotor.moveTo('NULL',9.5) OF 
+						1: // Done
+							aMoveFinish[2] := TRUE;
+						13: // Error
+							GVL_machine.motorErrorList := LFTCLAMP;
+							GVL_machine.bErrorPresent := TRUE;
+					END_CASE
+				END_IF
+				IF NOT aMoveFinish[3] THEN
+					CASE GVL_devices.fbRhtClampMotor.moveTo('NULL',9.5) OF 
+						1:// Done
+							aMoveFinish[3] := TRUE;
+						13:// Error
+							GVL_machine.motorErrorList := RHTCLAMP;
+							GVL_machine.bErrorPresent := TRUE;
+					END_CASE
+				END_IF
+			END_IF
+			IF F_checkMoveFinish(aMoveFinish,5,FALSE) THEN
+				ePrevState := eState;
+				eState := CLAMPRETURN;
+			END_IF
+			
+		CLAMPRETURN:
+			sPromptDisp := 'Clamps Moving Out';
+			IF NOT aMoveFinish[0] THEN
+				CASE GVL_devices.fbLftWidthMotor.homeToSensor(0) OF
+					1:// Done
+						aMoveFinish[0] := TRUE;
+					13:// Error
+						GVL_machine.motorErrorList := LFTWIDTH;
+						GVL_machine.bErrorPresent := TRUE;
+				END_CASE 
+			END_IF
+			IF NOT aMoveFinish[1] THEN
+				CASE GVL_devices.fbRhtWidthMotor.homeToSensor(0) OF 
+					1: //Done
+						aMoveFinish[1] := TRUE;
+					13: //Error\
+						GVL_machine.motorErrorList := RHTWIDTH;
+						GVL_machine.bErrorPresent := TRUE;
+				END_CASE
+			END_IF
+			
+			IF F_checkMoveFinish(aMoveFinish,2,FALSE) THEN
+				ePrevState := eState;
+				eState := CONFIRMSPAUNLOAD;
+			END_IF
+			
+		CONFIRMSPAUNLOAD:
+			GVL_devices.fbLtCurtains.mute();
+			bHideConfirmBtn 	:= FALSE;
+			sPromptDisp := 'Unload Spa';
+			IF bConfirmBtn OR NOT GVL_devices.fbTable.spaLoaded THEN
+				bConfirmBtn := FALSE;
+				GVL_eflex.bEflexPresent := FALSE;
+				GVL_eflex.fFlipHeight := 0;
+				GVL_eflex.fStudHeight := 0;
+				GVL_eflex.sSpaModel := '';
+				ePrevState := eState;
+				eState := INITHOMING;
+			END_IF
+			
+		STOPPROGRAM:
+			GVL_devices.fbLtCurtains.mute();
+			sPromptDisp := 'Program Stopped';
+			bHideStartBtn := FALSE;
+			bHideStopBtn := TRUE;
+			IF bStartBtn THEN
+				sPromptDisp := 'Program Starting';
+				bHideStartBtn := TRUE;
+				bHideStopBtn := TRUE;
+				motorsInit();
+				IF motorsInit.bMotorsInit THEN
+					bStartBtn := FALSE;
+					bStopBtn := FALSE;
+					bHideStopBtn := FALSE;
+					eState := ePrevState;
+				END_IF
+			END_IF
+			
+		RESETPROGRAM:
+			resetAutoProgram();
+			IF eResetState = RESETDONE THEN
+				sPromptDisp := 'Reset Program';
+				GVL_eflex.sSpaModel 	:= '';
+				GVL_eflex.bEflexPresent := FALSE;
+				bDispContinueProg := FALSE;
+				GVL_machine.bPageChange	:= FALSE;
+				bRestartProgBtn := FALSE;
+				F_checkMoveFinish(aMoveFinish,2,TRUE);
+				bStartBtn := FALSE;
+				bStopBtn := FALSE;
+				bConfirmBtn := FALSE;
+				bResetBtn := FALSE;
+				eState := CONFIRMINITHOMING;
+			END_IF
+			
+		RESETMOTORS:
+			bHideConfirmBtn := TRUE;
+			bHideStopBtn := TRUE;
+			bHideStartBtn := TRUE;
+			sPromptDisp := 'Initializing Motors';
+			motorsInit();
+			IF motorsInit.bMotorsInit THEN
+				eState := RESETPROGRAM;
+			END_IF
+			
+		MOTORFAULTED: 
+			bHideConfirmBtn := TRUE;
+			bHideStopBtn := TRUE;
+			bHideStartBtn := TRUE;
+			sPromptDisp := 'Motor Fault: Resetting';
+			motorsInit();
+			IF motorsInit.bMotorsInit THEN
+				eState := ePrevState;
+			END_IF
+			
+		PROGERRORSTOP: 
+			GVL_devices.fbLtCurtains.mute();
+			bHideStartBtn := FALSE;
+			bHideStopBtn := TRUE;
+			sPromptDisp := sSetPromptDisp;
+			IF bStartBtn THEN
+				sPromptDisp := 'Program Starting';
+				bHideStartBtn := TRUE;
+				bHideStopBtn := TRUE;
+				motorsInit();
+				IF motorsInit.bMotorsInit THEN
+					bStartBtn := FALSE;
+					bStopBtn := FALSE;
+					bHideStopBtn := FALSE;
+					eState := ePrevState;
+				END_IF
+			END_IF
+			
+		RESETLFTCOLUMNS:
+			GVL_devices.fbLtCurtains.mute();
+			bHideStartBtn := FALSE;
+			bHideStopBtn := TRUE;
+			sPromptDisp := sSetPromptDisp;
+			IF bStartBtn THEN
+				sPromptDisp := 'Program Starting';
+				bHideStartBtn := TRUE;
+				bHideStopBtn := TRUE;
+				motorsInit();
+				IF motorsInit.bMotorsInit THEN
+					bStartBtn := FALSE;
+					bStopBtn := FALSE;
+					bHideStopBtn := FALSE;
+					eState := MATCHLFTCOLUMNS;
+				END_IF
+			END_IF
+		
+		MATCHLFTCOLUMNS:
+			sPromptDisp := sSetPromptDisp;
+			IF ABS(GVL_devices.fbColumn0Motor.distance) < ABS(GVL_devices.fbColumn1Motor.distance) THEN
+				CASE GVL_devices.fbColumn0Motor.moveTo('NULL',GVL_devices.fbColumn1Motor.distance / 25.4) OF 
+					1: //Done
+						eState := ePrevState;
+					13: //Error
+						GVL_devices.fbColumn0Motor.stop();
+						GVL_devices.fbColumn1Motor.stop();
+						GVL_devices.fbColumn2Motor.stop();
+						GVL_devices.fbColumn3Motor.stop();
+						ePrevState := INITHOMING;
+						eState := PROGERRORSTOP;
+						sSetPromptDisp := 'Column Faulted Retry Start';
+				END_CASE
+			ELSE
+				CASE GVL_devices.fbColumn1Motor.moveTo('NULL',GVL_devices.fbColumn0Motor.distance / 25.4) OF 
+					1: //Done
+						eState := ePrevState;
+					13: //Error
+						GVL_devices.fbColumn0Motor.stop();
+						GVL_devices.fbColumn1Motor.stop();
+						GVL_devices.fbColumn2Motor.stop();
+						GVL_devices.fbColumn3Motor.stop();
+						ePrevState := INITHOMING;
+						eState := PROGERRORSTOP;
+						sSetPromptDisp := 'Column Faulted Retry Start';
+				END_CASE
+			END_IF
+					
+		RESETRHTCOLUMNS:
+			GVL_devices.fbLtCurtains.mute();
+			bHideStartBtn := FALSE;
+			bHideStopBtn := TRUE;
+			sPromptDisp := sSetPromptDisp;
+			IF bStartBtn THEN
+				sPromptDisp := 'Program Starting';
+				bHideStartBtn := TRUE;
+				bHideStopBtn := TRUE;
+				motorsInit();
+				IF motorsInit.bMotorsInit THEN
+					bStartBtn := FALSE;
+					bStopBtn := FALSE;
+					bHideStopBtn := FALSE;
+					eState := MATCHRHTCOLUMNS;
+				END_IF
+			END_IF
+		
+		MATCHRHTCOLUMNS:
+			sPromptDisp := sSetPromptDisp;
+			IF ABS(GVL_devices.fbColumn2Motor.distance) < ABS(GVL_devices.fbColumn3Motor.distance) THEN
+				CASE GVL_devices.fbColumn2Motor.moveTo('NULL',GVL_devices.fbColumn3Motor.distance / 25.4) OF 
+					1: //Done
+						eState := ePrevState;
+					13: //Error
+						GVL_devices.fbColumn0Motor.stop();
+						GVL_devices.fbColumn1Motor.stop();
+						GVL_devices.fbColumn2Motor.stop();
+						GVL_devices.fbColumn3Motor.stop();
+						ePrevState := INITHOMING;
+						eState := PROGERRORSTOP;
+						sSetPromptDisp := 'Column Faulted Retry Start';
+				END_CASE
+			ELSE
+				CASE GVL_devices.fbColumn3Motor.moveTo('NULL',GVL_devices.fbColumn2Motor.distance / 25.4) OF 
+					1: //Done
+						eState := ePrevState;
+					13: //Error
+						GVL_devices.fbColumn0Motor.stop();
+						GVL_devices.fbColumn1Motor.stop();
+						GVL_devices.fbColumn2Motor.stop();
+						GVL_devices.fbColumn3Motor.stop();
+						ePrevState := INITHOMING;
+						eState := PROGERRORSTOP;
+						sSetPromptDisp := 'Column Faulted Retry Start';
+				END_CASE
+			END_IF
+	END_CASE
+ELSE // Waiting for confirmation from operator to load previous running program or restart. 
+	nFrameDisp := 8;
+	IF bContinueProgBtn THEN
+		bDispContinueProg := FALSE;
+		GVL_machine.bPageChange	:= FALSE;
+		bContinueProgBtn := FALSE;
+		F_checkMoveFinish(aMoveFinish,0,TRUE);
+	ELSIF bRestartProgBtn THEN
+		eState := CONFIRMINITHOMING;
+		GVL_eflex.sSpaModel 	:= '';
+		GVL_eflex.bEflexPresent := FALSE;
+		bDispContinueProg := FALSE;
+		GVL_machine.bPageChange	:= FALSE;
+		bRestartProgBtn := FALSE;
+		F_checkMoveFinish(aMoveFinish,0,TRUE);
+	END_IF
+END_IF
+
+IF bResetBtn THEN
+	eResetState := CHECKWIDTH;
+	eState := RESETMOTORS;
+	bResetBtn := FALSE;
+ELSIF bStopBtn THEN
+	ePrevState := eState;
+	bStopBtn := FALSE;
+	eState := STOPPROGRAM;
+ELSIF eState <> RESETMOTORS AND eState <> RESETPROGRAM AND eState <> STOPPROGRAM AND eState <> MOTORFAULTED AND motorFault() THEN
+	ePrevState := eState;
+	eState := MOTORFAULTED;
+END_IF
+
+backgroundCheck();]]></ST>
+    </Implementation>
+    <Method Name="backgroundCheck" Id="{5b19ae5a-a1da-4075-bdfd-1b6bf0d866eb}">
+      <Declaration><![CDATA[METHOD backgroundCheck : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[bHideCheckDisp := TRUE;
+sCheckDisp := '';
+fbProcessTimer(IN := bProcessTimerIn, PT := tProcessTimerPt);
+bProcessTimerIn := FALSE;
+//IF eState <> CONFIRMINITHOMING OR eState <> INITHOMING THEN
+// ==== Check to see if any column motor is moving when others are not ==== //
+IF eState <> RESETLFTCOLUMNS AND eState <> RESETRHTCOLUMNS AND eState <> MATCHLFTCOLUMNS AND eState <> MATCHRHTCOLUMNS AND eState <> PROGERRORSTOP THEN
+	IF GVL_devices.fbColumn0Motor.distance > -1000 AND GVL_devices.fbColumn0Motor.distance < 1000 THEN
+		IF ABS(GVL_devices.fbColumn0Motor.distance - GVL_devices.fbColumn1Motor.distance) > 5 THEN
+			GVL_devices.fbColumn0Motor.estop();
+			GVL_devices.fbColumn1Motor.estop();
+			GVL_devices.fbColumn2Motor.estop();
+			GVL_devices.fbColumn3Motor.estop();
+			
+			GVL_machine.sBlock := DINT_TO_STRING(eState);
+			GVL_machine.sLoc := 'LFT Column Match';
+			GVL_machine.nID := 0;
+			GVL_machine.motorErrorList := CUSTOM;
+			GVL_machine.bErrorPresent := TRUE;
+			
+			IF ABS(GVL_devices.fbColumn0Motor.distance - GVL_devices.fbColumn1Motor.distance) < 12 THEN
+				ePrevState := eState;
+				eState := RESETLFTCOLUMNS;
+				sSetPromptDisp := 'Lft Columns: $n Counts not matching $n Start to reset.';
+			ELSE
+				ePrevState := eState;
+				eState := PROGERRORSTOP;
+				sSetPromptDisp := 'Lft Columns: $n Counts not matching. $n Maintenance required';
+			END_IF
+		END_IF
+	END_IF
+	
+	IF GVL_devices.fbColumn2Motor.distance > -1000 AND GVL_devices.fbColumn2Motor.distance < 1000 THEN 
+		IF ABS(GVL_devices.fbColumn2Motor.distance - GVL_devices.fbColumn3Motor.distance) > 5 THEN
+			GVL_devices.fbColumn0Motor.estop();
+			GVL_devices.fbColumn1Motor.estop();
+			GVL_devices.fbColumn2Motor.estop();
+			GVL_devices.fbColumn3Motor.estop();
+			
+			GVL_machine.sBlock := DINT_TO_STRING(eState);
+			GVL_machine.sLoc := 'RHT Column Match';
+			GVL_machine.nID := 1;
+			GVL_machine.motorErrorList := CUSTOM;
+			GVL_machine.bErrorPresent := TRUE;
+			
+			IF ABS(GVL_devices.fbColumn2Motor.distance - GVL_devices.fbColumn3Motor.distance) < 12 THEN
+				ePrevState := eState;
+				eState := RESETRHTCOLUMNS;
+				sSetPromptDisp := 'Rht Columns: $n Counts not matching $n Start to reset.';
+			ELSE
+				ePrevState := eState;
+				eState := PROGERRORSTOP;
+				sSetPromptDisp := 'Rht Columns: $n Counts not matching $n Maintenance required';
+			END_IF
+		END_IF
+	END_IF
+
+	IF GVL_devices.fbColumn0Motor.fbMotor.Status.Moving OR GVL_devices.fbColumn1Motor.fbMotor.Status.Moving OR GVL_devices.fbColumn2Motor.fbMotor.Status.Moving OR GVL_devices.fbColumn3Motor.fbMotor.Status.Moving THEN
+		IF GVL_devices.fbColumn0Motor.fbMotor.Status.NotMoving OR GVL_devices.fbColumn1Motor.fbMotor.Status.NotMoving OR GVL_devices.fbColumn2Motor.fbMotor.Status.NotMoving OR GVL_devices.fbColumn3Motor.fbMotor.Status.NotMoving THEN
+			fbMoveDelayTim(IN := FALSE, PT := T#500MS);
+			IF fbMoveDelayTim.Q THEN
+				GVL_devices.fbColumn0Motor.estop();
+				GVL_devices.fbColumn1Motor.estop();
+				GVL_devices.fbColumn2Motor.estop();
+				GVL_devices.fbColumn3Motor.estop();
+				ePrevState := eState;
+				eState := PROGERRORSTOP;
+				sSetPromptDisp := 'Column Faulted Retry Start';
+			END_IF
+		END_IF
+	ELSE
+		fbMoveDelayTim(IN := FALSE);
+	END_IF
+END_IF
+
+
+// === Check Software Limit Switches on Motors === //
+(*IF GVL_devices.fbRhtRotationMotor.fbMotor.Status.SoftLimitMaxExceeded OR GVL_devices.fbRhtRotationMotor.fbMotor.Status.SoftLimitMinExceeded THEN
+	bHideCheckDisp := FALSE;
+	sCheckDisp := 'Rht rotation motor: $n Out of Range';
+END_IF
+IF GVL_devices.fbLftRotationMotor.fbMotor.Status.SoftLimitMaxExceeded OR GVL_devices.fbLftRotationMotor.fbMotor.Status.SoftLimitMinExceeded THEN
+	bHideCheckDisp := FALSE;
+	sCheckDisp := 'Lft rotation motor: $n Out of Range';
+END_IF
+	
+IF GVL_devices.fbColumn0Motor.fbMotor.Status.SoftLimitMaxExceeded OR GVL_devices.fbColumn0Motor.fbMotor.Status.SoftLimitMinExceeded THEN
+	bHideCheckDisp := FALSE;
+	sCheckDisp := 'Column 0 Motor: $n Out of Range';
+END_IF
+IF GVL_devices.fbColumn1Motor.fbMotor.Status.SoftLimitMaxExceeded OR GVL_devices.fbColumn0Motor.fbMotor.Status.SoftLimitMinExceeded THEN
+	bHideCheckDisp := FALSE;
+	sCheckDisp := 'Column 1 Motor: $n Out of Range';
+END_IF
+IF GVL_devices.fbColumn2Motor.fbMotor.Status.SoftLimitMaxExceeded OR GVL_devices.fbColumn0Motor.fbMotor.Status.SoftLimitMinExceeded THEN
+	bHideCheckDisp := FALSE;
+	sCheckDisp := 'Column 2 Motor: $n Out of Range';
+END_IF
+IF GVL_devices.fbColumn3Motor.fbMotor.Status.SoftLimitMaxExceeded OR GVL_devices.fbColumn0Motor.fbMotor.Status.SoftLimitMinExceeded THEN
+	bHideCheckDisp := FALSE;
+	sCheckDisp := 'Column 3 Motor: $n Out of Range';
+END_IF
+
+IF GVL_devices.fbLftWidthMotor.fbMotor.Status.SoftLimitMaxExceeded OR GVL_devices.fbLftWidthMotor.fbMotor.Status.SoftLimitMinExceeded THEN
+	bHideCheckDisp := FALSE;
+	sCheckDisp := 'Lft width motor: $n Out of Range';
+END_IF
+IF GVL_devices.fbRhtWidthMotor.fbMotor.Status.SoftLimitMaxExceeded OR GVL_devices.fbRhtWidthMotor.fbMotor.Status.SoftLimitMinExceeded THEN
+	bHideCheckDisp := FALSE;
+	sCheckDisp := 'Rht width: $n Out of Range';
+END_IF
+
+IF GVL_devices.fbLftClampMotor.fbMotor.Status.SoftLimitMaxExceeded OR GVL_devices.fbLftClampMotor.fbMotor.Status.SoftLimitMinExceeded THEN
+	bHideCheckDisp := FALSE;
+	sCheckDisp := 'Lft clamp motor: $n Out of Range';
+END_IF
+IF GVL_devices.fbRhtClampMotor.fbMotor.Status.SoftLimitMaxExceeded OR GVL_devices.fbRhtClampMotor.fbMotor.Status.SoftLimitMinExceeded THEN
+	bHideCheckDisp := FALSE;
+	sCheckDisp := 'Rht clamp motor: $n Out of Range';
+END_IF
+*)
+// === Check if all 4 power supplies are on === //
+IF GVL_devices.fbColumn0Motor.fbMotor.Status.DriveDeviceError
+OR GVL_devices.fbLftClampMotor.fbMotor.Status.DriveDeviceError
+OR GVL_devices.fbColumn2Motor.fbMotor.Status.DriveDeviceError 
+OR GVL_devices.fbRhtClampMotor.fbMotor.Status.DriveDeviceError THEN
+	bHideCheckDisp := FALSE;
+	sCheckDisp := 'No Power $n Check Motor Power Supplies';
+END_IF
+
+// ==== Check for debris under table sensor === //
+IF GVL_devices.fbTable.tableHeight < GVL_persistent.fTableDownHeight - 0.10 THEN 
+	bHideCheckDisp := FALSE;
+	sCheckDisp := 'Table Sensor Height: $n Check debris under table';
+END_IF
+IF GVL_devices.fbTable.tableHeight > GVL_persistent.fTableDownHeight + 35 THEN 
+	bHideCheckDisp := FALSE;
+	sCheckDisp := 'Table Sensor Height: $n Check debris under table';
+END_IF
+
+// === Compare clamp distances === //
+IF ABS(GVL_devices.fbRhtClampMotor.distance + GVL_devices.fbLftClampMotor.distance) > 20 THEN
+	bHideCheckDisp := FALSE;
+	sCheckDisp := 'Clamping: Clamps not aligned $n Check clamps';
+END_IF
+
+CASE eState OF 
+	CONFIRMINITHOMING://
+	INITHOMING://
+	SCANEFLEX://
+	CONFIRMPROGRAM://
+	TABLETOCONVEYOR://
+	CONFIRMLOADED://
+	TABLETOCLAMP://
+	CENTERSPA://
+		bProcessTimerIn := TRUE;
+		tProcessTimerPt := T#2S;
+		IF NOT fbProcesstimer.Q AND (aMoveFinish[1] OR aMoveFinish[2]) THEN
+			bHideCheckDisp := FALSE;
+			sCheckDisp := 'Width Motors: $n Early torque out';
+		END_IF
+		IF NOT bHideCheckDisp THEN
+			bHideCheckDisp := FALSE;
+			sCheckDisp := 'Width Motors: $n Early torque out';
+		END_IF
+		
+	OPENCLAMP://
+		IF GVL_devices.fbLftWidthMotor.distance < 10 THEN
+			bHideCheckDisp := FALSE;
+			sCheckDisp := 'Lft Width Motor: $n Centering Failed';
+		END_IF
+		IF GVL_devices.fbRhtWidthMotor.distance < 10 THEN
+			bHideCheckDisp := FALSE;
+			sCheckDisp := 'Rht Width Motor: $n Centering Failed';
+		END_IF
+		
+	MOVETOCLAMP://
+		bProcessTimerIn := TRUE;
+		tProcessTimerPt := T#90S;
+		IF fbProcesstimer.Q THEN
+			IF NOT GVL_devices.fbLftWidthMotor.bClampSensor THEN
+				bHideCheckDisp := FALSE;
+				sCheckDisp := 'Lft width sensor: $n Sensor timed out';
+			END_IF
+			IF NOT GVL_devices.fbRhtWidthMotor.bClampSensor THEN
+				bHideCheckDisp := FALSE;
+				sCheckDisp := 'Rht width sensor: $n Sensor timed out';
+			END_IF
+		END_IF
+		
+		IF ABS(GVL_devices.fbLftWidthMotor.fbMotor.NcToPlc.ActTorque) > ABS(GVL_devices.fbLftWidthMotor.jogTorque) THEN
+			bHideCheckDisp := FALSE;
+			sCheckDisp := 'Lft Width Motor: $n Torque Exceeded';
+		END_IF
+		IF ABS(GVL_devices.fbRhtWidthMotor.fbMotor.NcToPlc.ActTorque) > ABS(GVL_devices.fbRhtWidthMotor.jogTorque) THEN
+			bHideCheckDisp := FALSE;
+			sCheckDisp := 'Rht Width Motor: $n Torque Exceeded';
+		END_IF
+		
+	CLAMPSPA://
+		IF NOT GVL_devices.fbLftWidthMotor.bClampSensor THEN
+			bHideCheckDisp := FALSE;
+			sCheckDisp := 'Lft width sensor: $n Check spa is clamped';
+		END_IF
+		IF NOT GVL_devices.fbRhtWidthMotor.bClampSensor THEN
+			bHideCheckDisp := FALSE;
+			sCheckDisp := 'Rht width sensor: $n Check spa is clamped';
+		END_IF
+		
+		IF GVL_devices.fbLftClampMotor.distance > -20 THEN
+			bHideCheckDisp := FALSE;
+			sCheckDisp := 'Lft clamp: $n Spa not clamped';
+		END_IF
+		IF GVL_devices.fbRhtClampMotor.distance < 20 THEN
+			bHideCheckDisp := FALSE;
+			sCheckDisp := 'Rht clamp: $n Spa not clamped';
+		END_IF
+		
+		
+	ROTATESPA://
+		IF GVL_devices.fbLftClampMotor.distance > -20 THEN
+			bHideCheckDisp := FALSE;
+			sCheckDisp := 'Lft clamp: $n Spa not clamped';
+		END_IF
+		IF GVL_devices.fbRhtClampMotor.distance < 20 THEN
+			bHideCheckDisp := FALSE;
+			sCheckDisp := 'Rht clamp: $n Spa not clamped';
+		END_IF
+	TABLETOBASE://
+	CONFIRMSKIIS://
+	CONFIRMBASE://
+	LOWERSPA://
+	CLAMPRETURN://
+	CONFIRMSPAUNLOAD://
+	
+	
+	
+END_CASE
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="homeMachine" Id="{b0b24477-902a-487d-8581-034eeefa274e}">
+      <Declaration><![CDATA[METHOD homeMachine : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[homeMachine := FALSE;
+CASE nHomeMachineState OF 
+	0:// Home Motors
+		IF aMoveFinish[2] THEN 
+			IF NOT aMoveFinish[0] THEN
+				CASE GVL_devices.fbLftClampMotor.homeToTorque() OF 
+					1:// Done
+						aMoveFinish[0] := TRUE;
+					13:// Error
+						GVL_devices.fbLftClampMotor.reset();
+						GVL_machine.motorErrorList := LFTCLAMP;
+						GVL_machine.bErrorPresent := TRUE;
+				END_CASE
+			END_IF
+		END_IF
+		
+		IF aMoveFinish[3] THEN
+			IF NOT aMoveFinish[1] THEN
+				CASE GVL_devices.fbRhtClampMotor.homeToTorque() OF 
+					1:// Done
+						aMoveFinish[1] := TRUE;
+					13:// Error
+						GVL_devices.fbRhtClampMotor.reset();
+						GVL_machine.motorErrorList := RHTCLAMP;
+						GVL_machine.bErrorPresent := TRUE;
+				END_CASE
+			END_IF
+		END_IF
+		
+		IF NOT aMoveFinish[2] THEN
+			CASE GVL_devices.fbLftWidthMotor.homeToSensor(0) OF 
+				1:// Done
+					aMoveFinish[2] := TRUE;
+				13:// Error
+					GVL_machine.motorErrorList := LFTWIDTH;
+					GVL_machine.bErrorPresent := TRUE;
+			END_CASE
+		END_IF
+		IF NOT aMoveFinish[3] THEN
+			CASE GVL_devices.fbRhtWidthMotor.homeToSensor(0) OF 
+				1:// Done
+					aMoveFinish[3] := TRUE;
+				13:// Error
+					GVL_machine.motorErrorList := RHTWIDTH;
+					GVL_machine.bErrorPresent := TRUE;
+			END_CASE
+		END_IF
+		IF aMoveFinish[0] AND aMoveFinish[2] THEN
+			IF NOT aMoveFinish[4] THEN
+				CASE GVL_devices.fbLftRotationMotor.homeToTorque() OF 
+					1:// Done
+						aMoveFinish[4] := TRUE;
+					13:// Error
+						GVL_machine.motorErrorList := LFTROTATION;
+						GVL_machine.bErrorPresent := TRUE;
+				END_CASE
+			END_IF
+			IF NOT aMoveFinish[6] THEN
+				IF GVL_devices.fbColumn1Motor.fbMotor.Status.Coupled THEN
+					GVL_devices.fbColumn0Motor.motorIdle := FALSE;
+					GVL_devices.fbColumn1Motor.motorIdle := FALSE;
+					CASE GVL_devices.fbColumn0Motor.homeToSensor(0) OF 
+						1:// Done
+							aMoveFinish[6] := TRUE;
+						13:// Error
+							GVL_machine.motorErrorList := COLUMN0;
+							GVL_machine.bErrorPresent := TRUE;
+					END_CASE
+				ELSE
+					CASE GVL_devices.fbColumn1Motor.coupleToAxis(GVL_devices.fbColumn0Motor.fbMotor) OF 
+						1:// Done
+						13: GVL_devices.fbColumn1Motor.reset();
+							GVL_machine.motorErrorList := COLUMN1;
+							GVL_machine.bErrorPresent := TRUE;
+					END_CASE
+				END_IF
+			END_IF
+		END_IF
+		
+		IF aMoveFinish[1] AND aMoveFinish[3] THEN
+			IF NOT aMoveFinish[5] THEN
+				CASE GVL_devices.fbRhtRotationMotor.homeToTorque() OF 
+					1:// Done
+						aMoveFinish[5] := TRUE;
+					13:// Error
+						GVL_machine.motorErrorList := RHTROTATION;
+						GVL_machine.bErrorPresent := TRUE;
+				END_CASE
+			END_IF
+			
+			IF NOT aMoveFinish[7] THEN
+				IF GVL_devices.fbColumn3Motor.fbMotor.Status.Coupled THEN
+					GVL_devices.fbColumn2Motor.motorIdle := FALSE;
+					GVL_devices.fbColumn3Motor.motorIdle := FALSE;
+					CASE GVL_devices.fbColumn2Motor.homeToSensor(0) OF 
+						1:// Done
+							aMoveFinish[7] := TRUE;
+						13://Error
+							GVL_machine.motorErrorList := COLUMN2;
+							GVL_machine.bErrorPresent := TRUE;
+					END_CASE
+				ELSE
+					CASE GVL_devices.fbColumn3Motor.coupleToAxis(GVL_devices.fbColumn2Motor.fbMotor) OF 
+						1://Done 
+						13: GVL_devices.fbColumn3Motor.reset();
+							GVL_machine.motorErrorList := COLUMN3;
+							GVL_machine.bErrorPresent := TRUE;
+					END_CASE
+				END_IF
+			END_IF
+		END_IF
+			
+		IF F_checkMoveFinish(aMoveFinish,8,FALSE) THEN
+			nHomeMachineState := nHomeMachineState + 1;
+		END_IF
+	1:// Move rotation to 90 deg
+		IF NOT aMoveFinish[0] THEN
+			CASE GVL_devices.fbLftRotationMotor.moveTo('NULL',90/25.4) OF
+				1: //Done
+					aMoveFinish[0] := TRUE;
+				13://Error
+					GVL_machine.motorErrorList := LFTROTATION;
+					GVL_machine.bErrorPresent := TRUE;
+			END_CASE
+		END_IF
+
+		IF NOT aMoveFinish[1] THEN
+			CASE GVL_devices.fbRhtRotationMotor.moveTo('NULL',90/25.4) OF
+				1: //Done
+					aMoveFinish[1] := TRUE;
+				13://Error
+					GVL_machine.motorErrorList := RHTROTATION;
+					GVL_machine.bErrorPresent := TRUE;
+			END_CASE
+		END_IF	
+		
+		IF F_checkMoveFinish(aMoveFinish,2,FALSE) THEN
+			nHomeMachineState := nHomeMachineState + 1;
+		END_IF
+	2:// Decouple all Motors
+		IF NOT GVL_devices.fbColumn1Motor.fbMotor.Status.Coupled AND NOT GVL_devices.fbColumn3Motor.fbMotor.Status.Coupled THEN
+			nHomeMachineState := 0;
+			homeMachine := TRUE;
+		ELSE
+			GVL_devices.fbColumn1Motor.decoupleAxis();
+			GVL_devices.fbColumn3Motor.decoupleAxis();
+		END_IF
+END_CASE]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="motorFault" Id="{d4bde3fa-ecdc-46a4-9e8d-ae35751538db}">
+      <Declaration><![CDATA[METHOD motorFault : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[motorFault := FALSE;
+IF GVL_devices.fbColumn0Motor.fbMotor.Status.Error OR
+	GVL_devices.fbColumn1Motor.fbMotor.Status.Error OR
+	GVL_devices.fbColumn2Motor.fbMotor.Status.Error OR
+	GVL_devices.fbColumn3Motor.fbMotor.Status.Error OR
+	GVL_devices.fbLftClampMotor.fbMotor.Status.Error OR
+	GVL_devices.fbRhtClampMotor.fbMotor.Status.Error OR
+	GVL_devices.fbLftWidthMotor.fbMotor.Status.Error OR
+	GVL_devices.fbRhtWidthMotor.fbMotor.Status.Error OR
+	GVL_devices.fbLftRotationMotor.fbMotor.Status.Error OR
+	GVL_devices.fbRhtRotationMotor.fbMotor.Status.Error THEN
+	motorFault := TRUE;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="moveColumns" Id="{6b020c39-1ad3-4aa2-ab31-cd9c48ed1a7d}">
+      <Declaration><![CDATA[METHOD moveColumns : INT
+VAR_INPUT
+	sState : STRING;
+	fHeight : REAL;
+	nOption : INT; //0 - Left Columns and Right Columns Move Seperate, 1- All columns follow one Master
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[moveColumns := 0;
+CASE nOption OF 
+	0:// Left Columns and Right Columns Move Seperate
+		
+	1:// All columns follow one Master
+		CASE nMoveColumnState OF 
+			0: // Execute Move on Master Axis 
+				IF GVL_devices.fbColumn1Motor.fbMotor.Status.Coupled AND GVL_devices.fbColumn2Motor.fbMotor.Status.Coupled AND GVL_devices.fbColumn3Motor.fbMotor.Status.Coupled THEN
+					GVL_devices.fbColumn0Motor.motorIdle := FALSE;
+					GVL_devices.fbColumn1Motor.motorIdle := FALSE;
+					GVL_devices.fbColumn2Motor.motorIdle := FALSE;
+					GVL_devices.fbColumn3Motor.motorIdle := FALSE;
+					CASE GVL_devices.fbColumn0Motor.moveTo(sState,fHeight) OF 
+						1: //Done
+							nMoveColumnState := nMoveColumnState + 1;
+						13: //Error
+							GVL_machine.motorErrorList := COLUMN0;
+							GVL_machine.bErrorPresent := TRUE;
+							moveColumns := 13;
+						15: //Move is halfway
+							moveColumns := 15;
+					END_CASE
+					IF GVL_devices.fbColumn0Motor.fbMotor.Status.Error OR GVL_devices.fbColumn1Motor.fbMotor.Status.Error OR GVL_devices.fbColumn2Motor.fbMotor.Status.Error OR GVL_devices.fbColumn3Motor.fbMotor.Status.Error THEN
+						GVL_devices.fbColumn0Motor.estop();
+						GVL_devices.fbColumn1Motor.estop();
+						GVL_devices.fbColumn2Motor.estop();
+						GVL_devices.fbColumn3Motor.estop();
+						moveColumns := 13;
+					END_IF
+				ELSE
+					CASE GVL_devices.fbColumn1Motor.coupleToAxis(GVL_devices.fbColumn0Motor.fbMotor) OF
+						1:// Done
+						13:// Error
+							GVL_machine.motorErrorList := COLUMN1;
+							GVL_machine.bErrorPresent := TRUE;
+					END_CASE
+					CASE GVL_devices.fbColumn2Motor.coupleToAxis(GVL_devices.fbColumn0Motor.fbMotor) OF
+						1:// Done
+						13:// Error
+							GVL_machine.motorErrorList := COLUMN2;
+							GVL_machine.bErrorPresent := TRUE;
+					END_CASE
+					CASE GVL_devices.fbColumn3Motor.coupleToAxis(GVL_devices.fbColumn0Motor.fbMotor) OF
+						1:// Done
+						13:// Error
+							GVL_machine.motorErrorList := COLUMN3;
+							GVL_machine.bErrorPresent := TRUE;
+					END_CASE
+				END_IF
+			1:// Decouple Axis
+				IF NOT GVL_devices.fbColumn1Motor.fbMotor.Status.Coupled AND NOT GVL_devices.fbColumn2Motor.fbMotor.Status.Coupled AND NOT GVL_devices.fbColumn3Motor.fbMotor.Status.Coupled THEN
+					nMoveColumnState := 0;
+					moveColumns := 1;
+				ELSE
+					GVL_devices.fbColumn1Motor.decoupleAxis();
+					GVL_devices.fbColumn2Motor.decoupleAxis();
+					GVL_devices.fbColumn3Motor.decoupleAxis();
+				END_IF
+		END_CASE
+END_CASE
+
+
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="moveRotation" Id="{d7720b3e-c445-44df-9939-dbe4f36c48e1}">
+      <Declaration><![CDATA[METHOD moveRotation : INT
+VAR_INPUT
+	sState : STRING;
+	fHeight : REAL;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[moveRotation := 0;
+CASE nMoveRotationState OF 
+	0://Command Move
+		IF NOT aMoveFinishSecond[0] THEN
+			CASE GVL_devices.fbLftRotationMotor.moveTo(sState,fHeight/25.4) OF 
+				1:// Done
+					aMoveFinishSecond[0] := TRUE;
+				13:// Errror
+					GVL_machine.motorErrorList := LFTROTATION;
+					GVL_machine.bErrorPresent := TRUE;
+					moveRotation := 13;
+			END_CASE
+		END_IF
+		IF NOT aMoveFinishSecond[1] THEN
+			CASE GVL_devices.fbRhtRotationMotor.moveTo(sState,fHeight/25.4) OF
+				1:// Done
+					aMoveFinishSecond[1] := TRUE;
+				13:// Error
+					GVL_machine.motorErrorList := RHTROTATION;
+					GVL_machine.bErrorPresent := TRUE;
+					moveRotation := 13;
+				15:// Move halfway
+					moveRotation := 15;
+			END_CASE
+		END_IF
+		
+		//Check if move is finished
+		IF F_checkMoveFinish(aMoveFinishSecond,2,FALSE) THEN
+			moveRotation := 1;
+		END_IF
+		
+		//Check if one is moving without other
+		IF GVL_devices.fbLftRotationMotor.fbMotor.Status.Moving OR GVL_devices.fbRhtRotationMotor.fbMotor.Status.Moving THEN
+			IF GVL_devices.fbLftRotationMotor.fbMotor.Status.NotMoving OR GVL_devices.fbRhtRotationMotor.fbMotor.Status.NotMoving THEN
+				fbMoveDelayTimRot(IN := TRUE, PT := T#500MS);
+				IF fbMoveDelayTimRot.Q THEN
+					moveRotation := 13;
+				END_IF
+			ELSE
+				fbMoveDelayTimRot(IN := FALSE);
+			END_IF
+		END_IF
+		
+		(*IF GVL_devices.fbLftRotationMotor.fbMotor.Status.Moving AND NOT GVL_devices.fbRhtRotationMotor.fbMotor.Status.Moving THEN
+			moveRotation := 13;
+		ELSIF NOT GVL_devices.fbLftRotationMotor.fbMotor.Status.Moving AND GVL_devices.fbRhtRotationMotor.fbMotor.Status.Moving THEN
+			moveRotation := 13;
+		END_IF*)
+END_CASE]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="resetAutoProgram" Id="{a0f5b3fd-c7c3-4b1d-98f8-985fdd65909c}">
+      <Declaration><![CDATA[METHOD resetAutoProgram : INT
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[CASE eResetState OF 
+	CHECKWIDTH:
+		sPromptDisp := 'RESET: Checking Width';
+		F_checkMoveFinish(aMoveFinish,0,TRUE);
+		IF GVL_devices.fbLftWidthMotor.distance < 1  AND GVL_devices.fbRhtWidthMotor.distance < 1 THEN
+			eResetState := RESETDONE;
+		ELSE
+			eResetState := CHECKCLAMPS;
+		END_IF
+	
+	CHECKCLAMPS:
+		sPromptDisp := 'RESET: Checking Clamps';
+		IF (GVL_devices.fbLftClampMotor.distance > -1 AND GVL_devices.fbRhtClampMotor.distance < 1) OR (GVL_devices.fbLftClampMotor.distance < -130 AND GVL_devices.fbRhtClampMotor.distance > 130) THEN
+			eResetState := RESETDONE;
+		ELSE
+			eResetState := CHECKROTATION;
+		END_IF
+		
+	CHECKROTATION:
+		sPromptDisp := 'RESET: Checking Rotation';
+		IF GVL_devices.fbLftRotationMotor.distance = -90 AND GVL_devices.fbRhtRotationMotor.distance = 90 THEN
+			eResetState := CHECKHEIGHT;
+		ELSIF GVL_devices.fbLftRotationMotor.distance = -270 AND GVL_devices.fbRhtRotationMotor.distance = 270 THEN
+			eResetState := MOVETOFLIPHEIGHT;
+		ELSE
+			eResetState := MOVETOFLIPHEIGHT;
+		END_IF
+		
+	CHECKHEIGHT://Check Height of Columns
+		sPromptDisp := 'RESET: Checking Columns';
+		IF GVL_devices.fbColumn0Motor.distance > -1 THEN
+			eResetState := OPENCLAMPS;
+		ELSE
+			sPromptDisp := 'RESET: Moving Columns';
+			CASE moveColumns('NULL',0,1) OF 
+				1: // Done
+					eResetState := OPENCLAMPS;
+				13:// error 
+					GVL_devices.fbColumn0Motor.stop();
+					GVL_devices.fbColumn1Motor.stop();
+					GVL_devices.fbColumn2Motor.stop();
+					GVL_devices.fbColumn3Motor.stop();
+					ePrevState := RESETPROGRAM;
+					eState := PROGERRORSTOP;
+					sPromptDisp := 'Column Faulted Retry Start';
+			END_CASE
+		END_IF
+		
+	MOVETOFLIPHEIGHT: //Move Spa to eflex flip height and unwind rotation. 
+		sPromptDisp := 'RESET: Rotating Spa';
+			IF NOT aMoveFinish[0] THEN
+				IF GVL_eflex.fFlipHeight > 12 THEN
+					CASE moveColumns('NULL',GVL_eflex.fFlipHeight,1) OF 
+						1:// Done
+							aMoveFinish[0] := TRUE;
+							aMoveFinish[1] := TRUE;
+						13:// Error
+							GVL_devices.fbColumn0Motor.stop();
+							GVL_devices.fbColumn1Motor.stop();
+							GVL_devices.fbColumn2Motor.stop();
+							GVL_devices.fbColumn3Motor.stop();
+							ePrevState := RESETPROGRAM;
+							eState := PROGERRORSTOP;
+							sPromptDisp := 'Column Faulted Retry Start';
+						15:// Move is halway
+							aMoveFinish[1] := TRUE;
+					END_CASE
+				ELSE
+					CASE moveColumns('NULL',24,1) OF 
+						1:// Done
+							aMoveFinish[0] := TRUE;
+						13:// Error
+							GVL_devices.fbColumn0Motor.stop();
+							GVL_devices.fbColumn1Motor.stop();
+							GVL_devices.fbColumn2Motor.stop();
+							GVL_devices.fbColumn3Motor.stop();
+							ePrevState := RESETPROGRAM;
+							eState := PROGERRORSTOP;
+							sPromptDisp := 'Column Faulted Retry Start';
+						15:// Move is halway
+							aMoveFinish[1] := TRUE;
+					END_CASE
+				END_IF
+			END_IF
+			IF aMoveFinish[1] THEN
+				IF NOT aMoveFinish[2] THEN
+					CASE moveRotation('NULL',90) OF 
+						1:// Done
+							aMoveFinish[2] := TRUE;
+						13:// Error
+							GVL_devices.fbLftRotationMotor.stop();
+							GVL_devices.fbRhtRotationMotor.stop();
+						15:// Move Halfway	
+							aMoveFinish[3] := TRUE;
+					END_CASE
+				END_IF
+			END_IF
+			
+			IF NOT aMoveFinish[4] THEN
+				IF GVL_devices.fbTable.moveTo(GVL_persistent.fTableDownHeight) THEN
+					aMoveFinish[4] := TRUE;
+				END_IF
+			END_IF
+		
+			IF F_checkMoveFinish(aMoveFinish,5,FALSE) THEN
+				eResetState := MOVETOUNCLAMPHEIGHT;
+			END_IF
+
+	MOVETOUNCLAMPHEIGHT:
+		sPromptDisp := 'RESET: Releasing Spa';
+		IF NOT aMoveFinish[0] THEN
+			CASE moveColumns('NULL',0,1) OF 
+				1:// Done
+					aMoveFinish[0] := TRUE;
+				13:// Error
+					GVL_devices.fbColumn0Motor.stop();
+					GVL_devices.fbColumn1Motor.stop();
+					GVL_devices.fbColumn2Motor.stop();
+					GVL_devices.fbColumn3Motor.stop();
+					ePrevState := RESETPROGRAM;
+					eState := PROGERRORSTOP;
+					sPromptDisp := 'Column Faulted Retry Start';
+				15:// Move is halway
+					aMoveFinish[1] := TRUE;
+			END_CASE
+		END_IF
+		
+		IF aMoveFinish[1] THEN
+			IF NOT aMoveFinish[2] THEN
+				CASE GVL_devices.fbLftClampMotor.moveTo('NULL',GVL_persistent.fClampOpenDist) OF 
+					1: // Done
+						aMoveFinish[2] := TRUE;
+					13://pass
+				END_CASE
+			END_IF
+			IF NOT aMoveFinish[3] THEN
+				CASE GVL_devices.fbRhtClampMotor.moveTo('NULL',GVL_persistent.fClampOpenDist) OF 
+					1: // Done
+						aMoveFinish[3] := TRUE;
+					13://pass
+				END_CASE
+			END_IF
+			IF NOT aMoveFinish[4] THEN
+				IF GVL_devices.fbTable.moveTo(GVL_persistent.fTableClampHeight) THEN
+					aMoveFinish[4] := TRUE;
+				END_IF
+			END_IF
+		END_IF
+		
+		IF F_checkMoveFinish(aMoveFinish,5,FALSE) THEN
+			eResetState := RESETDONE;
+		END_IF
+		
+	OPENCLAMPS://pass
+		sPromptDisp := 'RESET: Opening Clamps';
+		IF NOT aMoveFinish[0] THEN
+			IF GVL_devices.fbTable.moveTo(GVL_persistent.fTableClampHeight) THEN
+				aMoveFinish[0] := TRUE;
+			END_IF
+		END_IF
+		
+		IF NOT aMoveFinish[1] THEN
+			CASE GVL_devices.fbLftClampMotor.moveTo('NULL',GVL_persistent.fClampOpenDist) OF 
+				1: // Done
+					aMoveFinish[1] := TRUE;
+				13://pass
+			END_CASE
+		END_IF
+		IF NOT aMoveFinish[2] THEN
+			CASE GVL_devices.fbRhtClampMotor.moveTo('NULL',GVL_persistent.fClampOpenDist) OF 
+				1: // Done
+					aMoveFinish[2] := TRUE;
+				13://pass
+			END_CASE
+		END_IF
+		
+		IF F_checkMoveFinish(aMoveFinish,4,FALSE) THEN
+			eResetState := RESETDONE;
+		END_IF
+		
+	RESETDONE:// SteadyState
+		sPromptDisp := 'RESET: Reset Done';
+END_CASE]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="auto">
+      <LineId Id="3" Count="635" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="auto.backgroundCheck">
+      <LineId Id="3" Count="237" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="auto.homeMachine">
+      <LineId Id="3" Count="146" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="auto.motorFault">
+      <LineId Id="3" Count="11" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="auto.moveColumns">
+      <LineId Id="3" Count="61" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="auto.moveRotation">
+      <LineId Id="3" Count="47" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="auto.resetAutoProgram">
+      <LineId Id="3" Count="181" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

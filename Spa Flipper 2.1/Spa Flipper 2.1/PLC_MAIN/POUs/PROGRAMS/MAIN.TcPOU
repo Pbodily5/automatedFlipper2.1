@@ -1,0 +1,397 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.13">
+  <POU Name="MAIN" Id="{898c31ac-8209-4430-8256-484cd892e55e}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM MAIN
+VAR
+	eSafetyState 	: E_safetyState := INIT;
+	bSafetyInit 	: BOOL;
+	sSafetyResetMsg : STRING := '';
+	bDispSafetyResetMsg : BOOL;
+	nDispSafetyMsgCount : INT;
+	bSafetyResetBtn : BOOL;
+	bClearSafetyScrn : BOOL;
+	bSafetyFaultAck : BOOL;
+	fbSafetyBypassTim 	: TON;
+	fbSafetyBypassTrig 	: R_TRIG;
+	fbEstopTrig			: R_TRIG;
+	bBypassResetEstop 	: BOOL;
+	bHideLtCurtainDisable 	: BOOL;
+	
+	fbPageExit 		: R_TRIG;
+	fbErrorPresent	: R_TRIG;
+	
+	
+	//Used for ignition client count in "updateIgnition"
+	i : INT;
+	nCount : INT;
+	
+	//Ignition Client Handling
+	fbIgnitionClientHandler : FB_ignitionClientHandler;
+	
+	fbFlash : TON;
+	fbWritePeristentData : FB_WritePersistentData;
+	
+	fbRestart : TC_Restart;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[// === SETUP PARAMETERS ===
+
+
+// === CYCLIC CALLS ===
+safetyHandler();
+eflex();
+updateIgnition();
+updateMotors();
+fbErrorPresent(CLK := GVL_machine.bErrorPresent);
+IF fbErrorPresent.Q THEN
+	GVL_machine.bDispErrorIcon := TRUE;
+END_IF
+IF GVL_machine.bErrorPresent THEN
+	errorHandling();
+END_IF
+
+// === Safety Handler Output ===
+bDispSafetyResetMsg := (sSafetyResetMsg <> '');
+fbSafetyBypassTrig(CLK := GVL_machine.bSafetyBypass);
+
+IF bDispSafetyResetMsg AND eSafetyState <> BYPASS THEN
+	nDispSafetyMsgCount := nDispSafetyMsgCount + 1;
+	IF nDispSafetyMsgCount > 50 THEN
+		VisuElems.CurrentVisu := 'safetyResetScreen';
+	END_IF
+ELSE
+	nDispSafetyMsgCount := 0;
+END_IF
+
+IF bClearSafetyScrn OR fbSafetyBypassTrig.Q THEN
+	GVL_machine.bMotorsInitialized := FALSE;
+	bClearSafetyScrn := FALSE;
+	(*CASE GVL_machine.nPageIndex OF 
+		0: VisuElems.CURRENTVISU := 'mainScreen';
+		5: VisuElems.CURRENTVISU := 'manualScreen';
+		10: VisuElems.CURRENTVISU := 'eflexScreen';
+	END_CASE*)
+	
+	GVL_machine.bPageChange := TRUE;
+	VisuElems.CURRENTVISU := 'mainScreen';
+	GVL_machine.nPageIndex := 0;
+END_IF
+
+GVL_devices.fbTable.tempSteadyState();
+
+IF eSafetyState = BYPASS THEN
+	fbSafetyBypassTim(IN := TRUE, PT := T#5M);
+	IF fbSafetyBypassTim.Q THEN 
+		VisuElems.CURRENTVISU := 'safetyDisableWarning';
+	END_IF
+ELSE
+	fbSafetyBypassTim(IN := FALSE);
+END_IF
+
+IF GVL_machine.bMuteSafety AND NOT GVL_machine.bSafetyBypass THEN
+	bHideLtCurtainDisable := TRUE;
+ELSE
+	bHideLtCurtainDisable := FALSE;
+END_IF
+
+// === Ignition Client Handler ====
+fbIgnitionClientHandler(
+	sRequestedID := GVL_ignition.sReqID,
+	sRequestedRole := GVL_ignition.sRole,
+	sRemoveID := GVL_ignition.sRemoveID);
+
+IF fbIgnitionClientHandler.bSessionAddError THEN
+	GVL_ignition.bClientAddError := TRUE;
+ELSIF fbIgnitionClientHandler.bSessionAdded THEN
+	GVL_ignition.sReqID := '';
+	GVL_ignition.sRole := '';
+END_IF
+
+IF fbIgnitionClientHandler.bSessionRemoved THEN
+	GVL_ignition.sRemoveID := '';
+END_IF
+
+// === Page Events ===
+fbPageExit.CLK := GVL_machine.bPageChange;
+
+// === Default Light Status ===
+IF NOT GVL_devices.fbLtCurtains.curtainsMuted OR NOT GVL_machine.bSafetyOk THEN
+	GVL_devices.fbLtBars.redOn();
+ELSE
+	GVL_devices.fbLtBars.greenOn();
+END_IF
+
+IF GVL_machine.bMuteSafety THEN
+	GVL_devices.fbLtCurtains.mute();
+	GVL_devices.fbLtBars.yellowOn();
+ELSE
+	GVL_devices.fbLtCurtains.unmute();
+END_IF
+
+IF GVL_machine.bSafetyBypass THEN
+	GVL_devices.fbLtBars.yellowOn();
+END_IF
+// === CHECK MOTOR INIT AND SAFETY ===
+IF eSafetyState = OK OR eSafetyState = BYPASS THEN
+	IF GVL_machine.bMotorsInitialized THEN
+		//Program Steady State
+		GVL_devices.fbLftWidthMotor.motorIdle := TRUE;
+		GVL_devices.fbRhtWidthMotor.motorIdle := TRUE;
+		GVL_devices.fbLftClampMotor.motorIdle := TRUE;
+		GVL_devices.fbRhtClampMotor.motorIdle := TRUE;
+		GVL_devices.fbLftRotationMotor.motorIdle := TRUE;
+		GVL_devices.fbRhtRotationMotor.motorIdle := TRUE;
+		GVL_devices.fbColumn0Motor.motorIdle := TRUE;
+		GVL_devices.fbColumn1Motor.motorIdle := TRUE;
+		GVL_devices.fbColumn2Motor.motorIdle := TRUE;
+		GVL_devices.fbColumn3Motor.motorIdle := TRUE;
+		
+		
+		
+		IF fbPageExit.Q THEN
+			decoupleMotors();
+		END_IF
+		IF GVL_machine.nPageIndex <> GVL_machine.nPrevPageIndex THEN
+			GVL_machine.bPageChange := TRUE;
+			GVL_machine.nPrevPageIndex := GVL_machine.nPageIndex;
+		END_IF
+		CASE GVL_machine.nPageIndex OF 
+			5:// Run Manual Page
+				manual();
+			10://Run Auto Mode
+				auto();
+		END_CASE
+	ELSE
+		//Initialize Motors
+		motorsInit();
+	END_IF
+ELSE
+	GVL_machine.bMotorsInitialized := FALSE;
+END_IF
+
+// ==== SAVE PERSISTENT VARS === //
+IF GVL_machine.bFlashSaveBtn THEN
+	fbFlash(IN := TRUE,PT := T#1S);
+	IF fbFlash.Q THEN
+		GVL_machine.bSaveBtnFlashOn := NOT GVL_machine.bSaveBtnFlashOn;
+		fbFlash(IN := FALSE);
+	END_IF
+END_IF
+
+IF GVL_machine.bSaveBtn THEN
+	fbWritePeristentData(
+	NETID:= , 
+	PORT:= 851, 
+	START:= TRUE, 
+	TMOUT:= T#3S, 
+	MODE:= SPDM_2PASS, 
+	BUSY=> , 
+	ERR=> , 
+	ERRID=> );
+	GVL_machine.bSaveBtn := FALSE;
+	GVL_machine.bFlashSaveBtn := FALSE;
+END_IF
+
+// === TWINCAT RESET === //
+IF GVL_machine.bResetMachine THEN
+	fbRestart(
+	NETID:= , 
+	RESTART:= TRUE, 
+	TMOUT:= T#3S, 
+	BUSY=> , 
+	ERR=> , 
+	ERRID=> );
+END_IF]]></ST>
+    </Implementation>
+    <Method Name="decoupleMotors" Id="{4a343067-b8ca-4936-b471-574981936029}">
+      <Declaration><![CDATA[METHOD decoupleMotors : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[GVL_devices.fbColumn0Motor.decoupleAxis();
+GVL_devices.fbColumn1Motor.decoupleAxis();
+GVL_devices.fbColumn2Motor.decoupleAxis();
+GVL_devices.fbColumn3Motor.decoupleAxis();
+GVL_devices.fbLftClampMotor.decoupleAxis();
+GVL_devices.fbRhtClampMotor.decoupleAxis(); 
+GVL_devices.fbLftWidthMotor.decoupleAxis();
+GVL_devices.fbRhtWidthMotor.decoupleAxis();
+GVL_devices.fbLftRotationMotor.decoupleAxis();
+GVL_devices.fbRhtRotationMotor.decoupleAxis();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="safetyHandler" Id="{3ebe781b-aeb1-49c4-8f50-90f8893729d4}">
+      <Declaration><![CDATA[METHOD safetyHandler : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[CASE eSafetyState OF 
+	INIT:
+		GVL_machine.bRunSafety := FALSE;
+		IF GVL_machine.bOtherErr = FALSE THEN
+			eSafetyState := PREOP;
+		END_IF
+		IF GVL_machine.bSafetyErrorAck THEN
+			GVL_machine.bSafetyErrorAck := FALSE;
+			eSafetyState := PREOP;
+		END_IF
+	PREOP: 
+		GVL_machine.bRunSafety := TRUE;
+		IF GVL_machine.bOtherErr = TRUE THEN
+			GVL_machine.bSafetyErrorAck := TRUE;
+			eSafetyState := INIT;
+		END_IF
+		IF GVL_machine.bInRun AND GVL_machine.bInRun THEN
+			GVL_devices.fbLtCurtains.resetLftCurtainFB := TRUE;
+			GVL_devices.fbLtCurtains.resetRhtCurtainFB := TRUE;
+			GVL_devices.fbEstop.resetEstopFB := TRUE;
+			//bSafetyInit := TRUE;
+			//eSafetyState := OK;
+		END_IF
+		IF GVL_devices.fbEstop.nEstopFbState = 6 AND GVL_devices.fbLtCurtains.nLftCurtainFbState= 6 AND GVL_devices.fbLtCurtains.nRhtCurtainFbState = 6 THEN
+			GVL_devices.fbLtCurtains.resetLftCurtainFB := FALSE;
+			GVL_devices.fbLtCurtains.resetRhtCurtainFB := FALSE;
+			GVL_devices.fbEstop.resetEstopFB := FALSE;
+			bSafetyInit := TRUE;
+			eSafetyState := OK;
+		END_IF
+	OK:
+		//pass
+	FAULT: 
+		IF GVL_machine.bFbErr THEN
+			sSafetyResetMsg := 'There is a Function Block Error in the Safety Program';
+		ELSIF GVL_machine.bComErr THEN
+			sSafetyResetMsg := 'There is a Commnunication Error in the Safety Program';
+		ELSE
+			sSafetyResetMsg := 'There is a Other Error in the Safety Program';
+		END_IF
+		IF bSafetyResetBtn THEN
+			eSafetyState := RESETTING;
+			bSafetyFaultAck := TRUE;
+		END_IF
+	WAITRESET:
+		GVL_machine.bSafetyErrorAck := FALSE;
+		bSafetyFaultAck := FALSE;
+	RESETTING:
+		GVL_machine.bSafetyErrorAck := TRUE;
+		eSafetyState := WAITRESET;
+	BYPASS:
+		//pass
+	LOCKOUT:
+		//pass 
+END_CASE
+
+IF bSafetyInit THEN
+	fbEstopTrig(CLK := NOT GVL_devices.fbEstop.bEstopSigOk);
+	IF fbEstopTrig.Q THEN
+		GVL_machine.bSafetyBypass := FALSE;
+	END_IF
+	IF GVL_machine.bSafetyBypass AND GVL_devices.fbEstop.bEstopSigOk THEN
+		eSafetyState := BYPASS;
+	ELSE
+		IF GVL_machine.bFbErr OR GVL_machine.bComErr OR GVL_machine.bOtherErr THEN
+			IF NOT bSafetyFaultAck THEN
+				eSafetyState := FAULT;
+			END_IF
+		END_IF
+		
+		IF GVL_machine.bFbRun AND GVL_machine.bInRun THEN
+			IF GVL_devices.fbEstop.nEstopFbState = 1 AND GVL_devices.fbLtCurtains.nLftCurtainFbState = 1 AND GVL_devices.fbLtCurtains.nRhtCurtainFbState = 1 THEN
+				eSafetyState := OK;
+				sSafetyResetMsg := '';
+			END_IF	
+		END_IF
+		
+		IF NOT GVL_machine.bSafetyOk THEN
+			//A devices was triggered
+			eSafetyState := ENGAGED;
+			IF NOT GVL_devices.fbEstop.bEstopSigOk THEN
+				sSafetyResetMsg := 'Estop: Remove Estop and Reset';
+				IF bSafetyResetBtn OR bBypassResetEstop THEN
+					CASE GVL_devices.fbEstop.nEstopFbState OF 
+						2,3: // Triggered
+							GVL_devices.fbEstop.resetEstopFB := TRUE;
+						6: // Reset
+							GVL_devices.fbEstop.resetEstopFB := FALSE;
+							bSafetyResetBtn := FALSE;
+							bBypassResetEstop := FALSE;
+							sSafetyResetMsg := '';
+							bClearSafetyScrn := TRUE;
+					END_CASE
+				END_IF
+			ELSIF NOT GVL_devices.fbLtCurtains.bLftCurtainSigOk THEN
+				sSafetyResetMsg := 'Left Curtain: Remove Obstruction and Reset';
+				IF bSafetyResetBtn THEN
+					CASE GVL_devices.fbLtCurtains.nLftCurtainFbState OF
+						2,3:// Triggered
+							GVL_devices.fbLtCurtains.resetLftCurtainFB := TRUE;
+						6:// Reset
+							GVL_devices.fbLtCurtains.resetLftCurtainFB := FALSE;
+							bSafetyResetBtn := FALSE;
+							sSafetyResetMsg := '';
+							bClearSafetyScrn := TRUE;
+					END_CASE
+				END_IF
+			ELSIF NOT GVL_devices.fbLtCurtains.bRhtCurtainSigOk THEN
+				sSafetyResetMsg := 'Right Curtain: Remove Obstruction and Reset';
+				IF bSafetyResetBtn THEN
+					CASE GVL_devices.fbLtCurtains.nRhtCurtainFbState OF
+						2,3:// Triggered
+							GVL_devices.fbLtCurtains.resetRhtCurtainFB := TRUE;
+						6:// Reset
+							GVL_devices.fbLtCurtains.resetRhtCurtainFB := FALSE;
+							bSafetyResetBtn := FALSE;
+							sSafetyResetMsg := '';
+							bClearSafetyScrn := TRUE;
+					END_CASE
+				END_IF
+			END_IF
+		END_IF
+	END_IF
+END_IF
+
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="updateIgnition" Id="{8a20ce10-1024-4f97-9567-83587a59ded0}">
+      <Declaration><![CDATA[METHOD updateIgnition : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[GVL_ignition.fClampHeight := (GVL_devices.fbLftClampMotor.distance/25.4);
+GVL_ignition.fColumnHeight := -(GVL_devices.fbColumn0Motor.distance/25.4);
+GVL_ignition.fTableHeight := GVL_devices.fbtable.tableHeight;
+GVL_ignition.fWidthDistance := (GVL_devices.fbLftWidthMotor.distance/25.4);
+GVL_ignition.fRotationDistance := GVL_devices.fbRhtRotationMotor.distance;
+
+nCount := 0;
+FOR i:=0 TO 9 DO
+	IF GVL_ignition.aIgnitionClients[i].bActive THEN
+		nCount := nCount + 1; 
+	END_IF
+END_FOR
+GVL_ignition.nNumClients := nCount;]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="MAIN">
+      <LineId Id="3" Count="166" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="MAIN.decoupleMotors">
+      <LineId Id="3" Count="8" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="MAIN.safetyHandler">
+      <LineId Id="3" Count="124" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="MAIN.updateIgnition">
+      <LineId Id="3" Count="11" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.13">
+  <DUT Name="E_safetyState" Id="{532cf96f-b210-4deb-90e6-94093b8598ff}">
+    <Declaration><![CDATA[TYPE E_safetyState :
+(
+	INIT := 0,
+	PREOP,
+	OK,
+	FAULT,
+	WAITRESET,
+	RESETTING,
+	BYPASS,
+	LOCKOUT,
+	RESETCURTAINS,
+	RESETESTOP,
+	ENGAGED
+)DINT;
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

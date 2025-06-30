@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.13">
+  <POU Name="F_checkCoupledMovement" Id="{ba4adea6-19bb-4543-a538-41e41a15ed87}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION F_checkCoupledMovement : INT //0- No movement, 1-axis1 is moving, 2-axis2 is moving, 3- axis1 and axis2 are moving. 
+VAR_INPUT
+	axis1 : AXIS_REF;
+	axis2 : AXIS_REF; 
+END_VAR
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[F_checkCoupledMovement := 0;
+
+IF axis1.Status.Moving AND NOT axis2.Status.Moving THEN
+	F_checkCoupledMovement := 1;
+ELSIF axis1.Status.Moving AND NOT axis2.Status.Moving THEN
+	F_checkCoupledMovement := 2;
+ELSIF axis1.Status.Moving AND axis2.Status.Moving THEN
+	F_checkCoupledMovement := 3;
+END_IF]]></ST>
+    </Implementation>
+    <LineIds Name="F_checkCoupledMovement">
+      <LineId Id="3" Count="7" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.13">
+  <DUT Name="E_teknicMotorMethods" Id="{8bf6a0b8-8bb0-425b-8f50-c01afd941a98}">
+    <Declaration><![CDATA[TYPE E_teknicMotorMethods :
+(
+	brakeOff := 0,
+	brakeOn,
+	checkOutputs,
+	coupleToAxis,
+	decoupleAxis,
+	disable,
+	enable,
+	estop,
+	homeToSensor,
+	homeToTorque,
+	motorInit,
+	moveTo,
+	moveToJog,
+	moveToSensor,
+	moveToTorque,
+	readMotorParameter,
+	removeStop,
+	motorReset,
+	resetMotorCommands,
+	setError,
+	stop,
+	writeMotorParameter
+);
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

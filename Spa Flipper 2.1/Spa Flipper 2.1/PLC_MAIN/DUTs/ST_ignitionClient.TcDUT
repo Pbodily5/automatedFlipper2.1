@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.13">
+  <DUT Name="ST_ignitionClient" Id="{336055de-3d52-4161-a2b1-4e61b4baec34}">
+    <Declaration><![CDATA[TYPE ST_ignitionClient :
+STRUCT
+	sSessionId : STRING;
+	sRole : STRING;
+	bActive : BOOL;
+	bHasControl : BOOL;
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

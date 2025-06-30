@@ -1,0 +1,636 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.13">
+  <POU Name="manual" Id="{1799650c-bf49-426f-9c07-03bbde2eec39}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM manual
+VAR
+	aMoveFinishRotation			: ARRAY[0..10] OF BOOL; // Can track the completion of up to 10 simultaneous moves
+	aMoveFinishColumn			: ARRAY[0..10] OF BOOL; // Can track the completion of up to 10 simultaneous moves
+	aMoveFinishClamping			: ARRAY[0..10] OF BOOL; // Can track the completion of up to 10 simultaneous moves
+	aMoveFinishWidth			: ARRAY[0..10] OF BOOL; // Can track the completion of up to 10 simultaneous moves
+	
+	eRotationState 	: E_manualState;
+	eColumnState 	: E_manualState;
+	eClampingState	: E_manualState;
+	eWidthState		: E_manualState;
+	eTableState		: E_manualState;
+	
+	fbCoupledRotation : TON;
+	fbCoupledColumn : TON;
+	fbCoupledClamping : TON;
+	fbCoupledWidth : TON;
+	tUncoupledTimeout : TIME := T#500MS;
+	
+	bRotationStopped 	: BOOL;
+	bColumnStopped 		: BOOL;
+	bClampingStopped 	: BOOL;
+	bWidthStopped 		: BOOL;
+	bTableStopped		: BOOL;
+	
+	//HMI 
+	bHideRotationBtns 	: BOOL;
+	bHideColumnBtns 	: BOOL;
+	bHideClampingBtns	: BOOL;
+	bHideWidthBtns		: BOOL;
+	bHideTableBtns		: BOOL;
+	
+	bRotationMoveStatus : BOOL; // True- error is present
+	bColumnMoveStatus 	: BOOL;
+	bClampingMoveStatus : BOOL;
+	bWidthMoveStatus 	: BOOL;
+	bTableMoveStatus 	: BOOL;
+	writeParameter		: MC_AxisParameter;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[///////////////////////// PAGE CHANGE TO MANUAL //////////////////////////////
+IF GVL_machine.bPageChange THEN 
+	eRotationState 	:= STEADYSTATE;
+	eColumnState 	:= STEADYSTATE;
+	eClampingState 	:= STEADYSTATE;
+	eWidthState 	:= STEADYSTATE;
+	eTableState		:= STEADYSTATE;
+	GVL_machine.bPageChange	:= FALSE;
+END_IF
+
+fbCoupledRotation(PT := tUncoupledTimeout);
+fbCoupledColumn(PT := tUncoupledTimeout); 
+fbCoupledClamping (PT := tUncoupledTimeout);
+fbCoupledWidth (PT := tUncoupledTimeout);
+
+
+IF GVL_machine.bMuteSafety OR GVL_machine.bSafetyBypass THEN
+	//pass -default is yellow
+ELSIF bRotationStopped AND bColumnStopped AND bClampingStopped AND bWidthStopped AND bTableStopped THEN
+	GVL_devices.fbLtCurtains.mute();
+	IF GVL_devices.fbLtCurtains.curtainsMuted THEN
+		GVL_devices.fbLtBars.greenOn();
+	END_IF
+ELSIF NOT bRotationStopped OR NOT bColumnStopped OR NOT bClampingStopped OR NOT bWidthStopped OR NOT bTableStopped THEN
+	GVL_devices.fbLtBars.redOn();
+END_IF
+
+
+
+
+IF NOT GVL_machine.bSafetyOk AND NOT GVL_machine.bSafetyBypass THEN 
+	GVL_devices.fbLtBars.redOn();
+	GVL_devices.fbColumn0Motor.estop();
+	GVL_devices.fbColumn1Motor.estop();
+	GVL_devices.fbColumn2Motor.estop();
+	GVL_devices.fbColumn3Motor.estop();
+	GVL_devices.fbLftClampMotor.estop();
+	GVL_devices.fbRhtClampMotor.estop();
+	GVL_devices.fbLftRotationMotor.estop();
+	GVL_devices.fbRhtRotationMotor.estop();
+	GVL_devices.fbLftWidthMotor.estop();
+	GVL_devices.fbRhtWidthMotor.estop();
+	GVL_devices.fbTable.estop();
+	eRotationState 	:= STEADYSTATE;
+	eColumnState 	:= STEADYSTATE;
+	eClampingState 	:= STEADYSTATE;
+	eWidthState 	:= STEADYSTATE;
+	
+ELSE // No Estop or Light Curtain 
+	(*				Rotation Motion 			*)
+		bRotationStopped := FALSE;
+		bHideRotationBtns := TRUE;
+		CASE eRotationState OF 
+			STEADYSTATE:
+				bHideRotationBtns := FALSE;
+				bRotationStopped := TRUE;
+				fbCoupledRotation.IN := FALSE;
+				bRotationMoveStatus := FALSE;
+				F_checkMoveFinish(aMoveFinishRotation,1,TRUE);
+				
+			MOVEAWAYDIRECTION:
+				bHideRotationBtns := FALSE;
+				CASE GVL_devices.fbLftRotationMotor.moveToJog(0) OF 
+					1: // Good
+					13://Error
+						bRotationMoveStatus := TRUE; 
+						GVL_machine.motorErrorList := LFTROTATION;
+						GVL_machine.bErrorPresent := TRUE;
+				END_CASE
+				CASE GVL_devices.fbRhtRotationMotor.moveToJog(1) OF
+					1: // Good
+					13://Error
+						bRotationMoveStatus := TRUE;
+						GVL_machine.motorErrorList := RHTROTATION;
+						GVL_machine.bErrorPresent := TRUE; 
+				END_CASE
+				CASE F_checkCoupledMovement(GVL_devices.fbLftRotationMotor.fbMotor,GVL_devices.fbRhtRotationMotor.fbMotor) OF 
+						0: fbCoupledRotation.IN := FALSE;
+						1,2: fbCoupledRotation.IN := TRUE;
+						3: fbCoupledRotation.IN := FALSE;
+				END_CASE
+				
+			MOVEHOMEDIRECTION:
+				bHideRotationBtns := FALSE;
+				CASE GVL_devices.fbLftRotationMotor.moveToJog(1) OF
+					1: // Good
+					13://Error
+						bRotationMoveStatus := TRUE;
+						GVL_machine.motorErrorList := LFTROTATION;
+						GVL_machine.bErrorPresent := TRUE; 
+				END_CASE
+				CASE GVL_devices.fbRhtRotationMotor.moveToJog(0) OF
+					1: // Good
+					13://Error
+						bRotationMoveStatus := TRUE; 
+						GVL_machine.motorErrorList := RHTROTATION;
+						GVL_machine.bErrorPresent := TRUE; 
+				END_CASE
+				CASE F_checkCoupledMovement(GVL_devices.fbLftRotationMotor.fbMotor,GVL_devices.fbRhtRotationMotor.fbMotor) OF 
+						0: fbCoupledRotation.IN := FALSE;
+						1,2: fbCoupledRotation.IN := TRUE;
+						3: fbCoupledRotation.IN := FALSE;
+				END_CASE
+				
+			RESET:
+				IF NOT aMoveFinishRotation[0] THEN
+					CASE GVL_devices.fbLftRotationMotor.reset() OF
+						1:// Done
+							aMoveFinishRotation[0] := TRUE;
+						13:// Error
+							bRotationMoveStatus := TRUE;
+							GVL_machine.motorErrorList := LFTROTATION;
+							GVL_machine.bErrorPresent := TRUE;
+					END_CASE
+				END_IF
+				IF NOT aMoveFinishRotation[1] THEN
+					CASE GVL_devices.fbRhtRotationMotor.reset() OF
+						1:// Done
+							aMoveFinishRotation[1] := TRUE;
+						13:// Error
+							bRotationMoveStatus := TRUE;
+							GVL_machine.motorErrorList := RHTROTATION;
+							GVL_machine.bErrorPresent := TRUE; 
+						
+					END_CASE 
+				END_IF
+				IF F_checkMoveFinish(aMoveFinishRotation,2,FALSE) THEN
+					bRotationMoveStatus := FALSE;
+					eRotationState := STEADYSTATE;
+				END_IF
+				
+			HOMING:
+				IF GVL_devices.fbLftRotationMotor.fbMotor.Status.Homed AND GVL_devices.fbRhtRotationMotor.fbMotor.Status.Homed THEN
+					CASE F_checkCoupledMovement(GVL_devices.fbLftRotationMotor.fbMotor,GVL_devices.fbRhtRotationMotor.fbMotor) OF 
+						0: fbCoupledRotation.IN := FALSE;
+						1,2: fbCoupledRotation.IN := TRUE;
+						3: fbCoupledRotation.IN := FALSE;
+					END_CASE
+				END_IF
+				IF NOT aMoveFinishRotation[0] THEN
+					CASE GVL_devices.fbLftRotationMotor.homeToTorque() OF 
+						1:// Done
+							aMoveFinishRotation[0] := TRUE;
+						13:// Error
+							GVL_machine.motorErrorList := LFTROTATION;
+							GVL_machine.bErrorPresent := TRUE;
+					END_CASE
+				END_IF
+				IF NOT aMoveFinishRotation[1] THEN
+					CASE GVL_devices.fbRhtRotationMotor.homeToTorque() OF 
+						1:// Done
+							aMoveFinishRotation[1] := TRUE;
+						13:// Error
+							GVL_machine.motorErrorList := RHTROTATION;
+							GVL_machine.bErrorPresent := TRUE; 
+					END_CASE
+				END_IF
+				IF F_checkMoveFinish(aMoveFinishRotation,2,FALSE) THEN
+					eRotationState := STEADYSTATE;
+				END_IF
+		END_CASE
+		
+		//Initial Homing not done or Components not moving together
+		IF NOT GVL_devices.fbLftRotationMotor.fbMotor.Status.Homed OR NOT GVL_devices.fbRhtRotationMotor.fbMotor.Status.Homed OR fbCoupledRotation.Q OR bRotationMoveStatus THEN	
+			GVL_devices.fbLftRotationMotor.estop();
+			GVL_devices.fbRhtRotationMotor.estop();
+			bHideRotationBtns := TRUE;
+		END_IF
+		
+	(*				Column Motion 				*)
+		bColumnStopped := FALSE;
+		bHideColumnBtns := TRUE;
+		CASE eColumnState OF 
+			STEADYSTATE:
+				bHideColumnBtns := FALSE;
+				bColumnStopped := TRUE;
+				fbCoupledColumn.IN := FALSE;
+				bColumnMoveStatus := FALSE;
+				F_checkMoveFinish(aMoveFinishColumn,1,TRUE);
+				
+			MOVEAWAYDIRECTION:
+				bHideColumnBtns := FALSE;
+				IF GVL_devices.fbColumn1Motor.fbMotor.Status.Coupled AND GVL_devices.fbColumn2Motor.fbMotor.Status.Coupled AND GVL_devices.fbColumn3Motor.fbMotor.Status.Coupled THEN
+					GVL_devices.fbColumn0Motor.motorIdle := FALSE;
+					GVL_devices.fbColumn1Motor.motorIdle := FALSE;
+					GVL_devices.fbColumn2Motor.motorIdle := FALSE;
+					GVL_devices.fbColumn3Motor.motorIdle := FALSE;
+					CASE GVL_devices.fbColumn0Motor.moveToJog(0) OF
+						1:// Good
+						13:// Error
+							bColumnMoveStatus := TRUE;
+							GVL_machine.motorErrorList := COLUMN0;
+							GVL_machine.bErrorPresent := TRUE; 
+					END_CASE
+				ELSE // Couple Motors
+					GVL_devices.fbColumn1Motor.coupleToAxis(GVL_devices.fbColumn0Motor.fbMotor);
+					GVL_devices.fbColumn2Motor.coupleToAxis(GVL_devices.fbColumn0Motor.fbMotor);
+					GVL_devices.fbColumn3Motor.coupleToAxis(GVL_devices.fbColumn0Motor.fbMotor);
+				END_IF
+				
+			MOVEHOMEDIRECTION:
+				bHideColumnBtns := FALSE;
+				
+				
+				IF GVL_devices.fbColumn1Motor.fbMotor.Status.Coupled AND GVL_devices.fbColumn2Motor.fbMotor.Status.Coupled AND GVL_devices.fbColumn3Motor.fbMotor.Status.Coupled THEN
+					GVL_devices.fbColumn0Motor.motorIdle := FALSE;
+					GVL_devices.fbColumn1Motor.motorIdle := FALSE;
+					GVL_devices.fbColumn2Motor.motorIdle := FALSE;
+					GVL_devices.fbColumn3Motor.motorIdle := FALSE;
+					CASE GVL_devices.fbColumn0Motor.moveToJog(1) OF 
+						1:// Good
+						13:// Error
+							bColumnMoveStatus := TRUE;
+							GVL_machine.motorErrorList := COLUMN0;
+							GVL_machine.bErrorPresent := TRUE; 
+					END_CASE
+				ELSE // Couple Motors
+					GVL_devices.fbColumn1Motor.coupleToAxis(GVL_devices.fbColumn0Motor.fbMotor);
+					GVL_devices.fbColumn2Motor.coupleToAxis(GVL_devices.fbColumn0Motor.fbMotor);
+					GVL_devices.fbColumn3Motor.coupleToAxis(GVL_devices.fbColumn0Motor.fbMotor);
+				END_IF
+			RESET:
+				IF NOT aMoveFinishColumn[0] THEN
+					CASE GVL_devices.fbColumn0Motor.reset() OF 
+						1:// Done
+							aMoveFinishColumn[0] := TRUE;
+						13:// Error
+							bColumnMoveStatus := TRUE;
+							GVL_machine.motorErrorList := COLUMN0;
+							GVL_machine.bErrorPresent := TRUE; 
+					END_CASE
+				END_IF
+				IF NOT aMoveFinishColumn[1] THEN
+					CASE GVL_devices.fbColumn1Motor.reset() OF 
+						1:// Done
+							aMoveFinishColumn[1] := TRUE;
+						13:// Error
+							bColumnMoveStatus := TRUE;
+							GVL_machine.motorErrorList := COLUMN1;
+							GVL_machine.bErrorPresent := TRUE; 
+					END_CASE
+				END_IF
+				IF NOT aMoveFinishColumn[2] THEN
+					CASE GVL_devices.fbColumn2Motor.reset() OF 
+						1:// Done
+							aMoveFinishColumn[2] := TRUE;
+						13:// Error
+							bColumnMoveStatus := TRUE;
+							GVL_machine.motorErrorList := COLUMN2;
+							GVL_machine.bErrorPresent := TRUE; 
+					END_CASE
+				END_IF
+				IF NOT aMoveFinishColumn[3] THEN
+					CASE GVL_devices.fbColumn3Motor.reset() OF 
+						1:// Done
+							aMoveFinishColumn[3] := TRUE;
+						13:// Error
+							bColumnMoveStatus := TRUE;
+							GVL_machine.motorErrorList := COLUMN3;
+							GVL_machine.bErrorPresent := TRUE; 
+					END_CASE
+				END_IF
+				
+				IF F_checkMoveFinish(aMoveFinishColumn,4,FALSE) THEN
+					eColumnState := STEADYSTATE;
+				END_IF
+				
+			HOMING:
+				IF GVL_devices.fbColumn0Motor.fbMotor.Status.Homed AND GVL_devices.fbColumn2Motor.fbMotor.Status.Homed THEN
+					writeParameter := AxisMaxSoftPosLimit;
+					IF NOT aMoveFinishColumn[0] THEN
+						CASE GVL_devices.fbColumn2Motor.writeRealParameter(writeParameter,1) OF 
+							1: //Done
+								aMoveFinishColumn[0] := TRUE;
+							13:// Error
+								bColumnMoveStatus := TRUE;
+								GVL_machine.motorErrorList := COLUMN2;
+								GVL_machine.bErrorPresent := TRUE; 
+						END_CASE
+					END_IF
+					IF aMoveFinishColumn[0] AND NOT aMoveFinishColumn[1] THEN
+						IF GVL_devices.fbColumn1Motor.fbMotor.Status.Coupled AND GVL_devices.fbColumn2Motor.fbMotor.Status.Coupled AND GVL_devices.fbColumn3Motor.fbMotor.Status.Coupled THEN
+							GVL_devices.fbColumn0Motor.motorIdle := FALSE;
+							GVL_devices.fbColumn1Motor.motorIdle := FALSE;
+							GVL_devices.fbColumn2Motor.motorIdle := FALSE;
+							GVL_devices.fbColumn3Motor.motorIdle := FALSE;
+							CASE GVL_devices.fbColumn0Motor.homeToSensor(0) OF 
+								1: // Done
+									aMoveFinishColumn[1] := TRUE;
+								13:// Error
+									bColumnMoveStatus := TRUE;
+									GVL_machine.motorErrorList := COLUMN0;
+									GVL_machine.bErrorPresent := TRUE; 
+							END_CASE
+						ELSE // Couple Motors to Column0
+							GVL_devices.fbColumn1Motor.coupleToAxis(GVL_devices.fbColumn0Motor.fbMotor);
+							GVL_devices.fbColumn2Motor.coupleToAxis(GVL_devices.fbColumn0Motor.fbMotor);
+							GVL_devices.fbColumn3Motor.coupleToAxis(GVL_devices.fbColumn0Motor.fbMotor);
+						END_IF
+					END_IF
+					IF aMoveFinishColumn[1] AND NOT aMoveFinishColumn[2] THEN
+						CASE GVL_devices.fbColumn2Motor.writeRealParameter(writeParameter,0) OF 
+							1:// Done
+								aMoveFinishColumn[2] := TRUE;
+							13://Error
+								bColumnMoveStatus := TRUE;
+								GVL_machine.motorErrorList := COLUMN2;
+								GVL_machine.bErrorPresent := TRUE; 
+						END_CASE
+					END_IF
+					IF F_checkMoveFinish(aMoveFinishColumn,3,FALSE) THEN
+						eColumnState := STEADYSTATE;
+					END_IF
+				ELSE
+					IF NOT aMoveFinishColumn[0] THEN
+						IF GVL_devices.fbColumn1Motor.fbMotor.Status.Coupled THEN
+							GVL_devices.fbColumn0Motor.motorIdle := FALSE;
+							GVL_devices.fbColumn1Motor.motorIdle := FALSE;
+							CASE GVL_devices.fbColumn0Motor.homeToSensor(0) OF 
+								1:// Done
+									aMoveFinishColumn[0] := TRUE;
+								13:// Error
+									bColumnMoveStatus := TRUE;
+									GVL_machine.motorErrorList := COLUMN0;
+									GVL_machine.bErrorPresent := TRUE; 
+							END_CASE
+						ELSE
+							GVL_devices.fbColumn1Motor.coupleToAxis(GVL_devices.fbColumn0Motor.fbMotor);
+						END_IF
+					END_IF
+					
+					IF NOT aMoveFinishColumn[1] THEN
+						IF GVL_devices.fbColumn3Motor.fbMotor.Status.Coupled THEN
+							GVL_devices.fbColumn2Motor.motorIdle := FALSE;
+							GVL_devices.fbColumn3Motor.motorIdle := FALSE;
+							CASE GVL_devices.fbColumn2Motor.homeToSensor(0) OF 
+								1:// Done
+									aMoveFinishColumn[1] := TRUE;
+								13:// Error
+									bColumnMoveStatus := TRUE;
+									GVL_machine.motorErrorList := COLUMN2;
+									GVL_machine.bErrorPresent := TRUE; 
+							END_CASE
+						ELSE
+							GVL_devices.fbColumn3Motor.coupleToAxis(GVL_devices.fbColumn2Motor.fbMotor);
+						END_IF
+					END_IF
+					
+					IF F_checkMoveFinish(aMoveFinishColumn,2,FALSE) THEN
+						eColumnState := STEADYSTATE;
+					END_IF
+					
+				END_IF
+		END_CASE
+		
+		//Initial Homing not done or Components not moving together
+		IF NOT GVL_devices.fbColumn0Motor.fbMotor.Status.Homed OR NOT GVL_devices.fbColumn2Motor.fbMotor.Status.Homed OR fbCoupledColumn.Q THEN	
+			bHideColumnBtns := TRUE;
+		END_IF
+		
+	(* 				Clamping Motion				*)
+		bClampingStopped := FALSE;
+		bHideClampingBtns := TRUE;
+		CASE eClampingState OF 
+			STEADYSTATE:
+				bHideClampingBtns := FALSE;
+			 	bClampingStopped := TRUE;
+				bClampingMoveStatus := FALSE;
+				F_checkMoveFinish(aMoveFinishClamping,1,TRUE);
+				
+			MOVEAWAYDIRECTION:
+				bHideClampingBtns := FALSE;
+			 //	GVL_devices.fbLftClampMotor.motorIdle:= FALSE;
+			//	GVL_devices.fbRhtClampMotor.motorIdle:= FALSE;
+				CASE GVL_devices.fbLftClampMotor.moveToJog(0) OF 
+					1:// Good
+					13:// Error
+						bClampingMoveStatus := TRUE;
+						GVL_machine.motorErrorList := LFTCLAMP;
+						GVL_machine.bErrorPresent := TRUE; 
+				END_CASE
+				CASE GVL_devices.fbRhtClampMotor.moveToJog(1) OF
+					1:// Good
+					13:// Error
+						bClampingMoveStatus := TRUE;
+						GVL_machine.motorErrorList := RHTCLAMP;
+						GVL_machine.bErrorPresent := TRUE; 
+				END_CASE
+				
+			MOVEHOMEDIRECTION: 
+				bHideClampingBtns := FALSE;
+				//GVL_devices.fbLftClampMotor.motorIdle:= FALSE;
+				//GVL_devices.fbRhtClampMotor.motorIdle:= FALSE;
+				CASE GVL_devices.fbLftClampMotor.moveToJog(1) OF 
+					1://Good
+					13:// Error
+						bClampingMoveStatus := TRUE;
+						GVL_machine.motorErrorList := LFTCLAMP;
+						GVL_machine.bErrorPresent := TRUE; 
+				END_CASE
+				CASE GVL_devices.fbRhtClampMotor.moveToJog(0) OF
+					1:// Good
+					13:// Error
+						bClampingMoveStatus := TRUE;
+						GVL_machine.motorErrorList := RHTCLAMP;
+						GVL_machine.bErrorPresent := TRUE; 
+				END_CASE
+			
+			RESET:
+				IF NOT aMoveFinishClamping[0] THEN
+					CASE GVL_devices.fbLftClampMotor.reset() OF
+						1:// Done
+							aMoveFinishClamping[0] := TRUE;
+						13:// Error
+							bClampingMoveStatus := TRUE;
+							GVL_machine.motorErrorList := LFTCLAMP;
+							GVL_machine.bErrorPresent := TRUE; 
+					END_CASE
+				END_IF
+				IF NOT aMoveFinishClamping[1] THEN
+					CASE GVL_devices.fbRhtClampMotor.reset() OF 
+						1:// Done
+							aMoveFinishClamping[1] := TRUE;
+						13:// Error
+							bClampingMoveStatus := TRUE;
+							GVL_machine.motorErrorList := RHTCLAMP;
+							GVL_machine.bErrorPresent := TRUE; 
+					END_CASE
+				END_IF
+				IF F_checkMoveFinish(aMoveFinishClamping,2,FALSE) THEN
+					eClampingState := STEADYSTATE;
+				END_IF
+				
+			HOMING:
+				IF NOT aMoveFinishClamping[0] THEN
+					CASE GVL_devices.fbLftClampMotor.homeToTorque() OF 
+						1:// Done
+							aMoveFinishClamping[0] := TRUE;
+						13:// Error
+							bClampingMoveStatus := TRUE;
+							GVL_machine.motorErrorList := LFTCLAMP;
+							GVL_machine.bErrorPresent := TRUE; 
+					END_CASE
+				END_IF
+				IF NOT aMoveFinishClamping[1] THEN
+					CASE GVL_devices.fbRhtClampMotor.homeToTorque() OF 
+						1:// Done
+							aMoveFinishClamping[1] := TRUE;
+						13:// Error
+							bClampingMoveStatus := TRUE;
+							GVL_machine.motorErrorList := RHTCLAMP;
+							GVL_machine.bErrorPresent := TRUE; 
+					END_CASE
+				END_IF
+				IF F_checkMoveFinish(aMoveFinishClamping,2,FALSE) THEN
+					eClampingState := STEADYSTATE;
+				END_IF
+		END_CASE
+		//Initial Homing not done or Components not moving together
+		IF NOT GVL_devices.fbLftClampMotor.fbMotor.Status.Homed OR NOT GVL_devices.fbRhtClampMotor.fbMotor.Status.Homed OR fbCoupledClamping.Q THEN	
+			bHideClampingBtns := TRUE;
+		END_IF
+		
+	(*				Width Motion 				*)
+		bWidthStopped := FALSE;
+		bHideWidthBtns := TRUE;
+		CASE eWidthState OF 
+			STEADYSTATE : 
+				bHideWidthBtns := FALSE;
+			 	bWidthStopped := TRUE;
+				F_checkMoveFinish(aMoveFinishWidth,1,TRUE);
+				
+			MOVEAWAYDIRECTION:
+				bHideWidthBtns := FALSE;
+				//GVL_devices.fbLftWidthMotor.motorIdle:= FALSE;
+				//GVL_devices.fbRhtWidthMotor.motorIdle:= FALSE;
+				CASE GVL_devices.fbLftWidthMotor.moveToJog(1) OF 
+					1: //Good
+					13:// Error 
+						bWidthMoveStatus := TRUE;
+						GVL_machine.motorErrorList := LFTWIDTH;
+						GVL_machine.bErrorPresent := TRUE; 
+				END_CASE
+				CASE GVL_devices.fbRhtWidthMotor.moveToJog(1) OF 
+					1: //Good
+					13:// Error 
+						bWidthMoveStatus := TRUE;
+						GVL_machine.motorErrorList := RHTWIDTH;
+						GVL_machine.bErrorPresent := TRUE; 
+				END_CASE
+				
+			MOVEHOMEDIRECTION:
+				bHideWidthBtns := FALSE;
+				//GVL_devices.fbLftWidthMotor.motorIdle:= FALSE;
+				//GVL_devices.fbRhtWidthMotor.motorIdle:= FALSE;
+				CASE GVL_devices.fbLftWidthMotor.moveToJog(0) OF
+					1: //Good
+					13:// Error 
+						bWidthMoveStatus := TRUE;
+						GVL_machine.motorErrorList := LFTWIDTH;
+						GVL_machine.bErrorPresent := TRUE; 
+				END_CASE
+				CASE GVL_devices.fbRhtWidthMotor.moveToJog(0) OF
+					1: //Good
+					13:// Error 
+						bWidthMoveStatus := TRUE;
+						GVL_machine.motorErrorList := RHTWIDTH;
+						GVL_machine.bErrorPresent := TRUE; 
+				END_CASE
+				
+			RESET: 
+				IF NOT aMoveFinishWidth[0] THEN
+					CASE GVL_devices.fbLftWidthMotor.reset() OF 
+						1:// Done
+							aMoveFinishWidth[0] := TRUE;
+						13:// Error
+							bWidthMoveStatus := TRUE;
+							GVL_machine.motorErrorList := LFTWIDTH;
+							GVL_machine.bErrorPresent := TRUE; 
+					END_CASE
+				END_IF
+				IF NOT aMoveFinishWidth[1] THEN
+					CASE GVL_devices.fbRhtWidthMotor.reset() OF 
+						1:// Done
+							aMoveFinishWidth[1] := TRUE;
+						13:// Error	
+							bWidthMoveStatus := TRUE;
+							GVL_machine.motorErrorList := RHTWIDTH;
+							GVL_machine.bErrorPresent := TRUE; 
+					END_CASE
+				END_IF
+				IF F_checkMoveFinish(aMoveFinishWidth,2,FALSE) THEN
+					eWidthState := STEADYSTATE;
+				END_IF
+				
+			HOMING:
+				IF NOT aMoveFinishWidth[0] THEN
+					CASE GVL_devices.fbLftWidthMotor.homeToSensor(0) OF 
+						1:// Done
+							aMoveFinishWidth[0] := TRUE;
+						13:// Error
+							bWidthMoveStatus := TRUE;
+							GVL_machine.motorErrorList := LFTWIDTH;
+							GVL_machine.bErrorPresent := TRUE; 
+					END_CASE
+				END_IF
+				IF NOT aMoveFinishWidth[1] THEN
+					CASE GVL_devices.fbRhtWidthMotor.homeToSensor(0) OF 
+						1:// Done
+							aMoveFinishWidth[1] := TRUE;
+						13:// Error	
+							bWidthMoveStatus := TRUE;
+							GVL_machine.motorErrorList := RHTWIDTH;
+							GVL_machine.bErrorPresent := TRUE; 
+					END_CASE
+				END_IF
+				IF F_checkMoveFinish(aMoveFinishWidth,2,FALSE) THEN
+					eWidthState := STEADYSTATE;
+				END_IF
+		END_CASE
+		//Initial Homing not done or Components not moving together
+		IF NOT GVL_devices.fbLftWidthMotor.fbMotor.Status.Homed OR NOT GVL_devices.fbRhtWidthMotor.fbMotor.Status.Homed OR fbCoupledWidth.Q THEN	
+			bHideWidthBtns := TRUE;
+		END_IF
+		
+	(*				Table Motion				*)
+		bTableStopped := FALSE;
+		bHideTableBtns := TRUE;
+		CASE eTableState OF 
+			STEADYSTATE:
+				bHideTableBtns := FALSE;
+			 	bTableStopped := TRUE;
+				GVL_devices.fbTable.tempSteadyState();
+			MOVEAWAYDIRECTION:
+				bHideTableBtns := FALSE;
+				GVL_devices.fbTable.tempMoveUp();
+			MOVEHOMEDIRECTION:
+				bHideTableBtns := FALSE; 
+				GVL_devices.fbTable.tempMoveDown();
+			HOMING: 
+				IF GVL_devices.fbTable.moveTo(GVL_persistent.fTableConveyorHeight) THEN
+					eTableState := STEADYSTATE;
+				END_IF
+		END_CASE
+END_IF]]></ST>
+    </Implementation>
+    <LineIds Name="manual">
+      <LineId Id="3" Count="583" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

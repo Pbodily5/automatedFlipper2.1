@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.13">
+  <POU Name="tempEflex" Id="{92c008b8-0a38-4170-92c8-7d32aad6496a}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM tempEflex
+VAR
+	//HMI
+	nEflexState : INT;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[
+
+CASE nEflexState OF 
+	0://Steady State
+	1://A5L
+		GVL_eflex.fBaseInHeight := 30;
+		GVL_eflex.fSpaOutHeight := 35;
+		GVL_eflex.fFlipHeight := 19;
+		GVL_eflex.fStudHeight := 7;
+		GVL_eflex.sSpaModel := 'A5L';
+		GVL_eflex.bEflexPresent := TRUE;
+		nEflexState := 0;
+	2://A6
+		GVL_eflex.fBaseInHeight := 30;
+		GVL_eflex.fSpaOutHeight := 35;
+		GVL_eflex.fFlipHeight := 22;
+		GVL_eflex.fStudHeight := 12;
+		GVL_eflex.sSpaModel := 'A6';
+		GVL_eflex.bEflexPresent := TRUE;
+		nEflexState := 0;
+	3://A7
+		GVL_eflex.fBaseInHeight := 30;
+		GVL_eflex.fSpaOutHeight := 35;
+		GVL_eflex.fFlipHeight := 23;
+		GVL_eflex.fStudHeight := 12;
+		GVL_eflex.sSpaModel := 'A7';
+		GVL_eflex.bEflexPresent := TRUE;
+		nEflexState := 0;
+	4://A8
+		GVL_eflex.fBaseInHeight := 27.5;
+		GVL_eflex.fSpaOutHeight := 35;
+		GVL_eflex.fFlipHeight := 24;
+		GVL_eflex.fStudHeight := 15.5;
+		GVL_eflex.sSpaModel := 'A8';
+		GVL_eflex.bEflexPresent := TRUE;
+		nEflexState := 0;
+	5://A9L
+		GVL_eflex.fBaseInHeight := 20.5;
+		GVL_eflex.fSpaOutHeight := 35;
+		GVL_eflex.fFlipHeight := 24;
+		GVL_eflex.fStudHeight := 14.5;
+		GVL_eflex.sSpaModel := 'A9L';
+		GVL_eflex.bEflexPresent := TRUE;
+		nEflexState := 0;
+END_CASE
+
+]]></ST>
+    </Implementation>
+    <LineIds Name="tempEflex">
+      <LineId Id="3" Count="45" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

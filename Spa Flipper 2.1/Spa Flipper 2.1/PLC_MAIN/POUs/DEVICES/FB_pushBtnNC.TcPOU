@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.13">
+  <POU Name="FB_pushBtnNC" Id="{26c5556c-fe5e-424d-a946-f4ffef02553f}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_pushBtnNC
+VAR
+	bBtn AT %I* : BOOL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Property Name="isPressed" Id="{ffc4e911-297d-4446-b02b-a64e5fc500ba}">
+      <Declaration><![CDATA[PROPERTY isPressed : BOOL]]></Declaration>
+      <Get Name="Get" Id="{37011f4a-2da0-488f-916f-a5b833c89d0a}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[IF NOT bBtn THEN 
+	isPressed := TRUE;
+ELSE 
+	isPressed := FALSE;
+END_IF]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <LineIds Name="FB_pushBtnNC">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_pushBtnNC.isPressed.Get">
+      <LineId Id="3" Count="3" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

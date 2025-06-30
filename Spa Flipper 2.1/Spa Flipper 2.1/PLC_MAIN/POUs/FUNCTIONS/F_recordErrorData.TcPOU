@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.13">
+  <POU Name="F_recordErrorData" Id="{f60b0ff2-f379-47ce-8cb7-7df4f36ef232}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION F_recordErrorData : BOOL
+VAR_INPUT
+	sLoc 	: STRING;
+	sBlock 	: STRING;
+	nID 	: UDINT;
+	sMsg 	: STRING;
+END_VAR
+VAR
+	fbGetSystemTime  : GETSYSTEMTIME;
+    fileTime         : T_FILETIME;
+    sTime            : STRING;
+	sStringCombine0 : STRING;
+	sStringCombine1 : STRING;
+	sStringCombine2 : STRING;
+	sStringCombine3 : STRING;
+	sStringCombine4 : STRING;
+	sStringCombine5 : STRING;
+
+
+
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[fbGetSystemTime(timeLoDW=>fileTime.dwLowDateTime, timeHiDW=>fileTime.dwHighDateTime );
+
+	//Set time of event 
+	GVL_machine.aErrorData[1,GVL_machine.nErrorDataRow] := SYSTEMTIME_TO_STRING( FILETIME_TO_SYSTEMTIME( fileTime ) );
+	//Set Motor Location
+	GVL_machine.aErrorData[2,GVL_machine.nErrorDataRow] :=sLoc;
+	//Set Function Block Location
+	GVL_machine.aErrorData[3,GVL_machine.nErrorDataRow] := sBlock;
+	//Set Error ID 
+	GVL_machine.aErrorData[4,GVL_machine.nErrorDataRow] := UDINT_TO_STRING(nID);
+	//Set Message Error 
+	IF sMsg = '' THEN
+		CASE nID OF 
+			0,1: sStringCombine0 := CONCAT( '0: ' , LREAL_TO_STRING(GVL_devices.fbColumn0Motor.fbMotor.NcToPlc.ActPos));
+				 sStringCombine1 := CONCAT( ', 1: ' , LREAL_TO_STRING(GVL_devices.fbColumn1Motor.fbMotor.NcToPlc.ActPos));
+				 sStringCombine2 := CONCAT(', 2: ' , LREAL_TO_STRING(GVL_devices.fbColumn2Motor.fbMotor.NcToPlc.ActPos));
+				 sStringCombine3 := CONCAT(', 3: ' , LREAL_TO_STRING(GVL_devices.fbColumn3Motor.fbMotor.NcToPlc.ActPos));
+				 sStringCombine3 := CONCAT(sStringCombine0,sStringCombine1);
+				 sStringCombine4 := CONCAT(sStringCombine2,sStringCombine3);
+				 sMsg := CONCAT(sStringCombine3,sStringCombine4);
+				 sStringCombine0 := '';
+				 sStringCombine1 := '';
+				 sStringCombine2 := '';
+				 sStringCombine3 := '';
+				 sStringCombine3 := '';
+				 sStringCombine4 := '';
+			16992: sMsg := 'The master axis start position does not permit synchronization';
+			17056: sMsg := 'Group/axis consequential error';
+			17505: sMsg := 'Maximum software position limit (axis start)';
+			17135: sMsg := 'Axis is locked for motion commands because a stop command is still active';
+		ELSE
+			sMsg := 'No Message Data';
+		END_CASE
+	END_IF
+	
+	GVL_machine.aErrorData[5,GVL_machine.nErrorDataRow] := sMsg;
+	
+	//Check if end of table was reached
+	IF GVL_machine.nErrorDataRow = 23 THEN 
+		GVL_machine.nErrorDataRow := 1;
+	ELSE
+		GVL_machine.nErrorDataRow := GVL_machine.nErrorDataRow + 1;
+	END_IF
+	
+]]></ST>
+    </Implementation>
+    <LineIds Name="F_recordErrorData">
+      <LineId Id="3" Count="19" />
+      <LineId Id="61" Count="5" />
+      <LineId Id="69" Count="0" />
+      <LineId Id="68" Count="0" />
+      <LineId Id="23" Count="15" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

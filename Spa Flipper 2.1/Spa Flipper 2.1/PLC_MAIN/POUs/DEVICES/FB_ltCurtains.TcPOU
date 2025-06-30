@@ -1,0 +1,121 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.13">
+  <POU Name="FB_ltCurtains" Id="{c70223c6-dd8c-4dcf-8286-84cf4bd1fc56}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_ltCurtains EXTENDS FB_pushBtnNC
+VAR
+	bLftCurtainFbError 		AT %I* : BOOL;
+	bLftCurtainSigOk 		AT %I* : BOOL;
+	bRhtCurtainFbError 		AT %I* : BOOL;
+	bRhtCurtainSigOk 		AT %I* : BOOL;
+	nLftCurtainFbState 		AT %I* : USINT; //States : 1 - Running, 2 - PreOp, 3 - Triggered, 6 - Reset 
+	nRhtCurtainFbState 		AT %I* : USINT; //States : 1 - Running, 2 - PreOp, 3 - Triggered, 6 - Reset 
+	
+	bResetLftCurtainFb 	AT %Q* : BOOL;
+	bResetRhtCurtainFb 	AT %Q* : BOOL;
+	bMuteCurtains 		AT %Q* : BOOL;
+	
+	bCurtainsMuted		AT %I* : BOOL;
+	
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Property Name="curtainsMuted" Id="{d6533652-449f-468c-a986-c9b568b13f3e}">
+      <Declaration><![CDATA[PROPERTY curtainsMuted : BOOL]]></Declaration>
+      <Get Name="Get" Id="{ed36f076-4f5d-43dd-859e-a121dbdc4e01}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[curtainsMuted := bCurtainsMuted;
+]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="mute" Id="{3beb5be0-d98c-4c48-9772-6e99b4c14dc6}">
+      <Declaration><![CDATA[METHOD mute : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[bMuteCurtains := TRUE;
+mute := TRUE;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="reset" Id="{948fbe5e-3860-4b8d-a512-4f9b0583287f}">
+      <Declaration><![CDATA[METHOD reset : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[reset := FALSE;
+bResetLftCurtainFb 	:= TRUE;
+bResetRhtCurtainFb 	:= TRUE;
+
+(*IF NOT GVL_machine.bLightCurtainsOk THEN
+	bResetLftCurtainFb 	:= FALSE;
+	bResetRhtCurtainFb 	:= FALSE;
+	reset := TRUE;
+END_IF*)]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="resetLftCurtainFB" Id="{539bca16-d6bf-47ee-bc3f-6325ddf62a8e}">
+      <Declaration><![CDATA[PROPERTY resetLftCurtainFB : BOOL]]></Declaration>
+      <Set Name="Set" Id="{8266bb6e-bd58-4e61-b133-b0d8af772d9a}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[bResetLftCurtainFb := resetLftCurtainFB;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="resetRhtCurtainFB" Id="{5b5a279c-5b02-4e86-8dd5-21bb4754315b}">
+      <Declaration><![CDATA[PROPERTY resetRhtCurtainFB : BOOL]]></Declaration>
+      <Set Name="Set" Id="{1439c6b8-6188-4a43-bd03-11ba90c10ebb}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[bResetRhtCurtainFb := resetRhtCurtainFB;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Method Name="unmute" Id="{23778aa8-2cea-4649-aefe-67f3d76c6b1c}">
+      <Declaration><![CDATA[METHOD unmute : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[bMuteCurtains := FALSE;
+unmute := TRUE;]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="FB_ltCurtains">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_ltCurtains.curtainsMuted.Get">
+      <LineId Id="3" Count="0" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_ltCurtains.mute">
+      <LineId Id="3" Count="0" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_ltCurtains.reset">
+      <LineId Id="3" Count="7" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_ltCurtains.resetLftCurtainFB.Set">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_ltCurtains.resetRhtCurtainFB.Set">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_ltCurtains.unmute">
+      <LineId Id="3" Count="0" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

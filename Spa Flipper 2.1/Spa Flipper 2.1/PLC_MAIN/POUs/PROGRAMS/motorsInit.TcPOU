@@ -1,0 +1,204 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.13">
+  <POU Name="motorsInit" Id="{76fa6f0d-45d2-4b1e-a12c-f65aed458998}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM motorsInit
+VAR
+	nInitCount	: INT;
+	bChecked 	: BOOL := FALSE;
+	nWaitCount 	: INT;
+	aMoveFinish	: ARRAY[0..10] OF BOOL; // Can track the completion of up to 10 simultaneous moves
+	fbMotorTimeOut : TON;
+	fbWaitInit : TON;
+	bMotorsInit : BOOL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[	updateMotors();
+bMotorsInit := FALSE;
+fbWaitInit(IN:= TRUE, PT:=T#3S);
+fbMotorTimeOut(PT:=T#1M);
+
+IF fbWaitInit.Q THEN
+		GVL_machine.bMotorInitFailedDisp := FALSE;
+		
+		IF NOT aMoveFinish[1] THEN
+			aMoveFinish[1] := GVL_devices.fbColumn1Motor.init(
+								bMotorInvertedIn:= TRUE, 
+								bMotorDisablesIn:= FALSE, 
+								fMoveAcclIn:= 50, 
+								fMoveDclIn:= 50, 
+								fMoveVelocityIn:= 10, 
+								torqueVelocityIn:= 10, 
+								torqueAccelerationIn:= 50, 
+								torqueDecelerationIn:= 50, 
+								homeVelocityIn:= 7, 
+								homeSetPositionIn:= 0, 
+								homeTorqueLimitIn:= 8,
+								jogTorqueIn := 100);
+		END_IF
+		IF NOT aMoveFinish[2] THEN
+			aMoveFinish[2] := GVL_devices.fbColumn2Motor.init(
+								bMotorInvertedIn:= TRUE, 
+								bMotorDisablesIn:= FALSE, 
+								fMoveAcclIn:= 50, 
+								fMoveDclIn:= 50, 
+								fMoveVelocityIn:= 10, 
+								torqueVelocityIn:= 10, 
+								torqueAccelerationIn:= 50, 
+								torqueDecelerationIn:= 50, 
+								homeVelocityIn:= 7, 
+								homeSetPositionIn:= 0, 
+								homeTorqueLimitIn:= 8,
+								jogTorqueIn := 100);
+		END_IF
+		IF NOT aMoveFinish[3] THEN
+			aMoveFinish[3] := GVL_devices.fbColumn3Motor.init(
+								bMotorInvertedIn:= TRUE, 
+								bMotorDisablesIn:= FALSE, 
+								fMoveAcclIn:= 50, 
+								fMoveDclIn:= 50, 
+								fMoveVelocityIn:= 10, 
+								torqueVelocityIn:= 10, 
+								torqueAccelerationIn:= 50, 
+								torqueDecelerationIn:= 50, 
+								homeVelocityIn:= 7, 
+								homeSetPositionIn:= 0, 
+								homeTorqueLimitIn:= 8,
+								jogTorqueIn := 100);
+		END_IF
+		IF NOT aMoveFinish[4] THEN
+			aMoveFinish[4] := GVL_devices.fbLftClampMotor.init(
+								bMotorInvertedIn:= TRUE, 
+								bMotorDisablesIn:= TRUE, 
+								fMoveAcclIn:= 100, 
+								fMoveDclIn:= 100, 
+								fMoveVelocityIn:= 20, 
+								torqueVelocityIn:= 7, 
+								torqueAccelerationIn:= 100, 
+								torqueDecelerationIn:= 100, 
+								homeVelocityIn:= 7, 
+								homeSetPositionIn:= 0, 
+								homeTorqueLimitIn:= 20,
+								jogTorqueIn := 35);
+		END_IF
+		IF NOT aMoveFinish[5] THEN
+			aMoveFinish[5] := GVL_devices.fbRhtClampMotor.init(
+								bMotorInvertedIn:= FALSE, 
+								bMotorDisablesIn:= TRUE, 
+								fMoveAcclIn:= 100, 
+								fMoveDclIn:= 100, 
+								fMoveVelocityIn:= 20, 
+								torqueVelocityIn:= 7, 
+								torqueAccelerationIn:= 100, 
+								torqueDecelerationIn:= 100, 
+								homeVelocityIn:= 7, 
+								homeSetPositionIn:= 0, 
+								homeTorqueLimitIn:= 40,
+								jogTorqueIn := 35);
+		END_IF
+		IF NOT aMoveFinish[6] THEN
+			aMoveFinish[6] := GVL_devices.fbLftRotationMotor.init(
+								bMotorInvertedIn:= TRUE, 
+								bMotorDisablesIn:= TRUE, 
+								fMoveAcclIn:= 50, 
+								fMoveDclIn:= 50, 
+								fMoveVelocityIn:= 8, 
+								torqueVelocityIn:= 7, 
+								torqueAccelerationIn:= 50, 
+								torqueDecelerationIn:= 50, 
+								homeVelocityIn:= 3, 
+								homeSetPositionIn:= -65.5, 
+								homeTorqueLimitIn:= 20,
+								jogTorqueIn := 100);
+		END_IF
+		IF NOT aMoveFinish[7] THEN
+			aMoveFinish[7] := GVL_devices.fbRhtRotationMotor.init(
+								bMotorInvertedIn:= FALSE, 
+								bMotorDisablesIn:= TRUE, 
+								fMoveAcclIn:= 50, 
+								fMoveDclIn:= 50, 
+								fMoveVelocityIn:= 8, 
+								torqueVelocityIn:= 7, 
+								torqueAccelerationIn:= 50, 
+								torqueDecelerationIn:= 50, 
+								homeVelocityIn:= 3, 
+								homeSetPositionIn:= 65.50, 
+								homeTorqueLimitIn:= 20,
+								jogTorqueIn := 100);
+		END_IF
+		IF NOT aMoveFinish[8] THEN
+			aMoveFinish[8] := GVL_devices.fbLftWidthMotor.init(
+								bMotorInvertedIn:= FALSE, 
+								bMotorDisablesIn:= TRUE, 
+								fMoveAcclIn:= 50, 
+								fMoveDclIn:= 50, 
+								fMoveVelocityIn:= 20, 
+								torqueVelocityIn:= 20, 
+								torqueAccelerationIn:= 50, 
+								torqueDecelerationIn:= 50, 
+								homeVelocityIn:= 10, 
+								homeSetPositionIn:= 0, 
+								homeTorqueLimitIn:= 15,
+								jogTorqueIn := 30);
+		END_IF
+		IF NOT aMoveFinish[9] THEN
+			aMoveFinish[9] := GVL_devices.fbRhtWidthMotor.init(
+								bMotorInvertedIn:= FALSE, 
+								bMotorDisablesIn:= TRUE, 
+								fMoveAcclIn:= 50, 
+								fMoveDclIn:= 50, 
+								fMoveVelocityIn:= 20, 
+								torqueVelocityIn:= 20, 
+								torqueAccelerationIn:= 50, 
+								torqueDecelerationIn:= 50, 
+								homeVelocityIn:= 10, 
+								homeSetPositionIn:= 0, 
+								homeTorqueLimitIn:= 15,
+								jogTorqueIn := 30);
+		END_IF
+		IF NOT aMoveFinish[0] THEN
+			aMoveFinish[0] := GVL_devices.fbColumn0Motor.init(
+								bMotorInvertedIn:= TRUE, 
+								bMotorDisablesIn:= FALSE, 
+								fMoveAcclIn:= 50, 
+								fMoveDclIn:= 50, 
+								fMoveVelocityIn:= 10, 
+								torqueVelocityIn:= 10, 
+								torqueAccelerationIn:= 50, 
+								torqueDecelerationIn:= 50, 
+								homeVelocityIn:= 7, 
+								homeSetPositionIn:= 0, 
+								homeTorqueLimitIn:= 8,
+								jogTorqueIn := 100);
+		END_IF
+		
+		IF F_checkMoveFinish(aMoveFinish,10,FALSE) THEN
+			GVL_machine.sMotorInitState := 'PASSED';
+			fbWaitInit(IN := FALSE);
+			fbMotorTimeOut(IN := FALSE);
+			GVL_machine.bMotorInitFailedDisp := FALSE;
+			GVL_machine.bMotorsInitialized := TRUE;
+			bMotorsInit := TRUE;
+		ELSE
+			fbMotorTimeout.IN := TRUE;
+			IF fbMotorTimeout.Q THEN
+				fbWaitInit(IN := FALSE);
+				fbMotorTimeOut(IN := FALSE);
+				GVL_machine.sMotorInitState := 'FAILED';
+				GVL_machine.bMotorInitFailedDisp := TRUE;
+				F_checkMoveFinish(aMoveFinish,10,TRUE);
+				GVL_machine.bMotorsInitialized := TRUE;
+			END_IF
+		END_IF
+	IF LEN(GVL_machine.sMotorInitState) <> 0 THEN
+		GVL_devices.fbLftClampMotor.brakeOn();
+		GVL_devices.fbRhtClampMotor.brakeOn();
+	END_IF
+END_IF]]></ST>
+    </Implementation>
+    <LineIds Name="motorsInit">
+      <LineId Id="3" Count="180" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.13">
+  <POU Name="F_checkMoveFinish" Id="{59429ef8-800b-4d15-ae15-e8ac57dba66d}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION F_checkMoveFinish : BOOL
+VAR_INPUT
+	refArray 	: REFERENCE TO ARRAY[0..10] OF BOOL; //Move finish array to check 
+	nCount		: INT; // Number of moves completed to check against
+	reset		: BOOL; // True - Resets array, False - checks array against nCount;
+END_VAR
+VAR
+	nCounter 	: INT := 0;
+	i 			: INT := 0;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[F_checkMoveFinish := FALSE;
+IF NOT reset THEN 
+	FOR i := 0 TO SIZEOF(refArray)-1 BY 1 DO
+		IF refArray[i] THEN 
+			nCounter := nCounter + 1;
+		END_IF
+	END_FOR
+	
+	IF ncounter = nCount THEN 
+		FOR i := 0 TO SIZEOF(refArray)-1 BY 1 DO 
+			refArray[i] := FALSE;
+		END_FOR
+		F_checkMoveFinish := TRUE;
+	ELSE
+		F_checkMoveFinish := FALSE;
+	END_IF
+ELSE
+	FOR i := 0 TO SIZEOF(refArray)-1 BY 1 DO 
+			refArray[i] := FALSE;
+		END_FOR
+		F_checkMoveFinish := TRUE;
+END_IF]]></ST>
+    </Implementation>
+    <LineIds Name="F_checkMoveFinish">
+      <LineId Id="3" Count="20" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

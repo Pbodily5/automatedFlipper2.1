@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.13">
+  <DUT Name="ST_errorRef" Id="{4755b428-d4fd-4b5f-b78e-038143e9a09b}">
+    <Declaration><![CDATA[TYPE ST_errorRef :
+STRUCT
+	///		errorLoc: Location of the error. i.e. Right Height Motor
+	errorLoc : STRING;
+
+	///		errorId: If error is an axis error, the errorId will correlate to axis errors
+	///				 found in infoSys
+	errorId : UDINT;
+	
+	///		errorMsg : String representation if any. 'NULL' represents no msg. 'Not Found' represents lookup needed. 
+	errorMsg : STRING;
+	
+	//		errorState: What function block did the error originate from. 
+	errorState : E_ECmotorErrorState;
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

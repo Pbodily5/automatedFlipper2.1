@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.13">
+  <POU Name="FB_MultiMotorController" Id="{768fffa5-dcc7-4ac1-8696-c781292a10d5}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_MultiMotorController
+VAR_INPUT
+	aMotorRef :ARRAY[1..4] OF POINTER TO FB_teknicMotorEC; // Array of addresses of up to four motors to control. *Fill array in order of index **Must fill entire array. Unused spots - enter 0.
+	eMethod : E_teknicMotorMethods; // Method to call for control of specified motors
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	sControllerMsg : STRING; // String used to display messages from the controller FB.
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[(* Example call- FB_multiMotorController(aMotorRef := [ADR(FB_teknicMotor1),ADR(FB_teknicMotor2),0,0],sMethod := moveToJog); *)
+CASE eMethod OF 
+	brakeOff://
+	brakeOn://
+	checkOutputs://
+	coupleToAxis://
+	decoupleAxis://
+	disable://
+	enable://
+	estop://
+	homeToSensor://
+	homeToTorque://
+	motorInit://
+	moveTo://
+	moveToJog://
+	moveToSensor://
+	moveToTorque://
+	readMotorParameter://
+		sControllerMsg := LREAL_TO_STRING(aMotorRef[1]^.readValue);
+	removeStop://
+	motorReset://
+	resetMotorCommands://
+	setError://
+	stop://
+	writeMotorParameter://
+END_CASE]]></ST>
+    </Implementation>
+    <LineIds Name="FB_MultiMotorController">
+      <LineId Id="9" Count="0" />
+      <LineId Id="20" Count="1" />
+      <LineId Id="23" Count="13" />
+      <LineId Id="44" Count="1" />
+      <LineId Id="37" Count="4" />
+      <LineId Id="47" Count="0" />
+      <LineId Id="22" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

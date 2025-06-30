@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.13">
+  <POU Name="FB_digitalOut" Id="{9b8d181d-cfbc-4476-bcee-94eb362a3000}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_digitalOut
+VAR
+	bOutput AT %Q* : BOOL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="turnOff" Id="{4424f068-6486-4e26-9e95-7c1b3bbc0259}">
+      <Declaration><![CDATA[METHOD turnOff : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[bOutput := FALSE;
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="turnOn" Id="{f53682b9-6e21-41f8-9c27-119a87670951}">
+      <Declaration><![CDATA[METHOD turnOn : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[bOutput := TRUE;]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="FB_digitalOut">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_digitalOut.turnOff">
+      <LineId Id="3" Count="0" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_digitalOut.turnOn">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

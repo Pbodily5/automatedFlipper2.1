@@ -1,0 +1,271 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.13">
+  <POU Name="FB_table" Id="{41a54481-b8f6-4b7e-aeb2-9aab6dae80e1}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_table
+VAR
+	tableDistSens 	: FB_distSensor2011;
+	bTableGreenWire	AT %Q* : BOOL;				
+	bTableBlackWire	AT %Q* : BOOL;	
+	bTableBlueWire 	AT %Q* : BOOL;	
+	bSafetySensor1 	AT %I* : BOOL;
+	bSafetySensor2   AT %I* : BOOL;
+	bLoadedSensor AT %I* : BOOL;
+	
+	fbSpaLoadedTime 	: TON;
+	fbSpaUnloadedTime 	: TON;
+	heightSensorOffset : REAL := 5.875;
+	//heightSensorOffset : REAL := 1.25;
+END_VAR	
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="estop" Id="{9b12ee19-a5c9-42ee-a916-b6ffdd4c8312}">
+      <Declaration><![CDATA[METHOD estop : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[btableBlackWire 	:= FALSE;
+btableBlueWire 		:= FALSE;
+btableGreenWire 	:= FALSE;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="moveDown" Id="{00fafb52-ae9c-45d8-b64f-aef4df957c47}">
+      <Declaration><![CDATA[METHOD moveDown : BOOL
+VAR_INPUT
+	distance: REAL;
+END_VAR
+
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[bTableGreenWire := FALSE;
+// IF safetySensor1 OR safetySensor2 THEN
+//moveDown := 3 
+//ELSE 
+	IF tableHeight > distance THEN 
+		bTableBlackWire := TRUE;
+		bTableBlueWire := TRUE;
+		moveDown := FALSE;
+	ELSE 
+		bTableBlackWire := FALSE;
+		bTableBlueWire := FALSE;
+		moveDown := TRUE;
+	END_IF
+//END_IF
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="moveTo" Id="{7789d6a6-9a1a-45ac-a301-f54064d4a12d}">
+      <Declaration><![CDATA[METHOD moveTo : BOOL
+VAR_INPUT
+	distance: REAL;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[//IF safetySensor1 OR safetySensor2 THEN
+//moveDown := 3 
+//ELSE 
+	//IF tableDistSens.height> distance + 1 THEN 
+	IF tableHeight > distance + 0.5 THEN 
+		bTableBlackWire := TRUE;
+		bTableBlueWire := TRUE;
+		bTableGreenWire := FALSE;
+		
+	ELSE 
+		bTableBlackWire := FALSE;
+		bTableBlueWire := FALSE;
+		
+	END_IF
+	
+	IF tableHeight < distance - 0.5 THEN 
+		bTableBlackWire := FALSE;
+		bTableBlueWire := FALSE;
+		bTableGreenWire := TRUE;
+		
+	ELSE
+		bTableGreenWire := FALSE;
+		
+	END_IF
+	
+	IF tableHeight < distance + 0.5 AND tableHeight > distance - 0.5 THEN 
+		moveTo := TRUE;
+	ELSE 
+		moveTo := FALSE;
+	END_IF
+//END_IF
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="moveUp" Id="{b0513a13-df74-4285-9e32-8f0893c1235d}">
+      <Declaration><![CDATA[METHOD moveUp : BOOL
+VAR_INPUT
+	distance : REAL;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[bTableBlackWire := FALSE;
+bTableBlueWire := FALSE;
+// IF safetySensor1 OR safetySensor2 THEN
+//moveDown := 3 
+//ELSE 
+	IF tableHeight < distance THEN 
+		bTableGreenWire := TRUE;
+		moveUp := FALSE;
+	ELSE
+		bTableGreenWire := FALSE;
+		moveUp := TRUE;
+	END_IF
+//END_IF
+]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="spaLoaded" Id="{cb066240-9e76-40e5-a031-ec275801c361}">
+      <Declaration><![CDATA[PROPERTY spaLoaded : BOOL]]></Declaration>
+      <Get Name="Get" Id="{6c2107ac-6db5-4c66-b3b4-aa2217e92130}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[spaLoaded := FALSE;
+fbSpaLoadedTime(PT := T#1M);
+
+IF bLoadedSensor THEN
+	fbSpaLoadedTime.IN := TRUE;
+ELSE 
+	fbSpaLoadedTime.IN := FALSE;
+END_IF
+
+IF fbSpaLoadedTime.Q THEN
+	spaLoaded := TRUE;
+ELSE
+	spaLoaded := FALSE;
+END_IF]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="spaUnloaded" Id="{e128edf3-7536-4860-a00f-ddc59e38195f}">
+      <Declaration><![CDATA[PROPERTY spaUnloaded : BOOL]]></Declaration>
+      <Get Name="Get" Id="{848c5a2b-3c81-4273-bb40-218ad120af51}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[spaUnLoaded := FALSE;
+fbSpaUnloadedTime(PT := T#2M);
+
+IF NOT bLoadedSensor THEN
+	fbSpaUnloadedTime.IN := TRUE;
+ELSE 
+	fbSpaUnloadedTime.IN := FALSE;
+END_IF
+
+IF fbSpaUnloadedTime.Q THEN
+	spaUnLoaded := TRUE;
+ELSE
+	spaUnLoaded := FALSE;
+END_IF]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="tableHeight" Id="{bb669f3b-001d-46e8-be7f-ac7ee611cebe}">
+      <Declaration><![CDATA[PROPERTY tableHeight : REAL]]></Declaration>
+      <Get Name="Get" Id="{3c0740a6-0773-4aaf-80f2-51f6d38dd732}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[tableHeight:= tableDistSens.height + heightSensorOffset;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="tempMoveDown" Id="{45234f0b-5a02-4f9f-98d5-136e8c996002}">
+      <Declaration><![CDATA[METHOD tempMoveDown : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[//IF NOT safetySensor1 AND safetySensor2 THEN 
+bTableGreenWire 	:= FALSE;
+bTableBlackWire 	:= TRUE;
+bTableBlueWire 	:= TRUE;
+//ELSE
+//nothing
+//END_IF
+
+
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="tempMoveUp" Id="{663ea5d9-f625-4441-b93b-e3628399a007}">
+      <Declaration><![CDATA[METHOD tempMoveUp : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[//IF NOT safetySensor1 AND safetySensor2 THEN 
+bTableBlackWire := FALSE;
+bTableBlueWire := FALSE;
+bTableGreenWire := TRUE;
+//ELSE
+//nothing
+//END_IF
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="tempSteadyState" Id="{5e5e70ba-3b48-4a4f-acc1-86019aca5fb2}">
+      <Declaration><![CDATA[METHOD tempSteadyState : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[bTableBlackWire := FALSE;
+bTableBlueWire := FALSE;
+bTableGreenWire := FALSE;
+]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="FB_table">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_table.estop">
+      <LineId Id="3" Count="1" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_table.moveDown">
+      <LineId Id="3" Count="13" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_table.moveTo">
+      <LineId Id="3" Count="30" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_table.moveUp">
+      <LineId Id="3" Count="12" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_table.spaLoaded.Get">
+      <LineId Id="3" Count="12" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_table.spaUnloaded.Get">
+      <LineId Id="3" Count="12" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_table.tableHeight.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_table.tempMoveDown">
+      <LineId Id="3" Count="8" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_table.tempMoveUp">
+      <LineId Id="3" Count="6" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_table.tempSteadyState">
+      <LineId Id="3" Count="2" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

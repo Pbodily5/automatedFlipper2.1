@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.13">
+  <POU Name="eflex" Id="{2394daa4-016f-4684-ac0e-986a3b68d7ac}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM eflex
+VAR
+fbMqttClient	: FB_IotMqttClient;
+
+
+bSetParameter 	: BOOL := TRUE;
+bConnect 		: BOOL := TRUE;
+
+(* published message *)
+bPublish 		: BOOL;
+sTopicPub 		: STRING(255) := 'flipper2toNodeRed';
+sPayloadPub 	: STRING (255):= 'This is a test';
+x				: UDINT;
+
+(* recieved message *)
+bSubscribed 	: BOOL;
+sTopicSub 		: STRING(255) := 'toFlipper2PLC';
+sTopicRcv 		: STRING(255);
+sPayloadRcv 	: STRING(255);
+
+fbMessageQueue	: FB_IotMqttMessageQueue;
+fbMessage		: FB_IotMqttMessage;
+fbJsonDataType 	: FB_JsonReadWriteDataType;
+eflexMsgIn 		: ST_eflexMsgIn;
+sBuffer 		: STRING(255);
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF bSetParameter THEN
+	bSetParameter 				:= FALSE;
+	fbMqttClient.sHostName 		:= '10.0.0.41';
+	fbMqttClient.nHostPort 		:= 1883;
+	fbMqttClient.sUserName 		:= 'eflex';
+	fbMqttClient.sUserPassword 	:= 'dean-wormwood-sway-lope';
+	fbMqttClient.ipMessageQueue := fbMessageQueue;
+END_IF
+
+fbMqttClient.Execute(bConnect);
+
+
+IF fbMqttClient.bConnected THEN
+	IF NOT bSubscribed THEN
+		bSubscribed 	:= fbMqttClient.Subscribe(sTopic := sTopicSub, eQoS:= TcIOTMqttQos.AtMostOnceDelivery);
+	END_IF
+	IF bPublish THEN
+		fbMqttClient.Publish(
+		sTopic			:= sTopicPub, 
+		pPayload		:= ADR(sBuffer), 
+		nPayloadSize	:= LEN2(ADR(sBuffer)), 
+		eQoS			:= TcIOTMqttQos.AtMostOnceDelivery, 
+		bRetain			:= FALSE, 
+		bQueue			:= FALSE);
+		bPublish 		:= FALSE;	
+		x := MEMSET(destAddr := ADR(sPayloadRcv),fillByte := 0,n := SIZEOF(sPayloadRcv));			
+	END_IF
+END_IF
+
+IF fbMessageQueue.nQueuedMessages > 0 THEN 
+	IF fbMessageQueue.Dequeue(fbMessage := fbMessage) THEN
+		fbMessage.GetTopic(pTopic := ADR(sTopicRcv), nTopicSize := SIZEOF(sTopicRcv));
+		fbMessage.GetPayload(pPayload:=ADR(sPayloadRcv), nPayloadSize:=SIZEOF(sPayloadRcv), bSetNullTermination:=FALSE);
+		fbJsonDataType.SetSymbolFromJson(sPayloadRcv,'ST_eflexMsgIn',SIZEOF(eflexMsgIn), ADR(eflexMsgIn));
+		GVL_eflex.bEflexPresent := TRUE;
+		GVL_eflex.fFlipHeight := eflexMsgIn.flipHeight;
+		GVL_eflex.fStudHeight := eflexMsgIn.studHeight;
+		GVL_eflex.sSpaModel := eflexMsgIn.spaModel;
+		GVL_eflex.fBaseInHeight := eflexMsgIn.baseInHeight;
+		GVL_eflex.fSpaOutHeight := eflexMsgIn.spaOutHeight;
+		sBuffer := fbJsonDataType.GetJsonStringFromSymbol('ST_eflexMsgIn',SIZEOF(eflexMsgIn), ADR(eflexMsgIn));
+		bPublish := TRUE;
+	END_IF
+END_IF
+
+IF GVL_eflex.bEflexPresent THEN
+	IF GVL_eflex.fFlipHeight < 1 OR GVL_eflex.fStudHeight < 1 OR GVL_eflex.sSpaModel = '' THEN
+		GVL_eflex.sSpaModel := 'ERROR';
+	END_IF
+END_IF]]></ST>
+    </Implementation>
+    <LineIds Name="eflex">
+      <LineId Id="3" Count="48" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

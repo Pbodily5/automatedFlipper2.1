@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.13">
+  <POU Name="FB_distSensor2011" Id="{e6af5067-769c-4f54-8a1a-703851786096}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_distSensor2011
+VAR
+	nSensor AT %I* 	: INT;
+	fHeightVal 		: REAL;
+	fSensorAvg		: REAL;
+	nAvgSensorCount : INT;
+	fPrevHeight		: REAL;
+	fLowBound 		: REAL := 252; // mm's at 4 mA on sensor
+	fHighBound		: REAL := 1155; // mm's at 20 mA on sensor
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Property Name="height" Id="{55486666-a5d0-4146-a773-54d9595d890a}">
+      <Declaration><![CDATA[PROPERTY height : REAL //Distance in inches]]></Declaration>
+      <Get Name="Get" Id="{83f0b03b-06ce-40a7-81d3-c2a3c68c7185}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[//height := (((INT_TO_REAL(sensor)/32767)*3000)+50)/25.4;
+IF nAvgSensorCount <= 25 THEN
+	nAvgSensorCount := nAvgSensorCount + 1;
+	fSensorAvg := fSensorAvg + ((INT_TO_REAL(nSensor))/25);
+	fHeightVal := fPrevHeight;
+	height := fPrevHeight;
+ELSE 
+	height := (((fSensorAvg/43519)*fHighBound)+fLowBound)/25.4;
+	fPrevHeight := height;
+	fSensorAvg := 0;
+	nAvgSensorCount := 0;
+	fHeightVal := height;
+END_IF
+
+]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <LineIds Name="FB_distSensor2011">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_distSensor2011.height.Get">
+      <LineId Id="3" Count="13" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

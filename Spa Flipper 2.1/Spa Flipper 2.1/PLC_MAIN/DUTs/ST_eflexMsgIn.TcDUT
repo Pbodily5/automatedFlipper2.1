@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.13">
+  <DUT Name="ST_eflexMsgIn" Id="{c108be69-1c9a-4d1d-88d8-1be375763e36}">
+    <Declaration><![CDATA[TYPE ST_eflexMsgIn :
+STRUCT
+	serialNumber		: STRING;
+	taskType			: STRING;
+	taskConfigId		: STRING;
+	liveBuildStatusId 	: STRING;
+	spaModel 			: STRING;
+	flipHeight 			: REAL;
+	studHeight 			: REAL;
+	baseInHeight		: REAL;
+	spaOutHeight		: REAL;
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

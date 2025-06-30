@@ -1,0 +1,123 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.13">
+  <POU Name="errorHandling" Id="{968d1455-44f4-41b0-801b-173064e07596}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM errorHandling
+VAR
+	bResetBtn : BOOL;
+	bExitBtn : BOOL;
+	
+	sBlock : STRING;
+	nID : UDINT;
+	sMsg : STRING;
+	sLoc : STRING;
+	
+	nPrevId: UDINT;
+	sPrevBlock : STRING;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[//Create Page for each component and show it in a frame
+CASE GVL_machine.motorErrorList OF 
+	LFTROTATION : //pass
+		sLoc := 'LEFT ROTATION';
+		sBlock := GVL_devices.fbLftRotationMotor.stError.errorLoc;
+		nID := GVL_devices.fbLftRotationMotor.stError.errorId;
+		sMsg := GVL_devices.fbLftRotationMotor.stError.errorMsg;
+		
+		
+	
+	LFTCLAMP: //pass
+		sLoc := 'LEFT CLAMP';
+		sBlock := GVL_devices.fbLftClampMotor.stError.errorLoc;
+		nID := GVL_devices.fbLftClampMotor.stError.errorId;
+		sMsg := GVL_devices.fbLftClampMotor.stError.errorMsg;
+		
+		
+	
+	COLUMN0: //pass
+		sLoc := 'COLUMN 0';
+		sBlock := GVL_devices.fbColumn0Motor.stError.errorLoc;
+		nID := GVL_devices.fbColumn0Motor.stError.errorId;
+		sMsg := GVL_devices.fbColumn0Motor.stError.errorMsg;
+		
+		
+	
+	COLUMN1: //pass
+		sLoc := 'COLUMN 1';
+		sBlock := GVL_devices.fbColumn1Motor.stError.errorLoc;
+		nID := GVL_devices.fbColumn1Motor.stError.errorId;
+		sMsg := GVL_devices.fbColumn1Motor.stError.errorMsg;
+		
+	
+		
+	LFTWIDTH: //pass
+		sLoc := 'LEFT WIDTH';
+		sBlock := GVL_devices.fbLftWidthMotor.stError.errorLoc;
+		nID := GVL_devices.fbLftWidthMotor.stError.errorId;
+		sMsg := GVL_devices.fbLftWidthMotor.stError.errorMsg;
+		
+
+		
+	RHTWIDTH: //pass
+		sLoc := 'RIGHT WIDTH';
+		sBlock := GVL_devices.fbRhtWidthMotor.stError.errorLoc;
+		nID := GVL_devices.fbRhtWidthMotor.stError.errorId;
+		sMsg := GVL_devices.fbRhtWidthMotor.stError.errorMsg;
+		
+		
+		
+	COLUMN2: //pass
+		sLoc := 'COLUMN 2';
+		sBlock := GVL_devices.fbColumn2Motor.stError.errorLoc;
+		nID := GVL_devices.fbColumn2Motor.stError.errorId;
+		sMsg := GVL_devices.fbColumn2Motor.stError.errorMsg;
+		
+	
+		
+	COLUMN3: //pass
+		sLoc := 'COLUMN 3';
+		sBlock := GVL_devices.fbColumn3Motor.stError.errorLoc;
+		nID := GVL_devices.fbColumn3Motor.stError.errorId;
+		sMsg := GVL_devices.fbColumn3Motor.stError.errorMsg;
+		
+		
+	
+	RHTCLAMP: //pass
+		sLoc := 'RIGHT CLAMP';
+		sBlock := GVL_devices.fbRhtClampMotor.stError.errorLoc;
+		nID := GVL_devices.fbRhtClampMotor.stError.errorId;
+		sMsg := GVL_devices.fbRhtClampMotor.stError.errorMsg;
+		
+	
+		
+	RHTROTATION: //pass
+		sLoc := 'RIGHT ROTATION';
+		sBlock := GVL_devices.fbRhtRotationMotor.stError.errorLoc;
+		nID := GVL_devices.fbRhtRotationMotor.stError.errorId;
+		sMsg := GVL_devices.fbRhtRotationMotor.stError.errorMsg;
+		
+	CUSTOM: //pass
+		sLoc := GVL_machine.sLoc;
+		sBlock := GVL_machine.sBlock;
+		nID := GVL_machine.nID;
+		sMsg := GVL_machine.sMsg;
+
+END_CASE
+
+IF sBlock = sPrevBlock AND nID = nPrevID THEN
+	GVL_machine.bErrorPresent := FALSE;
+ELSE
+	F_recordErrorData(sLoc,sBlock,nId,sMsg);
+	GVL_machine.bErrorPresent := FALSE;
+	sPrevBlock := sBlock;
+	nPrevId := nID;
+END_IF
+
+]]></ST>
+    </Implementation>
+    <LineIds Name="errorHandling">
+      <LineId Id="3" Count="96" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

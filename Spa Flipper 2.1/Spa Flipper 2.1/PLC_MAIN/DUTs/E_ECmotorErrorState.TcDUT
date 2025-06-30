@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.13">
+  <DUT Name="E_ECmotorErrorState" Id="{2d31532d-e105-45a4-9a01-bb7dc180e4be}">
+    <Declaration><![CDATA[TYPE E_ECmotorErrorState :
+(
+	MCHOME := 0,
+	MCREADDRIVEOPERATIONMODE,
+	MCWRITEDRIVEOPERATIONMODE,
+	MCHALT,
+	MCSTOP,
+	MCJOG,
+	MCMOVEABSOLUTE,
+	MCMOVERELATIVE,
+	MCPOWER,
+	MCRESET,
+	MCSETPOSITION,
+	MCWRITEPARAMETER,
+	MCREADSTATUS,
+	MCTORQUECONTROL,
+	MCGEARIN,
+	MCGEAROUT
+)INT;
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>
