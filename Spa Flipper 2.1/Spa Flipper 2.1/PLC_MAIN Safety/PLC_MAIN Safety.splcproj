@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project Crc="1344057642" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+<Project Crc="4164165696" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <SchemaVersion>2.0</SchemaVersion>
@@ -16,7 +16,7 @@
     <IntProjName>PLC_MAIN Safety</IntProjName>
     <IsNewCreated>false</IsNewCreated>
     <SPlcProjVersion>1.8.0.0</SPlcProjVersion>
-    <NextSdsId>19</NextSdsId>
+    <NextSdsId>20</NextSdsId>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <DebugSymbols>false</DebugSymbols>
@@ -38,7 +38,8 @@
     <None Include="TwinSafeGroup1\Alias Devices\bResetLftCurtainFb.sds" />
     <None Include="TwinSafeGroup1\Alias Devices\bResetRhtCurtainFb.sds" />
     <None Include="TwinSafeGroup1\Alias Devices\bRhtCurtainFbError.sds" />
-    <None Include="TwinSafeGroup1\Alias Devices\bSafetyNotOk.sds" />
+    <None Include="TwinSafeGroup1\Alias Devices\bSafetyByPass.sds" />
+    <None Include="TwinSafeGroup1\Alias Devices\bSafetyOk.sds" />
     <None Include="TwinSafeGroup1\Alias Devices\EL1918, 8 digital inputs_1.sds" />
     <None Include="TwinSafeGroup1\Alias Devices\EL2904, 4 digital outputs_1.sds" />
     <None Include="TwinSafeGroup1\TwinSafeGroup1.sal" />

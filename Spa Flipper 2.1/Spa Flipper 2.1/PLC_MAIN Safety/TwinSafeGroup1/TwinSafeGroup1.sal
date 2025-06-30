@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<safetyApplication Crc="5307081" xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" dslVersion="1.5.0.0" Id="a7cfc1f4-594c-47f0-8c69-72aff77dce3c" name="" mapState="false" mapDiag="false" groupOrderId="0" passificationAllowed="false" temporaryDeactivationAllowed="false" permamentDeactivationAllowed="false" xmlid="0" analogFBOutputReplacementValues="Zero" verifyAnalogFBInputsIfStart="false" userFbId="00000000-0000-0000-0000-000000000000" xmlns="http://schemas.microsoft.com/dsltools/SafetyApplicationLanguage">
+<safetyApplication Crc="789781247" xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" dslVersion="1.5.0.0" Id="a7cfc1f4-594c-47f0-8c69-72aff77dce3c" name="" mapState="false" mapDiag="false" groupOrderId="0" passificationAllowed="false" temporaryDeactivationAllowed="false" permamentDeactivationAllowed="false" xmlid="0" analogFBOutputReplacementValues="Zero" verifyAnalogFBInputsIfStart="false" userFbId="00000000-0000-0000-0000-000000000000" xmlns="http://schemas.microsoft.com/dsltools/SafetyApplicationLanguage">
   <networks>
     <safetyApplicationHasNetworks Id="5442c5c8-6034-4cd3-8e27-b1e32a6fcb0b">
       <Network Id="bd8b2c9b-fcf3-41f9-bc31-69e55f61e6a6" name="Network1" networkName="Network1" intId="1" networkOrderId="0">
@@ -871,7 +871,13 @@
       <variable Id="7af41b29-c1c9-4bd0-a437-bb7e62b9de6a" name="bEstop1_in" isLocal="false">
         <sourceUsages>
           <variableHasSourceUsages Id="3a783abf-b684-4405-a78d-88083f1e638e">
-            <variableUsages Id="1b62099a-cea3-41bd-aed7-b95e3660df7e" />
+            <variableUsages Id="1b62099a-cea3-41bd-aed7-b95e3660df7e">
+              <usages>
+                <variableUsagesHasUsages Id="716b8c80-5a0b-4fa4-8257-6358da1b3872">
+                  <aliasDeviceIoUsage Id="aeb9443d-ee1b-4369-9722-3cdcd8996a83" sdsId="17" channelId="9" functionId="1614872833" />
+                </variableUsagesHasUsages>
+              </usages>
+            </variableUsages>
           </variableHasSourceUsages>
         </sourceUsages>
         <targetUsages>
@@ -941,6 +947,110 @@
         <targetUsages>
           <variableHasTargetUsages Id="01ef864e-3225-4c98-87be-97054c6098ba">
             <variableUsages Id="66544b10-ffc6-4eec-b897-10f33f1f60dd" />
+          </variableHasTargetUsages>
+        </targetUsages>
+      </variable>
+    </safetyApplicationHasVariables>
+    <safetyApplicationHasVariables Id="2a6db797-3f37-4e4a-8ba5-dcfab87084d8">
+      <variable Id="ab254ccd-46ce-4f93-8999-be44c6d21866" name="bFbErr_Out" isLocal="false">
+        <sourceUsages>
+          <variableHasSourceUsages Id="2606b5df-f685-48a4-b133-c6f9f905de58">
+            <variableUsages Id="7079f27d-2bc6-4458-933f-f832ae1764e4">
+              <usages>
+                <variableUsagesHasUsages Id="92adb84f-b219-4feb-aa22-212cf013f1d7">
+                  <groupPortUsage Id="00dea649-5bda-4e1b-b4f3-13b06075ef8f">
+                    <twinSAFEGroupAliasPort>
+                      <groupPortUsageReferencesTwinSAFEGroupAliasPort Id="95ff26e8-431f-4dae-bb10-8ecdf8f8c59c">
+                        <twinSAFEGroupAliasPortMoniker name="//FbErr" />
+                      </groupPortUsageReferencesTwinSAFEGroupAliasPort>
+                    </twinSAFEGroupAliasPort>
+                  </groupPortUsage>
+                </variableUsagesHasUsages>
+              </usages>
+            </variableUsages>
+          </variableHasSourceUsages>
+        </sourceUsages>
+        <targetUsages>
+          <variableHasTargetUsages Id="0091e0b8-00d7-4382-b47e-dc9da10ca011">
+            <variableUsages Id="6a4460fe-925d-4781-93cf-0b990e495484" />
+          </variableHasTargetUsages>
+        </targetUsages>
+      </variable>
+    </safetyApplicationHasVariables>
+    <safetyApplicationHasVariables Id="cce26f64-2110-44c6-808d-32cec70e1c2c">
+      <variable Id="3bdacf46-6015-436e-a100-9c848be6e268" name="bCommErr_Out" isLocal="false">
+        <sourceUsages>
+          <variableHasSourceUsages Id="494e5c62-f618-45cb-b3aa-2a4c8abeb1b8">
+            <variableUsages Id="3b20332e-0fee-42f2-8cd5-c92474d95db8">
+              <usages>
+                <variableUsagesHasUsages Id="21d84938-667a-41b3-a947-9e76d93688ae">
+                  <groupPortUsage Id="fcec0b59-bb94-41e1-9bbf-db876d74f255">
+                    <twinSAFEGroupAliasPort>
+                      <groupPortUsageReferencesTwinSAFEGroupAliasPort Id="73e29468-23c8-4a13-99a4-6d2d43051d35">
+                        <twinSAFEGroupAliasPortMoniker name="//ComErr" />
+                      </groupPortUsageReferencesTwinSAFEGroupAliasPort>
+                    </twinSAFEGroupAliasPort>
+                  </groupPortUsage>
+                </variableUsagesHasUsages>
+              </usages>
+            </variableUsages>
+          </variableHasSourceUsages>
+        </sourceUsages>
+        <targetUsages>
+          <variableHasTargetUsages Id="1ab834ed-a6ac-473b-8e3c-45ec015df974">
+            <variableUsages Id="1c8189f8-1e8d-4b6e-bb9f-d55e7ee99047" />
+          </variableHasTargetUsages>
+        </targetUsages>
+      </variable>
+    </safetyApplicationHasVariables>
+    <safetyApplicationHasVariables Id="ed8d84f6-073c-4e62-a0ab-57618a8dbf64">
+      <variable Id="3bfcb73e-7327-45e5-8cf4-60732a4ffd2f" name="bFbRun_Out" isLocal="false">
+        <sourceUsages>
+          <variableHasSourceUsages Id="0b47fddc-4306-4917-8baf-c33d7a4504ad">
+            <variableUsages Id="f02ae7c9-0d3a-4ea6-bb58-d7e44381d6b4">
+              <usages>
+                <variableUsagesHasUsages Id="3c6d5e10-2a90-4d29-9e85-c7bcc467942c">
+                  <groupPortUsage Id="9b324f38-66fd-487a-8f3d-f059233206cf">
+                    <twinSAFEGroupAliasPort>
+                      <groupPortUsageReferencesTwinSAFEGroupAliasPort Id="d4bb6658-a39e-4ca1-8ae4-c66cdd1d55c8">
+                        <twinSAFEGroupAliasPortMoniker name="//FbRun" />
+                      </groupPortUsageReferencesTwinSAFEGroupAliasPort>
+                    </twinSAFEGroupAliasPort>
+                  </groupPortUsage>
+                </variableUsagesHasUsages>
+              </usages>
+            </variableUsages>
+          </variableHasSourceUsages>
+        </sourceUsages>
+        <targetUsages>
+          <variableHasTargetUsages Id="cdc7e252-b799-452c-a49c-c0f27bfba86f">
+            <variableUsages Id="45b1a1bf-fe2f-41d2-9662-2b18154e2ecc" />
+          </variableHasTargetUsages>
+        </targetUsages>
+      </variable>
+    </safetyApplicationHasVariables>
+    <safetyApplicationHasVariables Id="7ef33658-3aae-4c08-92e3-960fd0357513">
+      <variable Id="6feb8179-bd57-469b-a88c-ad8317ceb8a7" name="bInRun_Out" isLocal="false">
+        <sourceUsages>
+          <variableHasSourceUsages Id="bd63ec93-208d-4fd6-a9a5-a68187c0eef5">
+            <variableUsages Id="ae932e42-f4b9-4b52-ac8e-193a2089f592">
+              <usages>
+                <variableUsagesHasUsages Id="c8d577fe-7ae4-43b1-970b-81641b26ad79">
+                  <groupPortUsage Id="74ec4af7-c5fa-4d16-a03a-d230cee97351">
+                    <twinSAFEGroupAliasPort>
+                      <groupPortUsageReferencesTwinSAFEGroupAliasPort Id="e3d4ecfb-4857-4626-b8b8-1c17bfe4467b">
+                        <twinSAFEGroupAliasPortMoniker name="//InRun" />
+                      </groupPortUsageReferencesTwinSAFEGroupAliasPort>
+                    </twinSAFEGroupAliasPort>
+                  </groupPortUsage>
+                </variableUsagesHasUsages>
+              </usages>
+            </variableUsages>
+          </variableHasSourceUsages>
+        </sourceUsages>
+        <targetUsages>
+          <variableHasTargetUsages Id="b8c6a0d9-3cc3-4bdc-b2cd-4988c289ccd9">
+            <variableUsages Id="4583faf0-629f-4455-9a0f-bcacad13cfe5" />
           </variableHasTargetUsages>
         </targetUsages>
       </variable>

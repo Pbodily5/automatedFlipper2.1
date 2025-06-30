@@ -1498,6 +1498,27 @@ External Setpoint Generation:
 		</Io>
 	</Project>
 	<Mappings>
-		<MappingInfo Identifier="{00000000-0010-0304-3000-040310000403}" Id="#x02030010"/>
+		<MappingInfo Identifier="{00000000-0010-0304-1000-040310000403}" Id="#x02030010"/>
+		<OwnerA Name="TIPC^PLC_MAIN^PLC_MAIN Instance">
+			<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 18 (EK1200)^Term 8 (EL1918)">
+				<Link VarA="PlcTask Inputs^GVL_devices.fbEstop.bEstopFbError" VarB="StandardInputs^Standard Out Var 5"/>
+				<Link VarA="PlcTask Inputs^GVL_devices.fbLtCurtains.bCurtainsMuted" VarB="StandardInputs^Standard Out Var 4"/>
+				<Link VarA="PlcTask Inputs^GVL_devices.fbLtCurtains.bLftCurtainFbError" VarB="StandardInputs^Standard Out Var 9"/>
+				<Link VarA="PlcTask Inputs^GVL_devices.fbLtCurtains.bRhtCurtainFbError" VarB="StandardInputs^Standard Out Var 11"/>
+				<Link VarA="PlcTask Inputs^GVL_machine.bComErr" VarB="StandardInputs^Standard Out Var 3"/>
+				<Link VarA="PlcTask Inputs^GVL_machine.bFbErr" VarB="StandardInputs^Standard Out Var 6"/>
+				<Link VarA="PlcTask Inputs^GVL_machine.bFbRun" VarB="StandardInputs^Standard Out Var 7"/>
+				<Link VarA="PlcTask Inputs^GVL_machine.bInRun" VarB="StandardInputs^Standard Out Var 8"/>
+				<Link VarA="PlcTask Inputs^GVL_machine.bOtherErr" VarB="StandardInputs^Standard Out Var 10"/>
+				<Link VarA="PlcTask Inputs^GVL_machine.bSafetyOk" VarB="StandardInputs^Standard Out Var 12"/>
+				<Link VarA="PlcTask Outputs^GVL_devices.fbEstop.bResetEstopFb" VarB="StandardOutputs^Standard In Var 14"/>
+				<Link VarA="PlcTask Outputs^GVL_devices.fbLtCurtains.bMuteCurtains" VarB="StandardOutputs^Standard In Var 13"/>
+				<Link VarA="PlcTask Outputs^GVL_devices.fbLtCurtains.bResetLftCurtainFb" VarB="StandardOutputs^Standard In Var 15"/>
+				<Link VarA="PlcTask Outputs^GVL_devices.fbLtCurtains.bResetRhtCurtainFb" VarB="StandardOutputs^Standard In Var 16"/>
+				<Link VarA="PlcTask Outputs^GVL_machine.bRunSafety" VarB="StandardOutputs^Standard In Var 2"/>
+				<Link VarA="PlcTask Outputs^GVL_machine.bSafetyBypass" VarB="StandardOutputs^Standard In Var 19"/>
+				<Link VarA="PlcTask Outputs^GVL_machine.bSafetyErrorAck" VarB="StandardOutputs^Standard In Var 1"/>
+			</OwnerB>
+		</OwnerA>
 	</Mappings>
 </TcSmProject>
