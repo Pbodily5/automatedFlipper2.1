@@ -1004,11 +1004,45 @@ External Setpoint Generation:
 		</Motion>
 		<Plc>
 			<Project GUID="{6036E6EF-E0ED-4D41-BFCF-5B60AD71A3FE}" Name="PLC_MAIN" PrjFilePath="PLC_MAIN\PLC_MAIN.plcproj" TmcFilePath="PLC_MAIN\PLC_MAIN.tmc" ReloadTmc="true" AmsPort="851" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcHash="{B39E8BD6-1CB3-CB14-EAE9-D87BB8849677}">
+				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcHash="{E3C3D3F9-A50E-4301-18A9-4842D53CBFC1}">
 					<Name>PLC_MAIN Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 					<Vars VarGrpType="1">
 						<Name>PlcTask Inputs</Name>
+						<Var>
+							<Name>GVL_devices.fbLtCurtains.bBtn</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL_devices.fbLtCurtains.bLftCurtainFbError</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL_devices.fbLtCurtains.bLftCurtainSigOk</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL_devices.fbLtCurtains.bRhtCurtainFbError</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL_devices.fbLtCurtains.bRhtCurtainSigOk</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL_devices.fbLtCurtains.nLftCurtainFbState</Name>
+							<Comment><![CDATA[States : 1 - Running, 2 - PreOp, 3 - Triggered, 6 - Reset ]]></Comment>
+							<Type>USINT</Type>
+						</Var>
+						<Var>
+							<Name>GVL_devices.fbLtCurtains.nRhtCurtainFbState</Name>
+							<Comment><![CDATA[States : 1 - Running, 2 - PreOp, 3 - Triggered, 6 - Reset ]]></Comment>
+							<Type>USINT</Type>
+						</Var>
+						<Var>
+							<Name>GVL_devices.fbLtCurtains.bCurtainsMuted</Name>
+							<Type>BOOL</Type>
+						</Var>
 						<Var>
 							<Name>GVL_devices.fbEstop.bBtn</Name>
 							<Type>BOOL</Type>
@@ -1232,40 +1266,6 @@ External Setpoint Generation:
 							<Comment><![CDATA[ Other safety error exist. (EDM FB)]]></Comment>
 							<Type>BOOL</Type>
 						</Var>
-						<Var>
-							<Name>GVL_devices.fbLtCurtains.bBtn</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>GVL_devices.fbLtCurtains.bLftCurtainFbError</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>GVL_devices.fbLtCurtains.bLftCurtainSigOk</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>GVL_devices.fbLtCurtains.bRhtCurtainFbError</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>GVL_devices.fbLtCurtains.bRhtCurtainSigOk</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>GVL_devices.fbLtCurtains.nLftCurtainFbState</Name>
-							<Comment><![CDATA[States : 1 - Running, 2 - PreOp, 3 - Triggered, 6 - Reset ]]></Comment>
-							<Type>USINT</Type>
-						</Var>
-						<Var>
-							<Name>GVL_devices.fbLtCurtains.nRhtCurtainFbState</Name>
-							<Comment><![CDATA[States : 1 - Running, 2 - PreOp, 3 - Triggered, 6 - Reset ]]></Comment>
-							<Type>USINT</Type>
-						</Var>
-						<Var>
-							<Name>GVL_devices.fbLtCurtains.bCurtainsMuted</Name>
-							<Type>BOOL</Type>
-						</Var>
 					</Vars>
 					<Vars VarGrpType="2" AreaNo="1">
 						<Name>PlcTask Outputs</Name>
@@ -1279,6 +1279,26 @@ External Setpoint Generation:
 						</Var>
 						<Var>
 							<Name>GVL_devices.fbLtBars.bYellowLight</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL_devices.fbLtCurtains.bRhtCurtainEnable</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL_devices.fbLtCurtains.bLftCurtainEnable</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL_devices.fbLtCurtains.bResetLftCurtainFb</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL_devices.fbLtCurtains.bResetRhtCurtainFb</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL_devices.fbLtCurtains.bMuteCurtains</Name>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
@@ -1440,26 +1460,6 @@ External Setpoint Generation:
 						<Var>
 							<Name>GVL_machine.bSafetyBypass</Name>
 							<Comment><![CDATA[Used to Bypass entire safety PLC. Should Only be accessible with high level credentials. ]]></Comment>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>GVL_devices.fbLtCurtains.bRhtCurtainEnable</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>GVL_devices.fbLtCurtains.bLftCurtainEnable</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>GVL_devices.fbLtCurtains.bResetLftCurtainFb</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>GVL_devices.fbLtCurtains.bResetRhtCurtainFb</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>GVL_devices.fbLtCurtains.bMuteCurtains</Name>
 							<Type>BOOL</Type>
 						</Var>
 					</Vars>
