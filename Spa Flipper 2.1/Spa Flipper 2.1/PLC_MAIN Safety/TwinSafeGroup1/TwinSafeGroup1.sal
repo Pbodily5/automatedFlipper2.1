@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<safetyApplication Crc="789781247" xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" dslVersion="1.5.0.0" Id="a7cfc1f4-594c-47f0-8c69-72aff77dce3c" name="" mapState="false" mapDiag="false" groupOrderId="0" passificationAllowed="false" temporaryDeactivationAllowed="false" permamentDeactivationAllowed="false" xmlid="0" analogFBOutputReplacementValues="Zero" verifyAnalogFBInputsIfStart="false" userFbId="00000000-0000-0000-0000-000000000000" xmlns="http://schemas.microsoft.com/dsltools/SafetyApplicationLanguage">
+<safetyApplication Crc="1419502280" xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" dslVersion="1.5.0.0" Id="a7cfc1f4-594c-47f0-8c69-72aff77dce3c" name="" mapState="false" mapDiag="false" groupOrderId="0" passificationAllowed="false" temporaryDeactivationAllowed="false" permamentDeactivationAllowed="false" xmlid="0" analogFBOutputReplacementValues="Zero" verifyAnalogFBInputsIfStart="false" userFbId="00000000-0000-0000-0000-000000000000" xmlns="http://schemas.microsoft.com/dsltools/SafetyApplicationLanguage">
   <networks>
     <safetyApplicationHasNetworks Id="5442c5c8-6034-4cd3-8e27-b1e32a6fcb0b">
       <Network Id="bd8b2c9b-fcf3-41f9-bc31-69e55f61e6a6" name="Network1" networkName="Network1" intId="1" networkOrderId="0">
@@ -381,6 +381,53 @@
               </parameterPorts>
             </fBEdm>
           </networkHasFunctionBlocks>
+          <networkHasFunctionBlocks Id="f1ce601d-eecc-49c1-9438-13f8b231e6f6">
+            <fBAnd Id="29d5929c-9c7c-4531-b1a8-f861943e94a2" name="FBAnd1" instanceName="FBAnd1" orderOfExecution="9" mapState="false" mapDiag="false" functionName="safeAnd">
+              <inPorts>
+                <functioBlockHasInPorts Id="52677690-6c1a-4774-842d-f477b0cf4f27">
+                  <inPort Id="9f4b83ef-726d-4470-8148-e6a6582bcf1e" name="AndIn1" portName="AndIn1" portNum="2" objectIndex="8" varId="2" filter="3" portDataType="1" channelInterface="Activated" deactivate1="Break Contact (NC)" maxDeviation="0" resetTime="0" />
+                </functioBlockHasInPorts>
+                <functioBlockHasInPorts Id="443b299b-9eb8-437b-a920-3b01a9a18872">
+                  <inPort Id="45175f8e-bfac-48cf-9c26-e37ba3b1f0dc" name="AndIn2" portName="AndIn2" portNum="3" objectIndex="9" varId="3" filter="2" portDataType="1" channelInterface="Activated" deactivate1="Break Contact (NC)" maxDeviation="0" resetTime="0" />
+                </functioBlockHasInPorts>
+                <functioBlockHasInPorts Id="e9fdff19-0b98-4d0a-b32e-9a8fddd7673f">
+                  <inPort Id="a2d48c98-5642-4d3a-8aa5-bf140a5d08b5" name="AndIn3" portName="AndIn3" portNum="4" objectIndex="10" varId="4" filter="2" portDataType="1" channelInterface="Deactivated" maxDeviation="0" resetTime="0" />
+                </functioBlockHasInPorts>
+                <functioBlockHasInPorts Id="64d59338-0028-458a-8747-2db03cf72a62">
+                  <inPort Id="7556252b-eeda-45ee-bc6c-83b4a927d11c" name="AndIn4" portName="AndIn4" portNum="5" objectIndex="11" varId="5" filter="2" portDataType="1" channelInterface="Deactivated" maxDeviation="0" resetTime="0" />
+                </functioBlockHasInPorts>
+                <functioBlockHasInPorts Id="b328b441-feea-42d9-ad55-edae6863165b">
+                  <inPort Id="31dd7cab-632f-47e3-813e-b08fff79c0cf" name="AndIn5" portName="AndIn5" portNum="6" objectIndex="12" varId="6" filter="2" portDataType="1" channelInterface="Deactivated" maxDeviation="0" resetTime="0" />
+                </functioBlockHasInPorts>
+                <functioBlockHasInPorts Id="e2720b25-aac4-4b40-8271-a6368c0dfe34">
+                  <inPort Id="669b7fd3-296a-4731-bd38-bdc0bd5d5874" name="AndIn6" portName="AndIn6" portNum="7" objectIndex="13" varId="7" filter="2" portDataType="1" channelInterface="Deactivated" maxDeviation="0" resetTime="0" />
+                </functioBlockHasInPorts>
+                <functioBlockHasInPorts Id="79f12c61-5ca8-48d1-9ecd-10eba5bec564">
+                  <inPort Id="15e0fec1-8774-4b6e-8088-b6de32f05f4c" name="AndIn7" portName="AndIn7" portNum="8" objectIndex="14" varId="8" filter="2" portDataType="1" channelInterface="Deactivated" maxDeviation="0" resetTime="0" />
+                </functioBlockHasInPorts>
+                <functioBlockHasInPorts Id="72151492-0062-45ba-919e-bbca2f9c301f">
+                  <inPort Id="09b43eb8-595a-402e-80a5-605d95d9030f" name="AndIn8" portName="AndIn8" portNum="9" objectIndex="15" varId="9" filter="2" portDataType="1" channelInterface="Deactivated" maxDeviation="0" resetTime="0" />
+                </functioBlockHasInPorts>
+              </inPorts>
+              <outPorts>
+                <functionBlockHasOutPorts Id="3822060c-f6e2-43f6-8532-22ddd2d60745">
+                  <outPort Id="c5d59bdb-1b9f-4393-9218-1f1607bd2f02" name="AndOut" portName="AndOut" portNum="8" objectIndex="1" varId="20" filter="7" portDataType="1" replacementValue="0">
+                    <targetFunctionBlockPorts>
+                      <wiredLink Id="90fe8c36-ef5a-4679-ab5f-dd6cf40be727">
+                        <inPortMoniker name="//Network1/FBTon1/TonIn" />
+                      </wiredLink>
+                      <wiredLink Id="4ce24679-2c8e-42cb-b82c-3d08a0af48b4">
+                        <inPortMoniker name="//Network1/FBMuting1/Muting1" />
+                      </wiredLink>
+                      <wiredLink Id="56119094-55b0-4c61-914b-3522f36c35cf">
+                        <inPortMoniker name="//Network1/FBMuting2/Muting1" />
+                      </wiredLink>
+                    </targetFunctionBlockPorts>
+                  </outPort>
+                </functionBlockHasOutPorts>
+              </outPorts>
+            </fBAnd>
+          </networkHasFunctionBlocks>
         </functionBlocks>
       </Network>
     </safetyApplicationHasNetworks>
@@ -489,36 +536,24 @@
       <variable Id="0293220f-ee89-45d4-9491-60487b4978fb" name="bMuteCurtains_in" isLocal="false">
         <sourceUsages>
           <variableHasSourceUsages Id="4e3468d4-8a56-49cf-b9d3-7d4e367f99c3">
-            <variableUsages Id="3fc8495f-e553-4c7c-9cbd-6649982b75d4" />
+            <variableUsages Id="3fc8495f-e553-4c7c-9cbd-6649982b75d4">
+              <usages>
+                <variableUsagesHasUsages Id="ee39e7d6-8493-44c1-bccf-c0854ed961dd">
+                  <aliasDeviceIoUsage Id="f65a0851-6dd2-4f80-b02a-b19a78c4b1f2" sdsId="13" channelId="1" functionId="1131179973" />
+                </variableUsagesHasUsages>
+              </usages>
+            </variableUsages>
           </variableHasSourceUsages>
         </sourceUsages>
         <targetUsages>
           <variableHasTargetUsages Id="907faf92-d6fd-4f19-b53e-0be4b5c0f1da">
             <variableUsages Id="2253ccf4-be71-4b49-be39-16368bbad78d">
               <usages>
-                <variableUsagesHasUsages Id="6f566a09-a51c-44c7-b369-c0ebe31ffbae">
-                  <fbPortUsage Id="c4172403-94b3-41d9-9bfe-41691d17e01f">
+                <variableUsagesHasUsages Id="41ef2aed-a718-4bac-92f4-5a5f59819a32">
+                  <fbPortUsage Id="6a2fc457-fe66-4b0d-831e-5f9b6694f574">
                     <functionBlockPort>
-                      <fbPortUsageReferencesFunctionBlockPort Id="77c95ea4-ca86-4bf2-ad90-5428717aa1a8">
-                        <inPortMoniker name="//Network1/FBTon1/TonIn" />
-                      </fbPortUsageReferencesFunctionBlockPort>
-                    </functionBlockPort>
-                  </fbPortUsage>
-                </variableUsagesHasUsages>
-                <variableUsagesHasUsages Id="0b05124d-d36c-4c45-b104-894491eaa937">
-                  <fbPortUsage Id="973cd008-5243-45c0-8ed3-f175ae2a02cb">
-                    <functionBlockPort>
-                      <fbPortUsageReferencesFunctionBlockPort Id="76618b29-81c5-4a92-93b6-2687b545f413">
-                        <inPortMoniker name="//Network1/FBMuting1/Muting1" />
-                      </fbPortUsageReferencesFunctionBlockPort>
-                    </functionBlockPort>
-                  </fbPortUsage>
-                </variableUsagesHasUsages>
-                <variableUsagesHasUsages Id="b615e16d-59d3-46ba-8025-6dd7fd5c15f5">
-                  <fbPortUsage Id="c76641f3-0497-4c6e-ad13-03194ff2b3d9">
-                    <functionBlockPort>
-                      <fbPortUsageReferencesFunctionBlockPort Id="8e66efd4-d7bf-40d9-9c30-2cb8f2300e46">
-                        <inPortMoniker name="//Network1/FBMuting2/Muting1" />
+                      <fbPortUsageReferencesFunctionBlockPort Id="f7df6d20-3c1a-418f-b3c8-200ac3efb63a">
+                        <inPortMoniker name="//Network1/FBAnd1/AndIn1" />
                       </fbPortUsageReferencesFunctionBlockPort>
                     </functionBlockPort>
                   </fbPortUsage>
@@ -533,7 +568,13 @@
       <variable Id="02ad0cf1-6d17-45b9-b736-06b8901c6641" name="OSSD1_in" isLocal="false">
         <sourceUsages>
           <variableHasSourceUsages Id="a9a6eaf8-bad6-4b8a-828f-204a4b49a570">
-            <variableUsages Id="7f4c6c32-31a0-4590-b3f6-e90a0d3d640a" />
+            <variableUsages Id="7f4c6c32-31a0-4590-b3f6-e90a0d3d640a">
+              <usages>
+                <variableUsagesHasUsages Id="7810ba6c-c63a-4355-8814-74544282246f">
+                  <aliasDeviceIoUsage Id="c7427480-0d1e-49a4-b2b9-1fb827d5b6af" sdsId="26" channelId="1" functionId="1610678529" />
+                </variableUsagesHasUsages>
+              </usages>
+            </variableUsages>
           </variableHasSourceUsages>
         </sourceUsages>
         <targetUsages>
@@ -559,7 +600,13 @@
       <variable Id="54f6cd19-9e44-4426-89e5-b4c3a8f87fde" name="OSSD2_in" isLocal="false">
         <sourceUsages>
           <variableHasSourceUsages Id="cc807f93-c811-4c00-83a8-592f95e7d17b">
-            <variableUsages Id="f9b772f8-2d5c-4d0a-873f-b160bae1593c" />
+            <variableUsages Id="f9b772f8-2d5c-4d0a-873f-b160bae1593c">
+              <usages>
+                <variableUsagesHasUsages Id="dc7a446c-4d13-48aa-8a6f-96fb4ad70d80">
+                  <aliasDeviceIoUsage Id="b5f3a3bf-5f1d-415d-8fbf-6ac4f2438e4f" sdsId="26" channelId="3" functionId="1611727105" />
+                </variableUsagesHasUsages>
+              </usages>
+            </variableUsages>
           </variableHasSourceUsages>
         </sourceUsages>
         <targetUsages>
@@ -585,7 +632,13 @@
       <variable Id="d00a3aac-22fa-436a-be9d-26192fc24d58" name="OSSD3_in" isLocal="false">
         <sourceUsages>
           <variableHasSourceUsages Id="e16738c2-43ed-41d1-b4e9-50326cde3bfa">
-            <variableUsages Id="ed8704a8-8c2f-4299-bcb4-ed70b0e94e16" />
+            <variableUsages Id="ed8704a8-8c2f-4299-bcb4-ed70b0e94e16">
+              <usages>
+                <variableUsagesHasUsages Id="6bba52a1-971d-4e26-a940-3b5aba880165">
+                  <aliasDeviceIoUsage Id="da299615-c67c-451d-b380-d8bca108c13e" sdsId="26" channelId="5" functionId="1612775681" />
+                </variableUsagesHasUsages>
+              </usages>
+            </variableUsages>
           </variableHasSourceUsages>
         </sourceUsages>
         <targetUsages>
@@ -611,7 +664,13 @@
       <variable Id="d68c1407-4698-4b7e-8323-e12cfdce9846" name="OSSD4_in" isLocal="false">
         <sourceUsages>
           <variableHasSourceUsages Id="3fba07c9-8f1b-44a7-9bc6-2ca18b30f8b9">
-            <variableUsages Id="44331837-e05d-4cc7-ab0a-5e0de83090f9" />
+            <variableUsages Id="44331837-e05d-4cc7-ab0a-5e0de83090f9">
+              <usages>
+                <variableUsagesHasUsages Id="8b4f29cd-c8f1-430a-8ff8-177ddb67f777">
+                  <aliasDeviceIoUsage Id="565a27ab-f0dc-464a-90f3-7efeb3849b86" sdsId="26" channelId="7" functionId="1613824257" />
+                </variableUsagesHasUsages>
+              </usages>
+            </variableUsages>
           </variableHasSourceUsages>
         </sourceUsages>
         <targetUsages>
@@ -654,7 +713,13 @@
         </sourceUsages>
         <targetUsages>
           <variableHasTargetUsages Id="4fcba740-59d8-4cfc-b8ea-320356965b84">
-            <variableUsages Id="ba123231-a912-4c2f-8b9f-c08a32bc9700" />
+            <variableUsages Id="ba123231-a912-4c2f-8b9f-c08a32bc9700">
+              <usages>
+                <variableUsagesHasUsages Id="f4f290bc-790b-47c2-b64e-35612c9a736e">
+                  <aliasDeviceIoUsage Id="b41f8a2c-e43d-498b-824c-72683d37713b" sdsId="9" channelId="1" functionId="1131179972" />
+                </variableUsagesHasUsages>
+              </usages>
+            </variableUsages>
           </variableHasTargetUsages>
         </targetUsages>
       </variable>
@@ -680,7 +745,13 @@
         </sourceUsages>
         <targetUsages>
           <variableHasTargetUsages Id="ac2b8ba7-7d74-4951-be31-72b2729f8fbd">
-            <variableUsages Id="1e9ab673-9622-441e-bb99-bc596652a755" />
+            <variableUsages Id="1e9ab673-9622-441e-bb99-bc596652a755">
+              <usages>
+                <variableUsagesHasUsages Id="d86b7fb5-7b81-49b2-9a2a-2f2fae831276">
+                  <aliasDeviceIoUsage Id="7e758b1e-0d37-4c81-bf08-03b577a0ad2a" sdsId="11" channelId="1" functionId="1131179972" />
+                </variableUsagesHasUsages>
+              </usages>
+            </variableUsages>
           </variableHasTargetUsages>
         </targetUsages>
       </variable>
@@ -706,7 +777,13 @@
         </sourceUsages>
         <targetUsages>
           <variableHasTargetUsages Id="87b98369-83c2-48d9-b21a-1568611ed74f">
-            <variableUsages Id="733864e6-d45e-45ac-8d78-91b52c4e70fc" />
+            <variableUsages Id="733864e6-d45e-45ac-8d78-91b52c4e70fc">
+              <usages>
+                <variableUsagesHasUsages Id="ee56dc6d-2d0e-4c65-a126-341090499b29">
+                  <aliasDeviceIoUsage Id="d1ec0516-81f2-4412-8c20-139d37d399fa" sdsId="21" channelId="1" functionId="1131179972" />
+                </variableUsagesHasUsages>
+              </usages>
+            </variableUsages>
           </variableHasTargetUsages>
         </targetUsages>
       </variable>
@@ -732,7 +809,13 @@
         </sourceUsages>
         <targetUsages>
           <variableHasTargetUsages Id="f04d207c-84ee-4e2b-912d-30279bb09a5e">
-            <variableUsages Id="cce742d7-c6a3-4b48-8e97-49c66ffe26bb" />
+            <variableUsages Id="cce742d7-c6a3-4b48-8e97-49c66ffe26bb">
+              <usages>
+                <variableUsagesHasUsages Id="57f8980d-82cd-42ed-a595-767a88512749">
+                  <aliasDeviceIoUsage Id="a29fa12b-f4e3-4593-a2ed-69c6a9ce5b85" sdsId="22" channelId="1" functionId="1131179972" />
+                </variableUsagesHasUsages>
+              </usages>
+            </variableUsages>
           </variableHasTargetUsages>
         </targetUsages>
       </variable>
@@ -758,7 +841,13 @@
         </sourceUsages>
         <targetUsages>
           <variableHasTargetUsages Id="f3f2c1b8-4b88-47d7-95ff-063ca5eb6642">
-            <variableUsages Id="86740197-52d5-4438-98c0-3517b8be4a07" />
+            <variableUsages Id="86740197-52d5-4438-98c0-3517b8be4a07">
+              <usages>
+                <variableUsagesHasUsages Id="dab1d008-7227-4236-b62d-8b71d3460515">
+                  <aliasDeviceIoUsage Id="4160e6b1-9ecd-4f12-b293-97b5d0d9dd55" sdsId="4" channelId="1" functionId="1131179972" />
+                </variableUsagesHasUsages>
+              </usages>
+            </variableUsages>
           </variableHasTargetUsages>
         </targetUsages>
       </variable>
@@ -784,7 +873,13 @@
         </sourceUsages>
         <targetUsages>
           <variableHasTargetUsages Id="2b34db77-6f1b-40b6-8b73-beb9079c0da6">
-            <variableUsages Id="0c03a4bc-9b59-499f-b1d8-93746f24d057" />
+            <variableUsages Id="0c03a4bc-9b59-499f-b1d8-93746f24d057">
+              <usages>
+                <variableUsagesHasUsages Id="90162a28-3e54-4253-9d94-92ae7ef089a6">
+                  <aliasDeviceIoUsage Id="58e8615a-a93c-4288-8f69-2a26a9d3a400" sdsId="12" channelId="1" functionId="1131179972" />
+                </variableUsagesHasUsages>
+              </usages>
+            </variableUsages>
           </variableHasTargetUsages>
         </targetUsages>
       </variable>
@@ -810,7 +905,13 @@
         </sourceUsages>
         <targetUsages>
           <variableHasTargetUsages Id="0ce7ccb3-d1dc-4b37-894a-c6a32f8806cf">
-            <variableUsages Id="48517d6f-22fd-4828-82d8-92efcacbb565" />
+            <variableUsages Id="48517d6f-22fd-4828-82d8-92efcacbb565">
+              <usages>
+                <variableUsagesHasUsages Id="53dedf64-1aa7-4d0c-8040-526d5cbb7585">
+                  <aliasDeviceIoUsage Id="1c3078bb-fa2f-4be8-a18c-55172c0e015f" sdsId="25" channelId="1" functionId="1879113985" />
+                </variableUsagesHasUsages>
+              </usages>
+            </variableUsages>
           </variableHasTargetUsages>
         </targetUsages>
       </variable>
@@ -819,7 +920,13 @@
       <variable Id="1e010d56-288e-4b35-b2d6-e6284d62641e" name="bMotorContactorMonitor_in" isLocal="false">
         <sourceUsages>
           <variableHasSourceUsages Id="ee30eb5f-94a3-4b9a-81af-b02ae2ac66df">
-            <variableUsages Id="96a79f5d-001e-4aa1-ab39-62207d7f7288" />
+            <variableUsages Id="96a79f5d-001e-4aa1-ab39-62207d7f7288">
+              <usages>
+                <variableUsagesHasUsages Id="97eb056e-ec7f-4353-824b-c1e2a6c8ddce">
+                  <aliasDeviceIoUsage Id="982e5cab-ee10-49b1-88f1-84f7136f687b" sdsId="26" channelId="15" functionId="1618018561" />
+                </variableUsagesHasUsages>
+              </usages>
+            </variableUsages>
           </variableHasSourceUsages>
         </sourceUsages>
         <targetUsages>
@@ -845,7 +952,13 @@
       <variable Id="898935db-8e92-4131-a255-aa4762797663" name="bResetEstopFB_in" isLocal="false">
         <sourceUsages>
           <variableHasSourceUsages Id="11af8dbd-470d-47a5-a956-cb520eb98fae">
-            <variableUsages Id="2b87d7a0-9b8b-4551-811a-32e928323927" />
+            <variableUsages Id="2b87d7a0-9b8b-4551-811a-32e928323927">
+              <usages>
+                <variableUsagesHasUsages Id="4d9f1625-9c25-40e8-a00b-cf03b0e8e457">
+                  <aliasDeviceIoUsage Id="9327258d-ea4a-4a3e-aff1-d8ec6dd58f1c" sdsId="14" channelId="1" functionId="1131179973" />
+                </variableUsagesHasUsages>
+              </usages>
+            </variableUsages>
           </variableHasSourceUsages>
         </sourceUsages>
         <targetUsages>
@@ -873,8 +986,8 @@
           <variableHasSourceUsages Id="3a783abf-b684-4405-a78d-88083f1e638e">
             <variableUsages Id="1b62099a-cea3-41bd-aed7-b95e3660df7e">
               <usages>
-                <variableUsagesHasUsages Id="716b8c80-5a0b-4fa4-8257-6358da1b3872">
-                  <aliasDeviceIoUsage Id="aeb9443d-ee1b-4369-9722-3cdcd8996a83" sdsId="17" channelId="9" functionId="1614872833" />
+                <variableUsagesHasUsages Id="9be9dac1-4158-4d97-afd4-3e27b77b0de0">
+                  <aliasDeviceIoUsage Id="7dc1475e-815d-4147-bb9b-07a5236ce31a" sdsId="26" channelId="9" functionId="1614872833" />
                 </variableUsagesHasUsages>
               </usages>
             </variableUsages>
@@ -889,6 +1002,15 @@
                     <functionBlockPort>
                       <fbPortUsageReferencesFunctionBlockPort Id="5f572cfe-f3cb-4c54-a8a0-4fa248c32920">
                         <inPortMoniker name="//Network1/FBEstop1/EStopIn1" />
+                      </fbPortUsageReferencesFunctionBlockPort>
+                    </functionBlockPort>
+                  </fbPortUsage>
+                </variableUsagesHasUsages>
+                <variableUsagesHasUsages Id="5b5dedd3-9726-4062-bec5-b36e38817e39">
+                  <fbPortUsage Id="193afbd2-03b6-4849-ba9e-704a1036d24c">
+                    <functionBlockPort>
+                      <fbPortUsageReferencesFunctionBlockPort Id="7b8d9f9c-9f30-4315-a189-a5369b4e56a2">
+                        <inPortMoniker name="//Network1/FBAnd1/AndIn2" />
                       </fbPortUsageReferencesFunctionBlockPort>
                     </functionBlockPort>
                   </fbPortUsage>
@@ -920,7 +1042,13 @@
         </sourceUsages>
         <targetUsages>
           <variableHasTargetUsages Id="ef7b7c7a-73d2-4b40-8d68-e85bdc2426c2">
-            <variableUsages Id="e9b30ad9-c0d5-461f-93a7-dbe407f4e8ee" />
+            <variableUsages Id="e9b30ad9-c0d5-461f-93a7-dbe407f4e8ee">
+              <usages>
+                <variableUsagesHasUsages Id="618c7d19-7395-4046-8e02-e6ed556cb4ed">
+                  <aliasDeviceIoUsage Id="ae46cb8b-11e0-4795-9b98-3ad2386c5172" sdsId="5" channelId="1" functionId="1131179972" />
+                </variableUsagesHasUsages>
+              </usages>
+            </variableUsages>
           </variableHasTargetUsages>
         </targetUsages>
       </variable>
@@ -946,7 +1074,13 @@
         </sourceUsages>
         <targetUsages>
           <variableHasTargetUsages Id="01ef864e-3225-4c98-87be-97054c6098ba">
-            <variableUsages Id="66544b10-ffc6-4eec-b897-10f33f1f60dd" />
+            <variableUsages Id="66544b10-ffc6-4eec-b897-10f33f1f60dd">
+              <usages>
+                <variableUsagesHasUsages Id="6df93c96-a808-40ef-9919-00112cb7d644">
+                  <aliasDeviceIoUsage Id="83d091b7-e889-4f31-8c16-bcd29b0016e8" sdsId="20" channelId="1" functionId="1131179972" />
+                </variableUsagesHasUsages>
+              </usages>
+            </variableUsages>
           </variableHasTargetUsages>
         </targetUsages>
       </variable>
@@ -972,7 +1106,13 @@
         </sourceUsages>
         <targetUsages>
           <variableHasTargetUsages Id="0091e0b8-00d7-4382-b47e-dc9da10ca011">
-            <variableUsages Id="6a4460fe-925d-4781-93cf-0b990e495484" />
+            <variableUsages Id="6a4460fe-925d-4781-93cf-0b990e495484">
+              <usages>
+                <variableUsagesHasUsages Id="90679719-2caf-4a73-b777-f4351615de3d">
+                  <aliasDeviceIoUsage Id="59b320a7-8fd5-4b14-a805-938e6f1a12f9" sdsId="6" channelId="1" functionId="1131179972" />
+                </variableUsagesHasUsages>
+              </usages>
+            </variableUsages>
           </variableHasTargetUsages>
         </targetUsages>
       </variable>
@@ -998,7 +1138,13 @@
         </sourceUsages>
         <targetUsages>
           <variableHasTargetUsages Id="1ab834ed-a6ac-473b-8e3c-45ec015df974">
-            <variableUsages Id="1c8189f8-1e8d-4b6e-bb9f-d55e7ee99047" />
+            <variableUsages Id="1c8189f8-1e8d-4b6e-bb9f-d55e7ee99047">
+              <usages>
+                <variableUsagesHasUsages Id="07285f7d-2f9f-4fa1-b017-4ac10428fa01">
+                  <aliasDeviceIoUsage Id="14abe5e3-c418-4edf-9448-0c21ebdb9751" sdsId="3" channelId="1" functionId="1131179972" />
+                </variableUsagesHasUsages>
+              </usages>
+            </variableUsages>
           </variableHasTargetUsages>
         </targetUsages>
       </variable>
@@ -1024,7 +1170,13 @@
         </sourceUsages>
         <targetUsages>
           <variableHasTargetUsages Id="cdc7e252-b799-452c-a49c-c0f27bfba86f">
-            <variableUsages Id="45b1a1bf-fe2f-41d2-9662-2b18154e2ecc" />
+            <variableUsages Id="45b1a1bf-fe2f-41d2-9662-2b18154e2ecc">
+              <usages>
+                <variableUsagesHasUsages Id="39804f4d-c77e-429c-bfad-09e415c23a9d">
+                  <aliasDeviceIoUsage Id="e9040a97-77b9-4a27-822d-575e8dfa842b" sdsId="7" channelId="1" functionId="1131179972" />
+                </variableUsagesHasUsages>
+              </usages>
+            </variableUsages>
           </variableHasTargetUsages>
         </targetUsages>
       </variable>
@@ -1050,7 +1202,77 @@
         </sourceUsages>
         <targetUsages>
           <variableHasTargetUsages Id="b8c6a0d9-3cc3-4bdc-b2cd-4988c289ccd9">
-            <variableUsages Id="4583faf0-629f-4455-9a0f-bcacad13cfe5" />
+            <variableUsages Id="4583faf0-629f-4455-9a0f-bcacad13cfe5">
+              <usages>
+                <variableUsagesHasUsages Id="62cf4641-7dfb-4ce4-a017-af6d3bc759e9">
+                  <aliasDeviceIoUsage Id="6160b9b1-15ab-4b3c-b8fd-98234c28e614" sdsId="8" channelId="1" functionId="1131179972" />
+                </variableUsagesHasUsages>
+              </usages>
+            </variableUsages>
+          </variableHasTargetUsages>
+        </targetUsages>
+      </variable>
+    </safetyApplicationHasVariables>
+    <safetyApplicationHasVariables Id="33a73d6c-e847-4d52-9d9a-a79e86067d57">
+      <variable Id="0ac47146-6228-46af-8fed-07486deac0dc" name="bLftCurtainMuteEnable_in" isLocal="false">
+        <sourceUsages>
+          <variableHasSourceUsages Id="b2727c0a-dd5f-44ca-a858-7ff757c2a66f">
+            <variableUsages Id="e7d7a1bc-8217-470c-8b38-2d54f796b3b8">
+              <usages>
+                <variableUsagesHasUsages Id="31ad9330-1a17-42cc-a9c0-4542d666164d">
+                  <aliasDeviceIoUsage Id="56590b44-17f3-49b7-9094-3effe39184e2" sdsId="24" channelId="1" functionId="1131179973" />
+                </variableUsagesHasUsages>
+              </usages>
+            </variableUsages>
+          </variableHasSourceUsages>
+        </sourceUsages>
+        <targetUsages>
+          <variableHasTargetUsages Id="675ffbd5-323b-497e-b87b-7ee46db6cb74">
+            <variableUsages Id="5cdb9f24-66a6-47a0-a980-8c3b04313638">
+              <usages>
+                <variableUsagesHasUsages Id="6dc418d3-ea23-4041-bdaa-1e785f610d44">
+                  <fbPortUsage Id="c1194965-5123-4d44-b80d-de62813b0057">
+                    <functionBlockPort>
+                      <fbPortUsageReferencesFunctionBlockPort Id="d6a3bf91-fcdb-49a1-8817-c2a090e9e2d7">
+                        <inPortMoniker name="//Network1/FBMuting1/Enable" />
+                      </fbPortUsageReferencesFunctionBlockPort>
+                    </functionBlockPort>
+                  </fbPortUsage>
+                </variableUsagesHasUsages>
+              </usages>
+            </variableUsages>
+          </variableHasTargetUsages>
+        </targetUsages>
+      </variable>
+    </safetyApplicationHasVariables>
+    <safetyApplicationHasVariables Id="439c6edc-d869-4023-bc73-b313bb26a550">
+      <variable Id="8540142c-39f2-4e39-819f-fec5f5d2c8bf" name="bRhtCurtainMuteEnable_in" isLocal="false">
+        <sourceUsages>
+          <variableHasSourceUsages Id="937ca98d-0124-4e84-ba99-c1a649f4bea0">
+            <variableUsages Id="da159b06-f742-4734-9174-4368c18c9304">
+              <usages>
+                <variableUsagesHasUsages Id="cb739491-66f7-4a31-aea3-a077dd244b53">
+                  <aliasDeviceIoUsage Id="838f8c6b-29da-4f47-b438-996b0d22bfe1" sdsId="23" channelId="1" functionId="1131179973" />
+                </variableUsagesHasUsages>
+              </usages>
+            </variableUsages>
+          </variableHasSourceUsages>
+        </sourceUsages>
+        <targetUsages>
+          <variableHasTargetUsages Id="92dfe162-ff7f-4a31-b4dd-613d208cac1c">
+            <variableUsages Id="9fd8e2ce-c4db-4351-9676-0a4fe575e284">
+              <usages>
+                <variableUsagesHasUsages Id="56c3e32a-29c9-4652-9114-a83886ee5a4c">
+                  <fbPortUsage Id="c4c4a9df-c7d4-43af-adc7-4844deb5ecf7">
+                    <functionBlockPort>
+                      <fbPortUsageReferencesFunctionBlockPort Id="835e5283-6de4-4940-ae3f-2becfb0c1e67">
+                        <inPortMoniker name="//Network1/FBMuting2/Enable" />
+                      </fbPortUsageReferencesFunctionBlockPort>
+                    </functionBlockPort>
+                  </fbPortUsage>
+                </variableUsagesHasUsages>
+              </usages>
+            </variableUsages>
           </variableHasTargetUsages>
         </targetUsages>
       </variable>

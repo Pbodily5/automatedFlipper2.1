@@ -30,21 +30,21 @@
 			</SubItem>
 		</DataType>
 		<DataType>
-			<Name GUID="{18071995-0000-0000-0000-002000000006}" IecBaseType="true" BitType="true" AutoDeleteType="true" HideSubItems="true">ARRAY [0..5] OF BIT</Name>
-			<BitSize>6</BitSize>
+			<Name GUID="{18071995-0000-0000-0000-002000000003}" IecBaseType="true" AutoDeleteType="true" HideSubItems="true">ARRAY [0..2] OF BIT</Name>
+			<BitSize>3</BitSize>
 			<BaseType GUID="{18071995-0000-0000-0000-000000000010}">BIT</BaseType>
 			<ArrayInfo>
 				<LBound>0</LBound>
-				<Elements>6</Elements>
+				<Elements>3</Elements>
 			</ArrayInfo>
 		</DataType>
 		<DataType>
-			<Name GUID="{18071995-0000-0000-0000-002000000001}" IecBaseType="true" BitType="true" AutoDeleteType="true" HideSubItems="true">ARRAY [0..0] OF BIT</Name>
-			<BitSize>1</BitSize>
+			<Name GUID="{18071995-0000-0000-0000-002000000007}" IecBaseType="true" AutoDeleteType="true" HideSubItems="true">ARRAY [0..6] OF BIT</Name>
+			<BitSize>7</BitSize>
 			<BaseType GUID="{18071995-0000-0000-0000-000000000010}">BIT</BaseType>
 			<ArrayInfo>
 				<LBound>0</LBound>
-				<Elements>1</Elements>
+				<Elements>7</Elements>
 			</ArrayInfo>
 		</DataType>
 		<DataType>
@@ -66,7 +66,7 @@
 		<EtherCAT SlaveType="2" PdiType="#x0005" MboxDataLinkLayer="true" StateMBoxPolling="true" CycleMBoxPollingTime="0" CoeType="3" FoeType="1" VendorId="#x00000002" ProductCode="#x077e3052" RevisionNo="#x00110000" InfoDataAddr="true" RepeatSupport="true" TimeoutStateChange1="5000" TimeoutMailbox2="10000" TComSupport="true" PortPhys="51" DebugMemory="8" SafetyLogicSupported="true" MaxSlotCount="2" Type="EL1918, 8Ch. Safety Input 24V, TwinSAFE" Desc="EL1918">
 			<SyncMan>001000012600010001000000000100010001001026010000</SyncMan>
 			<SyncMan>001100012200010002000000000100010001001122010000</SyncMan>
-			<SyncMan>001209002400010003000000000000000800001224010000</SyncMan>
+			<SyncMan>00120a002400010003000000000000000800001224010000</SyncMan>
 			<SyncMan>001d0a002000010004000000000000000900001d20010000</SyncMan>
 			<SyncMan>002e00002400000003000000000000000000002e24000000</SyncMan>
 			<SyncMan>002f00002000000004000000000000000000002f20000000</SyncMan>
@@ -82,12 +82,12 @@
 			<SuTask>#x00000000</SuTask>
 			<MBoxUserCmdData>004003000a0000001f000000000000000000000000000000000000000000000020f31005020000000100456e61626c6520446961674d65737361676520617320656d657267656e637900</MBoxUserCmdData>
 			<Pdo Name="ConnectionInputs" Index="#x1a00" Flags="#x2011" SyncMan="3">
-				<Entry Name="Message_18 TxPDO" Index="#x7000" Sub="#x01">
+				<Entry Name="Message_25 TxPDO" Index="#x7000" Sub="#x01">
 					<Type GUID="{2438F91B-E188-4ED7-8594-54354F9ED6A4}" Namespace="Safety">FSOE_6</Type>
 				</Entry>
 			</Pdo>
 			<Pdo Name="ConnectionOutputs" Index="#x1600" InOut="1" Flags="#x2011" SyncMan="2">
-				<Entry Name="Message_18 RxPDO" Index="#x6000" Sub="#x01">
+				<Entry Name="Message_25 RxPDO" Index="#x6000" Sub="#x01">
 					<Type GUID="{2438F91B-E188-4ED7-8594-54354F9ED6A4}" Namespace="Safety">FSOE_6</Type>
 				</Entry>
 			</Pdo>
@@ -122,8 +122,17 @@
 				<Entry Name="Standard Out Var 12" Index="#x7000" Sub="#x0a">
 					<Type>BIT</Type>
 				</Entry>
+				<Entry Name="Standard Out Var 20" Index="#x7000" Sub="#x0b">
+					<Type>BIT</Type>
+				</Entry>
+				<Entry Name="Standard Out Var 21" Index="#x7000" Sub="#x0c">
+					<Type>BIT</Type>
+				</Entry>
+				<Entry Name="Standard Out Var 22" Index="#x7000" Sub="#x0d">
+					<Type>BIT</Type>
+				</Entry>
 				<Entry>
-					<Type GUID="{18071995-0000-0000-0000-002000000006}">ARRAY [0..5] OF BIT</Type>
+					<Type GUID="{18071995-0000-0000-0000-002000000003}">ARRAY [0..2] OF BIT</Type>
 				</Entry>
 			</Pdo>
 			<Pdo Name="StandardOutputs" Index="#x17f0" InOut="1" Flags="#x2011" SyncMan="2">
@@ -148,8 +157,14 @@
 				<Entry Name="Standard In Var 19" Index="#x6000" Sub="#x07">
 					<Type>BIT</Type>
 				</Entry>
+				<Entry Name="Standard In Var 23" Index="#x6000" Sub="#x08">
+					<Type>BIT</Type>
+				</Entry>
+				<Entry Name="Standard In Var 24" Index="#x6000" Sub="#x09">
+					<Type>BIT</Type>
+				</Entry>
 				<Entry>
-					<Type GUID="{18071995-0000-0000-0000-002000000001}">ARRAY [0..0] OF BIT</Type>
+					<Type GUID="{18071995-0000-0000-0000-002000000007}">ARRAY [0..6] OF BIT</Type>
 				</Entry>
 			</Pdo>
 			<Pdo Name="FSLOGIC Inputs" Index="#x1bff" Flags="#x0091" SyncMan="3">

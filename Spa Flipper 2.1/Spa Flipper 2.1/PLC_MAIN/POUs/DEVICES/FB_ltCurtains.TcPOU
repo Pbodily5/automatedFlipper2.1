@@ -10,6 +10,9 @@ VAR
 	nLftCurtainFbState 		AT %I* : USINT; //States : 1 - Running, 2 - PreOp, 3 - Triggered, 6 - Reset 
 	nRhtCurtainFbState 		AT %I* : USINT; //States : 1 - Running, 2 - PreOp, 3 - Triggered, 6 - Reset 
 	
+
+	bRhtCurtainEnable	AT %Q* : BOOL;
+	bLftCurtainEnable	AT %Q* : BOOL;
 	bResetLftCurtainFb 	AT %Q* : BOOL;
 	bResetRhtCurtainFb 	AT %Q* : BOOL;
 	bMuteCurtains 		AT %Q* : BOOL;
@@ -32,6 +35,28 @@ END_VAR
 ]]></ST>
         </Implementation>
       </Get>
+    </Property>
+    <Property Name="enableLftCurtain" Id="{f4723c28-2852-40ee-8052-0951da5c885c}">
+      <Declaration><![CDATA[PROPERTY enableLftCurtain : BOOL]]></Declaration>
+      <Set Name="Set" Id="{9ecb6982-d6ca-4bff-979b-3850342c8d7d}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[bLftCurtainEnable := enableLftCurtain;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="enableRhtCurtain" Id="{314778af-c8a9-4f73-bf3a-7a9e4f5f8c0f}">
+      <Declaration><![CDATA[PROPERTY enableRhtCurtain : BOOL]]></Declaration>
+      <Set Name="Set" Id="{aa90021d-f0c9-4f8d-8e34-70ee05bcd5da}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[bRhtCurtainEnable := enableRhtCurtain;]]></ST>
+        </Implementation>
+      </Set>
     </Property>
     <Method Name="mute" Id="{3beb5be0-d98c-4c48-9772-6e99b4c14dc6}">
       <Declaration><![CDATA[METHOD mute : BOOL
@@ -97,6 +122,12 @@ unmute := TRUE;]]></ST>
     </LineIds>
     <LineIds Name="FB_ltCurtains.curtainsMuted.Get">
       <LineId Id="3" Count="0" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_ltCurtains.enableLftCurtain.Set">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_ltCurtains.enableRhtCurtain.Set">
       <LineId Id="2" Count="0" />
     </LineIds>
     <LineIds Name="FB_ltCurtains.mute">

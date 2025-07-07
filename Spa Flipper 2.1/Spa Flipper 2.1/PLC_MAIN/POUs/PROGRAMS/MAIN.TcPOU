@@ -247,6 +247,8 @@ END_VAR
 		IF GVL_machine.bInRun AND GVL_machine.bInRun THEN
 			GVL_devices.fbLtCurtains.resetLftCurtainFB := TRUE;
 			GVL_devices.fbLtCurtains.resetRhtCurtainFB := TRUE;
+			GVL_devices.fbLtCurtains.enableLftCurtain := TRUE;
+			GVL_devices.fbLtCurtains.enableRhtCurtain := TRUE;
 			GVL_devices.fbEstop.resetEstopFB := TRUE;
 			//bSafetyInit := TRUE;
 			//eSafetyState := OK;
@@ -254,6 +256,8 @@ END_VAR
 		IF GVL_devices.fbEstop.nEstopFbState = 6 AND GVL_devices.fbLtCurtains.nLftCurtainFbState= 6 AND GVL_devices.fbLtCurtains.nRhtCurtainFbState = 6 THEN
 			GVL_devices.fbLtCurtains.resetLftCurtainFB := FALSE;
 			GVL_devices.fbLtCurtains.resetRhtCurtainFB := FALSE;
+			GVL_devices.fbLtCurtains.enableLftCurtain := FALSE;
+			GVL_devices.fbLtCurtains.enableRhtCurtain := FALSE;
 			GVL_devices.fbEstop.resetEstopFB := FALSE;
 			bSafetyInit := TRUE;
 			eSafetyState := OK;
@@ -328,8 +332,10 @@ IF bSafetyInit THEN
 					CASE GVL_devices.fbLtCurtains.nLftCurtainFbState OF
 						2,3:// Triggered
 							GVL_devices.fbLtCurtains.resetLftCurtainFB := TRUE;
+							GVL_devices.fbLtCurtains.enableLftCurtain := FALSE;
 						6:// Reset
 							GVL_devices.fbLtCurtains.resetLftCurtainFB := FALSE;
+							GVL_devices.fbLtCurtains.enableLftCurtain := TRUE;
 							bSafetyResetBtn := FALSE;
 							sSafetyResetMsg := '';
 							bClearSafetyScrn := TRUE;
@@ -341,8 +347,10 @@ IF bSafetyInit THEN
 					CASE GVL_devices.fbLtCurtains.nRhtCurtainFbState OF
 						2,3:// Triggered
 							GVL_devices.fbLtCurtains.resetRhtCurtainFB := TRUE;
+							GVL_devices.fbLtCurtains.enableRhtCurtain := FALSE;
 						6:// Reset
 							GVL_devices.fbLtCurtains.resetRhtCurtainFB := FALSE;
+							GVL_devices.fbLtCurtains.enableRhtCurtain := TRUE;
 							bSafetyResetBtn := FALSE;
 							sSafetyResetMsg := '';
 							bClearSafetyScrn := TRUE;
@@ -386,7 +394,19 @@ GVL_ignition.nNumClients := nCount;]]></ST>
       <LineId Id="2" Count="0" />
     </LineIds>
     <LineIds Name="MAIN.safetyHandler">
-      <LineId Id="3" Count="124" />
+      <LineId Id="3" Count="18" />
+      <LineId Id="131" Count="1" />
+      <LineId Id="22" Count="6" />
+      <LineId Id="133" Count="1" />
+      <LineId Id="29" Count="73" />
+      <LineId Id="135" Count="0" />
+      <LineId Id="103" Count="1" />
+      <LineId Id="136" Count="0" />
+      <LineId Id="105" Count="10" />
+      <LineId Id="137" Count="0" />
+      <LineId Id="116" Count="1" />
+      <LineId Id="138" Count="0" />
+      <LineId Id="118" Count="9" />
       <LineId Id="2" Count="0" />
     </LineIds>
     <LineIds Name="MAIN.updateIgnition">

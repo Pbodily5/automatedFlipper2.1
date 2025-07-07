@@ -1,15 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<SafetyDeviceDesc Crc="3716832999" FileFormatVersion="1.9">
+<SafetyDeviceDesc Crc="624550997" FileFormatVersion="1.9">
   <AliasDeviceType>
     <Type>4</Type>
-    <SubType>1050494</SubType>
+    <SubType>17827710</SubType>
     <VendorId>2</VendorId>
   </AliasDeviceType>
-  <SDSID>17</SDSID>
+  <SDSID>26</SDSID>
   <SafetyAliasDevice>
     <ObjectId>0</ObjectId>
     <LinkingMode>Local</LinkingMode>
-    <ConnectionId>17</ConnectionId>
+    <ConnectionId>26</ConnectionId>
     <ConnectionMode>slave</ConnectionMode>
     <ConnectionType>FSoE</ConnectionType>
     <MapDiag>false</MapDiag>
@@ -24,6 +24,38 @@
       <Param Index="4120" SubIndex="1">02000000</Param>
       <Param Index="4320" SubIndex="1">0000</Param>
       <Param Index="4320" SubIndex="2">0000</Param>
+      <Param Index="5632" SubIndex="0">0B</Param>
+      <Param Index="5632" SubIndex="1">08018070</Param>
+      <Param Index="5632" SubIndex="2">01010270</Param>
+      <Param Index="5632" SubIndex="3">01011270</Param>
+      <Param Index="5632" SubIndex="4">01012270</Param>
+      <Param Index="5632" SubIndex="5">01013270</Param>
+      <Param Index="5632" SubIndex="6">01014270</Param>
+      <Param Index="5632" SubIndex="7">01015270</Param>
+      <Param Index="5632" SubIndex="8">01016270</Param>
+      <Param Index="5632" SubIndex="9">01017270</Param>
+      <Param Index="5632" SubIndex="10">10038070</Param>
+      <Param Index="5632" SubIndex="11">10028070</Param>
+      <Param Index="6656" SubIndex="0">13</Param>
+      <Param Index="6656" SubIndex="1">08018060</Param>
+      <Param Index="6656" SubIndex="2">01010160</Param>
+      <Param Index="6656" SubIndex="3">01010260</Param>
+      <Param Index="6656" SubIndex="4">01011160</Param>
+      <Param Index="6656" SubIndex="5">01011260</Param>
+      <Param Index="6656" SubIndex="6">01012160</Param>
+      <Param Index="6656" SubIndex="7">01012260</Param>
+      <Param Index="6656" SubIndex="8">01013160</Param>
+      <Param Index="6656" SubIndex="9">01013260</Param>
+      <Param Index="6656" SubIndex="10">01014160</Param>
+      <Param Index="6656" SubIndex="11">01014260</Param>
+      <Param Index="6656" SubIndex="12">01015160</Param>
+      <Param Index="6656" SubIndex="13">01015260</Param>
+      <Param Index="6656" SubIndex="14">01016160</Param>
+      <Param Index="6656" SubIndex="15">01016260</Param>
+      <Param Index="6656" SubIndex="16">01017160</Param>
+      <Param Index="6656" SubIndex="17">01017260</Param>
+      <Param Index="6656" SubIndex="18">10038060</Param>
+      <Param Index="6656" SubIndex="19">10028060</Param>
       <Param Index="32768" SubIndex="1">00</Param>
       <Param Index="32768" SubIndex="2">01</Param>
       <Param Index="32768" SubIndex="4">01</Param>
@@ -38,14 +70,14 @@
       <Param Index="32785" SubIndex="2">0200</Param>
       <Param Index="32800" SubIndex="1">00</Param>
       <Param Index="32800" SubIndex="2">01</Param>
-      <Param Index="32800" SubIndex="4">01</Param>
-      <Param Index="32800" SubIndex="5">01</Param>
+      <Param Index="32800" SubIndex="4">00</Param>
+      <Param Index="32800" SubIndex="5">00</Param>
       <Param Index="32801" SubIndex="1">0A00</Param>
       <Param Index="32801" SubIndex="2">0200</Param>
       <Param Index="32816" SubIndex="1">00</Param>
       <Param Index="32816" SubIndex="2">01</Param>
-      <Param Index="32816" SubIndex="4">01</Param>
-      <Param Index="32816" SubIndex="5">01</Param>
+      <Param Index="32816" SubIndex="4">00</Param>
+      <Param Index="32816" SubIndex="5">00</Param>
       <Param Index="32817" SubIndex="1">0A00</Param>
       <Param Index="32817" SubIndex="2">0200</Param>
       <Param Index="32832" SubIndex="1">00</Param>
@@ -56,23 +88,23 @@
       <Param Index="32833" SubIndex="2">0200</Param>
       <Param Index="32848" SubIndex="1">00</Param>
       <Param Index="32848" SubIndex="2">01</Param>
-      <Param Index="32848" SubIndex="4">01</Param>
-      <Param Index="32848" SubIndex="5">01</Param>
+      <Param Index="32848" SubIndex="4">00</Param>
+      <Param Index="32848" SubIndex="5">00</Param>
       <Param Index="32849" SubIndex="1">0A00</Param>
       <Param Index="32849" SubIndex="2">0200</Param>
       <Param Index="32864" SubIndex="1">00</Param>
       <Param Index="32864" SubIndex="2">01</Param>
-      <Param Index="32864" SubIndex="4">01</Param>
-      <Param Index="32864" SubIndex="5">01</Param>
+      <Param Index="32864" SubIndex="4">00</Param>
+      <Param Index="32864" SubIndex="5">00</Param>
       <Param Index="32865" SubIndex="1">0A00</Param>
       <Param Index="32865" SubIndex="2">0200</Param>
       <Param Index="32880" SubIndex="1">00</Param>
       <Param Index="32880" SubIndex="2">01</Param>
-      <Param Index="32880" SubIndex="4">01</Param>
-      <Param Index="32880" SubIndex="5">01</Param>
+      <Param Index="32880" SubIndex="4">00</Param>
+      <Param Index="32880" SubIndex="5">00</Param>
       <Param Index="32881" SubIndex="1">0A00</Param>
       <Param Index="32881" SubIndex="2">0200</Param>
-      <Param Index="61520" SubIndex="1">7E071000</Param>
+      <Param Index="61520" SubIndex="1">7E071001</Param>
       <Messages>
         <IO>
           <Name>FSoE Command</Name>
