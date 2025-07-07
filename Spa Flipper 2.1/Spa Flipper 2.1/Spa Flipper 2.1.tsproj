@@ -1004,11 +1004,41 @@ External Setpoint Generation:
 		</Motion>
 		<Plc>
 			<Project GUID="{6036E6EF-E0ED-4D41-BFCF-5B60AD71A3FE}" Name="PLC_MAIN" PrjFilePath="PLC_MAIN\PLC_MAIN.plcproj" TmcFilePath="PLC_MAIN\PLC_MAIN.tmc" ReloadTmc="true" AmsPort="851" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcHash="{E3C3D3F9-A50E-4301-18A9-4842D53CBFC1}">
+				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcHash="{0EA0BE61-A76F-F504-05F5-F5FE49D228EA}">
 					<Name>PLC_MAIN Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 					<Vars VarGrpType="1">
 						<Name>PlcTask Inputs</Name>
+						<Var>
+							<Name>GVL_machine.bSafetyOk</Name>
+							<Comment><![CDATA[ Safety protocol enacted ]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL_machine.bFbRun</Name>
+							<Comment><![CDATA[ Safety Function Blocks are running]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL_machine.bInRun</Name>
+							<Comment><![CDATA[ Safety Program is Running]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL_machine.bFbErr</Name>
+							<Comment><![CDATA[ A Safety Function Block contains an error]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL_machine.bComErr</Name>
+							<Comment><![CDATA[ Safety program communication error]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL_machine.bOtherErr</Name>
+							<Comment><![CDATA[ Other safety error exist. (EDM FB)]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
 						<Var>
 							<Name>GVL_devices.fbLtCurtains.bBtn</Name>
 							<Type>BOOL</Type>
@@ -1236,39 +1266,24 @@ External Setpoint Generation:
 							<Name>GVL_devices.fbColumn3Motor.refMasterAxis.NcToPlc</Name>
 							<Type GUID="{25521FAA-EA5F-4C7F-8864-BBCCDACD2E98}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
 						</Var>
-						<Var>
-							<Name>GVL_machine.bSafetyOk</Name>
-							<Comment><![CDATA[ Safety protocol enacted ]]></Comment>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>GVL_machine.bFbRun</Name>
-							<Comment><![CDATA[ Safety Function Blocks are running]]></Comment>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>GVL_machine.bInRun</Name>
-							<Comment><![CDATA[ Safety Program is Running]]></Comment>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>GVL_machine.bFbErr</Name>
-							<Comment><![CDATA[ A Safety Function Block contains an error]]></Comment>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>GVL_machine.bComErr</Name>
-							<Comment><![CDATA[ Safety program communication error]]></Comment>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>GVL_machine.bOtherErr</Name>
-							<Comment><![CDATA[ Other safety error exist. (EDM FB)]]></Comment>
-							<Type>BOOL</Type>
-						</Var>
 					</Vars>
 					<Vars VarGrpType="2" AreaNo="1">
 						<Name>PlcTask Outputs</Name>
+						<Var>
+							<Name>GVL_machine.bRunSafety</Name>
+							<Comment><![CDATA[////////////////// SAFETY /////////////////////////////////]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL_machine.bSafetyErrorAck</Name>
+							<Comment><![CDATA[ Sequence to acknowledge safety error : False > True > False.]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL_machine.bSafetyBypass</Name>
+							<Comment><![CDATA[Used to Bypass entire safety PLC. Should Only be accessible with high level credentials. ]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
 						<Var>
 							<Name>GVL_devices.fbLtBars.bGreenLight</Name>
 							<Type>BOOL</Type>
@@ -1446,21 +1461,6 @@ External Setpoint Generation:
 						<Var>
 							<Name>GVL_devices.fbColumn3Motor.refMasterAxis.PlcToNc</Name>
 							<Type GUID="{96B75FEB-2D84-43BE-A3EC-D9A681F27D52}" Namespace="MC">PLCTONC_AXIS_REF</Type>
-						</Var>
-						<Var>
-							<Name>GVL_machine.bRunSafety</Name>
-							<Comment><![CDATA[////////////////// SAFETY /////////////////////////////////]]></Comment>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>GVL_machine.bSafetyErrorAck</Name>
-							<Comment><![CDATA[ Sequence to acknowledge safety error : False > True > False.]]></Comment>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>GVL_machine.bSafetyBypass</Name>
-							<Comment><![CDATA[Used to Bypass entire safety PLC. Should Only be accessible with high level credentials. ]]></Comment>
-							<Type>BOOL</Type>
 						</Var>
 					</Vars>
 					<Contexts>
