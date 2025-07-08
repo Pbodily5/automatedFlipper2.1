@@ -48,19 +48,13 @@
 			</ArrayInfo>
 		</DataType>
 		<DataType>
-			<Name GUID="{2B008623-51EE-EF6A-ACDE-0017707F5BB8}" AutoDeleteType="true">INFODATA_FB_3</Name>
-			<BitSize>24</BitSize>
+			<Name GUID="{73F57572-A2C9-F88F-FFC6-9BA3A895E419}" AutoDeleteType="true">INFODATA_FB_1</Name>
+			<BitSize>8</BitSize>
 			<SubItem>
 				<Name>State</Name>
 				<Type GUID="{18071995-0000-0000-0000-000000000002}">USINT</Type>
 				<BitSize>8</BitSize>
 				<BitOffs>0</BitOffs>
-			</SubItem>
-			<SubItem>
-				<Name>Diag</Name>
-				<Type GUID="{18071995-0000-0000-0000-000000000005}">UINT</Type>
-				<BitSize>16</BitSize>
-				<BitOffs>8</BitOffs>
 			</SubItem>
 		</DataType>
 		<DataType>
@@ -129,22 +123,22 @@
 				<Entry Name="Standard Out Var 9" Index="#x7000" Sub="#x07">
 					<Type>BIT</Type>
 				</Entry>
-				<Entry Name="Standard Out Var 10" Index="#x7000" Sub="#x08">
+				<Entry Name="Standard Out Var 11" Index="#x7000" Sub="#x08">
 					<Type>BIT</Type>
 				</Entry>
-				<Entry Name="Standard Out Var 11" Index="#x7000" Sub="#x09">
+				<Entry Name="Standard Out Var 12" Index="#x7000" Sub="#x09">
 					<Type>BIT</Type>
 				</Entry>
-				<Entry Name="Standard Out Var 12" Index="#x7000" Sub="#x0a">
+				<Entry Name="Standard Out Var 20" Index="#x7000" Sub="#x0a">
 					<Type>BIT</Type>
 				</Entry>
-				<Entry Name="Standard Out Var 20" Index="#x7000" Sub="#x0b">
+				<Entry Name="Standard Out Var 21" Index="#x7000" Sub="#x0b">
 					<Type>BIT</Type>
 				</Entry>
-				<Entry Name="Standard Out Var 21" Index="#x7000" Sub="#x0c">
+				<Entry Name="Standard Out Var 22" Index="#x7000" Sub="#x0c">
 					<Type>BIT</Type>
 				</Entry>
-				<Entry Name="Standard Out Var 22" Index="#x7000" Sub="#x0d">
+				<Entry Name="Standard Out Var 31" Index="#x7000" Sub="#x0d">
 					<Type>BIT</Type>
 				</Entry>
 				<Entry>
@@ -185,7 +179,13 @@
 			</Pdo>
 			<Pdo Name="Function Block Info Data" Index="#x1bf8" Flags="#x2011" SyncMan="3">
 				<Entry Name="TwinSafeGroup1.Network1.FBEstop1 Info Data" Index="#x7000" Sub="#x01">
-					<Type GUID="{2B008623-51EE-EF6A-ACDE-0017707F5BB8}">INFODATA_FB_3</Type>
+					<Type GUID="{73F57572-A2C9-F88F-FFC6-9BA3A895E419}">INFODATA_FB_1</Type>
+				</Entry>
+				<Entry Name="TwinSafeGroup1.Network1.FBMon1 Info Data" Index="#x7000" Sub="#x02">
+					<Type GUID="{73F57572-A2C9-F88F-FFC6-9BA3A895E419}">INFODATA_FB_1</Type>
+				</Entry>
+				<Entry Name="TwinSafeGroup1.Network1.FBMon2 Info Data" Index="#x7000" Sub="#x03">
+					<Type GUID="{73F57572-A2C9-F88F-FFC6-9BA3A895E419}">INFODATA_FB_1</Type>
 				</Entry>
 			</Pdo>
 			<Pdo Name="FSLOGIC Inputs" Index="#x1bff" Flags="#x0091" SyncMan="3">

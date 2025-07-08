@@ -19,6 +19,7 @@ VAR_GLOBAL
 	bFbErr				AT %I* : BOOL;			// A Safety Function Block contains an error
 	bComErr				AT %I* : BOOL;			// Safety program communication error
 	bOtherErr			AT %I* : BOOL;			// Other safety error exist. (EDM FB)
+	bTestErr			AT %I* : BOOL;
 	
 	bSafetyInit : BOOL;
 	nPageIndex: INT;
