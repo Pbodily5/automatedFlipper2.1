@@ -1004,7 +1004,7 @@ External Setpoint Generation:
 		</Motion>
 		<Plc>
 			<Project GUID="{6036E6EF-E0ED-4D41-BFCF-5B60AD71A3FE}" Name="PLC_MAIN" PrjFilePath="PLC_MAIN\PLC_MAIN.plcproj" TmcFilePath="PLC_MAIN\PLC_MAIN.tmc" ReloadTmc="true" AmsPort="851" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="PLC_MAIN\PLC_MAIN.tmc" TmcHash="{E84A4C5B-517C-9E66-3F4C-B14C7ECDF569}">
+				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="PLC_MAIN\PLC_MAIN.tmc" TmcHash="{C38F5880-EEE1-5ABF-3138-5A4C13289D49}">
 					<Name>PLC_MAIN Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 					<Vars VarGrpType="1">
@@ -1495,7 +1495,7 @@ External Setpoint Generation:
 			</Project>
 		</Plc>
 		<Safety>
-			<Project GUID="{4E494D0C-D4F4-45C0-B282-92EA7FF3B23C}" Name="PLC_MAIN Safety" PrjFilePath="PLC_MAIN Safety\PLC_MAIN Safety.splcProj" TmcFilePath="PLC_MAIN Safety\PLC_MAIN Safety.tmc" GeneralArchiveSettings="#x000f" TargetArchiveSettings="#x0007" FileArchiveSettings="#x000e">
+			<Project GUID="{4549795F-0E55-4C70-BB2F-0761452AF80B}" Name="PLC_MAIN Safety" PrjFilePath="PLC_MAIN Safety\PLC_MAIN Safety.splcProj" TmcFilePath="PLC_MAIN Safety\PLC_MAIN Safety.tmc" GeneralArchiveSettings="#x000f" TargetArchiveSettings="#x0007" FileArchiveSettings="#x000e">
 				<Instance Id="#x01010010" KeepUnrestoredLinks="2">
 					<Name>PLC_MAIN Safety Instance</Name>
 					<TmcDesc GUID="{72A6D5B8-E98C-4604-8B90-09D1F8AB38A9}">
@@ -1517,7 +1517,6 @@ External Setpoint Generation:
 	</Project>
 	<Mappings>
 		<MappingInfo Identifier="{00000000-2001-0850-0020-500810000403}" Id="#x02030020"/>
-		<MappingInfo Identifier="{03040010-0010-0304-1000-040310000403}" Id="#x02030010" Watchdog="04000000040000000400000004000000"/>
 		<OwnerA Name="TIPC^PLC_MAIN^PLC_MAIN Instance">
 			<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 18 (EK1200)^Term 2 (EL1008)">
 				<Link VarA="PlcTask Inputs^GVL_devices.fbColumn0Motor.bHomeSensor" VarB="Channel 6^Input"/>
@@ -1544,33 +1543,6 @@ External Setpoint Generation:
 			</OwnerB>
 			<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 18 (EK1200)^Term 7 (EL3024)">
 				<Link VarA="PlcTask Inputs^GVL_devices.fbTable.tableDistSens.nSensor" VarB="AI Standard Channel 1^Value"/>
-			</OwnerB>
-			<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 18 (EK1200)^Term 8 (EL1918)">
-				<Link VarA="PlcTask Inputs^GVL_devices.fbEstop.bEstopFbError" VarB="StandardInputs^Standard Out Var 5"/>
-				<Link VarA="PlcTask Inputs^GVL_devices.fbEstop.bEstopSigOk" VarB="StandardInputs^Standard Out Var 20"/>
-				<Link VarA="PlcTask Inputs^GVL_devices.fbEstop.nEstopFbState" VarB="Function Block Info Data^TwinSafeGroup1.Network1.FBEstop1 Info Data^State"/>
-				<Link VarA="PlcTask Inputs^GVL_devices.fbLtCurtains.bCurtainsMuted" VarB="StandardInputs^Standard Out Var 4"/>
-				<Link VarA="PlcTask Inputs^GVL_devices.fbLtCurtains.bLftCurtainFbError" VarB="StandardInputs^Standard Out Var 9"/>
-				<Link VarA="PlcTask Inputs^GVL_devices.fbLtCurtains.bLftCurtainSigOk" VarB="StandardInputs^Standard Out Var 21"/>
-				<Link VarA="PlcTask Inputs^GVL_devices.fbLtCurtains.bRhtCurtainFbError" VarB="StandardInputs^Standard Out Var 11"/>
-				<Link VarA="PlcTask Inputs^GVL_devices.fbLtCurtains.bRhtCurtainSigOk" VarB="StandardInputs^Standard Out Var 22"/>
-				<Link VarA="PlcTask Inputs^GVL_devices.fbLtCurtains.nLftCurtainFbState" VarB="Function Block Info Data^TwinSafeGroup1.Network1.FBMon1 Info Data^State"/>
-				<Link VarA="PlcTask Inputs^GVL_devices.fbLtCurtains.nRhtCurtainFbState" VarB="Function Block Info Data^TwinSafeGroup1.Network1.FBMon2 Info Data^State"/>
-				<Link VarA="PlcTask Inputs^GVL_machine.bComErr" VarB="StandardInputs^Standard Out Var 3"/>
-				<Link VarA="PlcTask Inputs^GVL_machine.bFbErr" VarB="StandardInputs^Standard Out Var 6"/>
-				<Link VarA="PlcTask Inputs^GVL_machine.bFbRun" VarB="StandardInputs^Standard Out Var 7"/>
-				<Link VarA="PlcTask Inputs^GVL_machine.bInRun" VarB="StandardInputs^Standard Out Var 8"/>
-				<Link VarA="PlcTask Inputs^GVL_machine.bSafetyOk" VarB="StandardInputs^Standard Out Var 12"/>
-				<Link VarA="PlcTask Inputs^GVL_machine.bTestErr" VarB="StandardInputs^Standard Out Var 31"/>
-				<Link VarA="PlcTask Outputs^GVL_devices.fbEstop.bResetEstopFb" VarB="StandardOutputs^Standard In Var 14"/>
-				<Link VarA="PlcTask Outputs^GVL_devices.fbLtCurtains.bLftCurtainEnable" VarB="StandardOutputs^Standard In Var 24"/>
-				<Link VarA="PlcTask Outputs^GVL_devices.fbLtCurtains.bMuteCurtains" VarB="StandardOutputs^Standard In Var 13"/>
-				<Link VarA="PlcTask Outputs^GVL_devices.fbLtCurtains.bResetLftCurtainFb" VarB="StandardOutputs^Standard In Var 15"/>
-				<Link VarA="PlcTask Outputs^GVL_devices.fbLtCurtains.bResetRhtCurtainFb" VarB="StandardOutputs^Standard In Var 16"/>
-				<Link VarA="PlcTask Outputs^GVL_devices.fbLtCurtains.bRhtCurtainEnable" VarB="StandardOutputs^Standard In Var 23"/>
-				<Link VarA="PlcTask Outputs^GVL_machine.bRunSafety" VarB="StandardOutputs^Standard In Var 2"/>
-				<Link VarA="PlcTask Outputs^GVL_machine.bSafetyBypass" VarB="StandardOutputs^Standard In Var 19"/>
-				<Link VarA="PlcTask Outputs^GVL_machine.bSafetyErrorAck" VarB="StandardOutputs^Standard In Var 1"/>
 			</OwnerB>
 		</OwnerA>
 	</Mappings>

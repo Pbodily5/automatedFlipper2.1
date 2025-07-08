@@ -39,23 +39,13 @@
 			</ArrayInfo>
 		</DataType>
 		<DataType>
-			<Name GUID="{18071995-0000-0000-0000-002000000007}" IecBaseType="true" AutoDeleteType="true" HideSubItems="true">ARRAY [0..6] OF BIT</Name>
-			<BitSize>7</BitSize>
+			<Name GUID="{18071995-0000-0000-0000-002000000001}" IecBaseType="true" BitType="true" AutoDeleteType="true" HideSubItems="true">ARRAY [0..0] OF BIT</Name>
+			<BitSize>1</BitSize>
 			<BaseType GUID="{18071995-0000-0000-0000-000000000010}">BIT</BaseType>
 			<ArrayInfo>
 				<LBound>0</LBound>
-				<Elements>7</Elements>
+				<Elements>1</Elements>
 			</ArrayInfo>
-		</DataType>
-		<DataType>
-			<Name GUID="{73F57572-A2C9-F88F-FFC6-9BA3A895E419}" AutoDeleteType="true">INFODATA_FB_1</Name>
-			<BitSize>8</BitSize>
-			<SubItem>
-				<Name>State</Name>
-				<Type GUID="{18071995-0000-0000-0000-000000000002}">USINT</Type>
-				<BitSize>8</BitSize>
-				<BitOffs>0</BitOffs>
-			</SubItem>
 		</DataType>
 		<DataType>
 			<Name GUID="{18071995-0000-0000-0000-002000000010}" IecBaseType="true" AutoDeleteType="true" HideSubItems="true">ARRAY [0..1] OF BYTE</Name>
@@ -76,8 +66,8 @@
 		<EtherCAT SlaveType="2" PdiType="#x0005" MboxDataLinkLayer="true" StateMBoxPolling="true" CycleMBoxPollingTime="0" CoeType="3" FoeType="1" VendorId="#x00000002" ProductCode="#x077e3052" RevisionNo="#x00110000" InfoDataAddr="true" RepeatSupport="true" TimeoutStateChange1="5000" TimeoutMailbox2="10000" TComSupport="true" PortPhys="51" DebugMemory="8" SafetyLogicSupported="true" MaxSlotCount="2" Type="EL1918, 8Ch. Safety Input 24V, TwinSAFE" Desc="EL1918">
 			<SyncMan>001000012600010001000000000100010001001026010000</SyncMan>
 			<SyncMan>001100012200010002000000000100010001001122010000</SyncMan>
-			<SyncMan>00120a002400010003000000000000000800001224010000</SyncMan>
-			<SyncMan>001d0d002000010004000000000000000900001d20010000</SyncMan>
+			<SyncMan>001209002400010003000000000000000800001224010000</SyncMan>
+			<SyncMan>001d0a002000010004000000000000000900001d20010000</SyncMan>
 			<SyncMan>002e00002400000003000000000000000000002e24000000</SyncMan>
 			<SyncMan>002f00002000000004000000000000000000002f20000000</SyncMan>
 			<Fmmu>0000000000000000001200020100000001000000060000000200000000000000</Fmmu>
@@ -92,53 +82,53 @@
 			<SuTask>#x00000000</SuTask>
 			<MBoxUserCmdData>004003000a0000001f000000000000000000000000000000000000000000000020f31005020000000100456e61626c6520446961674d65737361676520617320656d657267656e637900</MBoxUserCmdData>
 			<Pdo Name="ConnectionInputs" Index="#x1a00" Flags="#x2011" SyncMan="3">
-				<Entry Name="Message_29 TxPDO" Index="#x7000" Sub="#x01">
+				<Entry Name="Message_21 TxPDO" Index="#x7000" Sub="#x01">
 					<Type GUID="{2438F91B-E188-4ED7-8594-54354F9ED6A4}" Namespace="Safety">FSOE_6</Type>
 				</Entry>
 			</Pdo>
 			<Pdo Name="ConnectionOutputs" Index="#x1600" InOut="1" Flags="#x2011" SyncMan="2">
-				<Entry Name="Message_29 RxPDO" Index="#x6000" Sub="#x01">
+				<Entry Name="Message_21 RxPDO" Index="#x6000" Sub="#x01">
 					<Type GUID="{2438F91B-E188-4ED7-8594-54354F9ED6A4}" Namespace="Safety">FSOE_6</Type>
 				</Entry>
 			</Pdo>
 			<Pdo Name="StandardInputs" Index="#x1bf0" Flags="#x2011" SyncMan="3">
-				<Entry Name="Standard Out Var 3" Index="#x7000" Sub="#x01">
+				<Entry Name="Standard Out Var 8" Index="#x7000" Sub="#x01">
 					<Type>BIT</Type>
 				</Entry>
-				<Entry Name="Standard Out Var 4" Index="#x7000" Sub="#x02">
+				<Entry Name="Standard Out Var 9" Index="#x7000" Sub="#x02">
 					<Type>BIT</Type>
 				</Entry>
-				<Entry Name="Standard Out Var 5" Index="#x7000" Sub="#x03">
+				<Entry Name="Standard Out Var 10" Index="#x7000" Sub="#x03">
 					<Type>BIT</Type>
 				</Entry>
-				<Entry Name="Standard Out Var 6" Index="#x7000" Sub="#x04">
+				<Entry Name="Standard Out Var 11" Index="#x7000" Sub="#x04">
 					<Type>BIT</Type>
 				</Entry>
-				<Entry Name="Standard Out Var 7" Index="#x7000" Sub="#x05">
+				<Entry Name="Standard Out Var 12" Index="#x7000" Sub="#x05">
 					<Type>BIT</Type>
 				</Entry>
-				<Entry Name="Standard Out Var 8" Index="#x7000" Sub="#x06">
+				<Entry Name="Standard Out Var 13" Index="#x7000" Sub="#x06">
 					<Type>BIT</Type>
 				</Entry>
-				<Entry Name="Standard Out Var 9" Index="#x7000" Sub="#x07">
+				<Entry Name="Standard Out Var 14" Index="#x7000" Sub="#x07">
 					<Type>BIT</Type>
 				</Entry>
-				<Entry Name="Standard Out Var 11" Index="#x7000" Sub="#x08">
+				<Entry Name="Standard Out Var 15" Index="#x7000" Sub="#x08">
 					<Type>BIT</Type>
 				</Entry>
-				<Entry Name="Standard Out Var 12" Index="#x7000" Sub="#x09">
+				<Entry Name="Standard Out Var 16" Index="#x7000" Sub="#x09">
 					<Type>BIT</Type>
 				</Entry>
-				<Entry Name="Standard Out Var 20" Index="#x7000" Sub="#x0a">
+				<Entry Name="Standard Out Var 17" Index="#x7000" Sub="#x0a">
 					<Type>BIT</Type>
 				</Entry>
-				<Entry Name="Standard Out Var 21" Index="#x7000" Sub="#x0b">
+				<Entry Name="Standard Out Var 18" Index="#x7000" Sub="#x0b">
 					<Type>BIT</Type>
 				</Entry>
-				<Entry Name="Standard Out Var 22" Index="#x7000" Sub="#x0c">
+				<Entry Name="Standard Out Var 19" Index="#x7000" Sub="#x0c">
 					<Type>BIT</Type>
 				</Entry>
-				<Entry Name="Standard Out Var 31" Index="#x7000" Sub="#x0d">
+				<Entry Name="Standard Out Var 20" Index="#x7000" Sub="#x0d">
 					<Type>BIT</Type>
 				</Entry>
 				<Entry>
@@ -152,40 +142,23 @@
 				<Entry Name="Standard In Var 2" Index="#x6000" Sub="#x02">
 					<Type>BIT</Type>
 				</Entry>
-				<Entry Name="Standard In Var 13" Index="#x6000" Sub="#x03">
+				<Entry Name="Standard In Var 3" Index="#x6000" Sub="#x03">
 					<Type>BIT</Type>
 				</Entry>
-				<Entry Name="Standard In Var 14" Index="#x6000" Sub="#x04">
+				<Entry Name="Standard In Var 4" Index="#x6000" Sub="#x04">
 					<Type>BIT</Type>
 				</Entry>
-				<Entry Name="Standard In Var 15" Index="#x6000" Sub="#x05">
+				<Entry Name="Standard In Var 5" Index="#x6000" Sub="#x05">
 					<Type>BIT</Type>
 				</Entry>
-				<Entry Name="Standard In Var 16" Index="#x6000" Sub="#x06">
+				<Entry Name="Standard In Var 6" Index="#x6000" Sub="#x06">
 					<Type>BIT</Type>
 				</Entry>
-				<Entry Name="Standard In Var 19" Index="#x6000" Sub="#x07">
-					<Type>BIT</Type>
-				</Entry>
-				<Entry Name="Standard In Var 23" Index="#x6000" Sub="#x08">
-					<Type>BIT</Type>
-				</Entry>
-				<Entry Name="Standard In Var 24" Index="#x6000" Sub="#x09">
+				<Entry Name="Standard In Var 7" Index="#x6000" Sub="#x07">
 					<Type>BIT</Type>
 				</Entry>
 				<Entry>
-					<Type GUID="{18071995-0000-0000-0000-002000000007}">ARRAY [0..6] OF BIT</Type>
-				</Entry>
-			</Pdo>
-			<Pdo Name="Function Block Info Data" Index="#x1bf8" Flags="#x2011" SyncMan="3">
-				<Entry Name="TwinSafeGroup1.Network1.FBEstop1 Info Data" Index="#x7000" Sub="#x01">
-					<Type GUID="{73F57572-A2C9-F88F-FFC6-9BA3A895E419}">INFODATA_FB_1</Type>
-				</Entry>
-				<Entry Name="TwinSafeGroup1.Network1.FBMon1 Info Data" Index="#x7000" Sub="#x02">
-					<Type GUID="{73F57572-A2C9-F88F-FFC6-9BA3A895E419}">INFODATA_FB_1</Type>
-				</Entry>
-				<Entry Name="TwinSafeGroup1.Network1.FBMon2 Info Data" Index="#x7000" Sub="#x03">
-					<Type GUID="{73F57572-A2C9-F88F-FFC6-9BA3A895E419}">INFODATA_FB_1</Type>
+					<Type GUID="{18071995-0000-0000-0000-002000000001}">ARRAY [0..0] OF BIT</Type>
 				</Entry>
 			</Pdo>
 			<Pdo Name="FSLOGIC Inputs" Index="#x1bff" Flags="#x0091" SyncMan="3">

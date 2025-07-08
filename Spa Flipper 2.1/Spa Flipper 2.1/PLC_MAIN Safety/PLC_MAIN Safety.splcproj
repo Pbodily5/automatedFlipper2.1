@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project Crc="1609546371" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+<Project Crc="2590911415" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{4e494d0c-d4f4-45c0-b282-92ea7ff3b23c}</ProjectGuid>
+    <ProjectGuid>{4549795f-0e55-4c70-bb2f-0761452af80b}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <RootNamespace>TwinCAT3SafePlcProject</RootNamespace>
     <AssemblyName>TwinCAT3SafePlcProject</AssemblyName>
@@ -16,7 +16,10 @@
     <IntProjName>PLC_MAIN Safety</IntProjName>
     <IsNewCreated>false</IsNewCreated>
     <SPlcProjVersion>1.8.0.0</SPlcProjVersion>
-    <NextSdsId>32</NextSdsId>
+    <NextSdsId>25</NextSdsId>
+    <SafeAddressVerification>ProjectWideUnique</SafeAddressVerification>
+    <FbInPortActivationVerification>Strict</FbInPortActivationVerification>
+    <AliasDeviceAutoLinkingVerification>MismatchAsWarning</AliasDeviceAutoLinkingVerification>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <DebugSymbols>false</DebugSymbols>
@@ -25,7 +28,12 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <None Include="TwinSafeGroup1\Alias Devices\bCommErr.sds" />
+    <None Include="TwinSafeGroup1\Alias Devices\bMuteCurtains.sds" />
+    <None Include="TwinSafeGroup1\Alias Devices\bResetEstopFb.sds" />
+    <None Include="TwinSafeGroup1\Alias Devices\bResetLftCurtainFb.sds" />
+    <None Include="TwinSafeGroup1\Alias Devices\bResetRhtCurtainFb.sds" />
+    <None Include="TwinSafeGroup1\Alias Devices\bSafetyBypass.sds" />
+    <None Include="TwinSafeGroup1\Alias Devices\bComErr.sds" />
     <None Include="TwinSafeGroup1\Alias Devices\bCurtainsMuted.sds" />
     <None Include="TwinSafeGroup1\Alias Devices\bEstopFbError.sds" />
     <None Include="TwinSafeGroup1\Alias Devices\bEstopSigOk.sds" />
@@ -33,18 +41,11 @@
     <None Include="TwinSafeGroup1\Alias Devices\bFbRun.sds" />
     <None Include="TwinSafeGroup1\Alias Devices\bInRun.sds" />
     <None Include="TwinSafeGroup1\Alias Devices\bLftCurtainFbError.sds" />
-    <None Include="TwinSafeGroup1\Alias Devices\bLftCurtainMuteEnable.sds" />
     <None Include="TwinSafeGroup1\Alias Devices\bLftCurtainSigOk.sds" />
-    <None Include="TwinSafeGroup1\Alias Devices\bMuteCurtains.sds" />
-    <None Include="TwinSafeGroup1\Alias Devices\bResetEstopFb.sds" />
-    <None Include="TwinSafeGroup1\Alias Devices\bResetLftCurtainFb.sds" />
-    <None Include="TwinSafeGroup1\Alias Devices\bResetRhtCurtainFb.sds" />
+    <None Include="TwinSafeGroup1\Alias Devices\bOtherErr.sds" />
     <None Include="TwinSafeGroup1\Alias Devices\bRhtCurtainFbError.sds" />
-    <None Include="TwinSafeGroup1\Alias Devices\bRhtCurtainMuteEnable.sds" />
     <None Include="TwinSafeGroup1\Alias Devices\bRhtCurtainSigOk.sds" />
-    <None Include="TwinSafeGroup1\Alias Devices\bSafetyByPass.sds" />
     <None Include="TwinSafeGroup1\Alias Devices\bSafetyOk.sds" />
-    <None Include="TwinSafeGroup1\Alias Devices\bTestError.sds" />
     <None Include="TwinSafeGroup1\Alias Devices\Term 5 %28EL2904%29 - Module 1 %28FSOES%29.sds" />
     <None Include="TwinSafeGroup1\Alias Devices\Term 8 %28EL1918%29 - Module 1 %28FSOE%29.sds" />
     <None Include="TwinSafeGroup1\TwinSafeGroup1.sal" />

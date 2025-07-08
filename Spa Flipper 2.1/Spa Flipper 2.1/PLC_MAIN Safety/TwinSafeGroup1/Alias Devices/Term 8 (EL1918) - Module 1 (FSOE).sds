@@ -1,15 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<SafetyDeviceDesc Crc="3395950776" FileFormatVersion="1.9">
+<SafetyDeviceDesc Crc="1574952934" FileFormatVersion="1.9">
   <AliasDeviceType>
     <Type>4</Type>
     <SubType>17827710</SubType>
     <VendorId>2</VendorId>
   </AliasDeviceType>
-  <SDSID>26</SDSID>
+  <SDSID>24</SDSID>
   <SafetyAliasDevice>
     <ObjectId>0</ObjectId>
     <LinkingMode>Local</LinkingMode>
-    <ConnectionId>26</ConnectionId>
+    <ConnectionId>24</ConnectionId>
     <ConnectionMode>slave</ConnectionMode>
     <ConnectionType>FSoE</ConnectionType>
     <MapDiag>false</MapDiag>
@@ -17,7 +17,7 @@
     <MapOutputs>false</MapOutputs>
     <MapState>false</MapState>
     <ModuleFaultIsComErr>false</ModuleFaultIsComErr>
-    <SafeAddress>0</SafeAddress>
+    <SafeAddress>2</SafeAddress>
     <Watchdog>100</Watchdog>
     <ComErrAck Type="Unset" />
     <Params>
@@ -82,8 +82,8 @@
       <Param Index="32817" SubIndex="2">0200</Param>
       <Param Index="32832" SubIndex="1">00</Param>
       <Param Index="32832" SubIndex="2">01</Param>
-      <Param Index="32832" SubIndex="4">00</Param>
-      <Param Index="32832" SubIndex="5">00</Param>
+      <Param Index="32832" SubIndex="4">01</Param>
+      <Param Index="32832" SubIndex="5">01</Param>
       <Param Index="32833" SubIndex="1">0A00</Param>
       <Param Index="32833" SubIndex="2">0200</Param>
       <Param Index="32848" SubIndex="1">00</Param>
