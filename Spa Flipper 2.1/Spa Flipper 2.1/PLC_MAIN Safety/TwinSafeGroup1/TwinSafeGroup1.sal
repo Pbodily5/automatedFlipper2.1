@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<safetyApplication Crc="1398731063" xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" dslVersion="1.5.0.0" Id="a7cfc1f4-594c-47f0-8c69-72aff77dce3c" name="" mapState="false" mapDiag="false" groupOrderId="0" passificationAllowed="false" temporaryDeactivationAllowed="false" permamentDeactivationAllowed="false" xmlid="0" analogFBOutputReplacementValues="Zero" verifyAnalogFBInputsIfStart="false" userFbId="00000000-0000-0000-0000-000000000000" xmlns="http://schemas.microsoft.com/dsltools/SafetyApplicationLanguage">
+<safetyApplication Crc="4032002675" xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" dslVersion="1.5.0.0" Id="a7cfc1f4-594c-47f0-8c69-72aff77dce3c" name="" mapState="false" mapDiag="false" groupOrderId="0" passificationAllowed="false" temporaryDeactivationAllowed="false" permamentDeactivationAllowed="false" xmlid="0" analogFBOutputReplacementValues="Zero" verifyAnalogFBInputsIfStart="false" userFbId="00000000-0000-0000-0000-000000000000" xmlns="http://schemas.microsoft.com/dsltools/SafetyApplicationLanguage">
   <networks>
     <safetyApplicationHasNetworks Id="5442c5c8-6034-4cd3-8e27-b1e32a6fcb0b">
       <Network Id="bd8b2c9b-fcf3-41f9-bc31-69e55f61e6a6" name="Network1" networkName="Network1" intId="1" networkOrderId="0">
         <functionBlocks>
           <networkHasFunctionBlocks Id="757a587a-4a0e-455a-9dd2-b9d9cc8dc19a">
-            <fBEstop Id="fc8f0390-a9d8-43b1-b24a-61cbc5aaa6b6" name="FBEstop1" instanceName="FBEstop1" orderOfExecution="1" mapState="false" mapDiag="false" functionName="safeEstop" safeInputsAfterDiscError="false">
+            <fBEstop Id="fc8f0390-a9d8-43b1-b24a-61cbc5aaa6b6" name="FBEstop1" instanceName="FBEstop1" orderOfExecution="1" mapState="true" mapDiag="false" functionName="safeEstop" safeInputsAfterDiscError="false">
               <inPorts>
                 <functioBlockHasInPorts Id="a04e25a5-0ac3-446b-8f0e-e920c4970f3d">
                   <inPort Id="3e83d62d-0c69-4bf0-b87e-50c2c8443ce1" name="Restart" portName="Restart" portNum="2" objectIndex="0" varId="1" filter="3" portDataType="1" maxDeviation="0" resetTime="0" />
@@ -66,7 +66,7 @@
             </fBEstop>
           </networkHasFunctionBlocks>
           <networkHasFunctionBlocks Id="98959b98-0105-4b25-a3d4-8c9210268ed9">
-            <fBMuting Id="61f3c549-bfa2-4120-a821-f407f9929cd0" name="FBMuting1" instanceName="FBMuting1" orderOfExecution="3" mapState="false" mapDiag="false" functionName="safeMuting" sequentialInputs="true" oSSDCheckOptional="false">
+            <fBMuting Id="61f3c549-bfa2-4120-a821-f407f9929cd0" name="FBMuting1" instanceName="FBMuting1" orderOfExecution="3" mapState="true" mapDiag="true" functionName="safeMuting" sequentialInputs="true" oSSDCheckOptional="false">
               <inPorts>
                 <functioBlockHasInPorts Id="e141f13e-992b-495e-921e-9a00f1c15a08">
                   <inPort Id="e3288bdd-1a92-41e0-80e0-13ce9cf3a29e" name="Enable" portName="Enable" portNum="2" objectIndex="0" varId="1" filter="3" portDataType="1" maxDeviation="0" resetTime="0" />
@@ -136,7 +136,7 @@
             </fBMuting>
           </networkHasFunctionBlocks>
           <networkHasFunctionBlocks Id="b86e8ea2-b635-498d-93a7-ca3f8e2cf95e">
-            <fBMuting Id="2e108323-c8e8-4ede-9abe-c90d74f01ad3" name="FBMuting2" instanceName="FBMuting2" orderOfExecution="4" mapState="false" mapDiag="false" functionName="safeMuting" sequentialInputs="true" oSSDCheckOptional="false">
+            <fBMuting Id="2e108323-c8e8-4ede-9abe-c90d74f01ad3" name="FBMuting2" instanceName="FBMuting2" orderOfExecution="4" mapState="true" mapDiag="true" functionName="safeMuting" sequentialInputs="true" oSSDCheckOptional="false">
               <inPorts>
                 <functioBlockHasInPorts Id="585af275-1060-41ac-94c4-3bd32a474d69">
                   <inPort Id="615e2eef-f7e6-4bf6-b430-f4db1caa45a8" name="Enable" portName="Enable" portNum="2" objectIndex="0" varId="1" filter="3" portDataType="1" maxDeviation="0" resetTime="0" />
