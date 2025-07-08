@@ -68,10 +68,10 @@
 	<Mappings>
 		<OwnerA>
 			<OwnerB Name="TIID^Device 1 (EtherCAT)">
-				<Link VarA="Term 18 (EK1200)^Term 5 (EL2904)^Module 1 (FSOES)^RxPDO^FSOE" VarB="Term 18 (EK1200)^Term 8 (EL1918)^ConnectionInputs^Message_28 TxPDO"/>
-				<Link VarA="Term 18 (EK1200)^Term 5 (EL2904)^Module 1 (FSOES)^TxPDO^FSOE" VarB="Term 18 (EK1200)^Term 8 (EL1918)^ConnectionOutputs^Message_28 RxPDO"/>
-				<Link VarA="Term 18 (EK1200)^Term 8 (EL1918)^ConnectionInputs^Message_28 TxPDO" VarB="Term 18 (EK1200)^Term 5 (EL2904)^Module 1 (FSOES)^RxPDO^FSOE"/>
-				<Link VarA="Term 18 (EK1200)^Term 8 (EL1918)^ConnectionOutputs^Message_28 RxPDO" VarB="Term 18 (EK1200)^Term 5 (EL2904)^Module 1 (FSOES)^TxPDO^FSOE"/>
+				<Link VarA="Term 18 (EK1200)^Term 5 (EL2904)^Module 1 (FSOES)^RxPDO^FSOE" VarB="Term 18 (EK1200)^Term 8 (EL1918)^ConnectionInputs^Message_29 TxPDO"/>
+				<Link VarA="Term 18 (EK1200)^Term 5 (EL2904)^Module 1 (FSOES)^TxPDO^FSOE" VarB="Term 18 (EK1200)^Term 8 (EL1918)^ConnectionOutputs^Message_29 RxPDO"/>
+				<Link VarA="Term 18 (EK1200)^Term 8 (EL1918)^ConnectionInputs^Message_29 TxPDO" VarB="Term 18 (EK1200)^Term 5 (EL2904)^Module 1 (FSOES)^RxPDO^FSOE"/>
+				<Link VarA="Term 18 (EK1200)^Term 8 (EL1918)^ConnectionOutputs^Message_29 RxPDO" VarB="Term 18 (EK1200)^Term 5 (EL2904)^Module 1 (FSOES)^TxPDO^FSOE"/>
 			</OwnerB>
 		</OwnerA>
 	</Mappings>

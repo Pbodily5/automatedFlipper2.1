@@ -98,12 +98,12 @@
 			<SuTask>#x00000000</SuTask>
 			<MBoxUserCmdData>004003000a0000001f000000000000000000000000000000000000000000000020f31005020000000100456e61626c6520446961674d65737361676520617320656d657267656e637900</MBoxUserCmdData>
 			<Pdo Name="ConnectionInputs" Index="#x1a00" Flags="#x2011" SyncMan="3">
-				<Entry Name="Message_28 TxPDO" Index="#x7000" Sub="#x01">
+				<Entry Name="Message_29 TxPDO" Index="#x7000" Sub="#x01">
 					<Type GUID="{2438F91B-E188-4ED7-8594-54354F9ED6A4}" Namespace="Safety">FSOE_6</Type>
 				</Entry>
 			</Pdo>
 			<Pdo Name="ConnectionOutputs" Index="#x1600" InOut="1" Flags="#x2011" SyncMan="2">
-				<Entry Name="Message_28 RxPDO" Index="#x6000" Sub="#x01">
+				<Entry Name="Message_29 RxPDO" Index="#x6000" Sub="#x01">
 					<Type GUID="{2438F91B-E188-4ED7-8594-54354F9ED6A4}" Namespace="Safety">FSOE_6</Type>
 				</Entry>
 			</Pdo>
