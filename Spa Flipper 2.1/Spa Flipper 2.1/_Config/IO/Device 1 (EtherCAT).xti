@@ -33,37 +33,9 @@
 		<Box File="Term 18 (EK1200).xti" Id="1">
 			<EtherCAT PortABoxInfo="#x00ffffff"/>
 		</Box>
-		<Box File="Drive 10 (ClearPath EtherCAT Integrated ServoMotor).xti" Id="10">
-			<EtherCAT PortABoxInfo="#x01000009"/>
-		</Box>
-		<Box File="Drive 11 (ClearPath EtherCAT Integrated ServoMotor).xti" Id="11">
-			<EtherCAT PortABoxInfo="#x0100000a"/>
-		</Box>
-		<Box File="Drive 12 (ClearPath EtherCAT Integrated ServoMotor).xti" Id="12">
-			<EtherCAT PortABoxInfo="#x0100000b"/>
-		</Box>
-		<Box File="Drive 13 (ClearPath EtherCAT Integrated ServoMotor).xti" Id="13">
-			<EtherCAT PortABoxInfo="#x0100000c"/>
-		</Box>
-		<Box File="Drive 14 (ClearPath EtherCAT Integrated ServoMotor).xti" Id="14">
-			<EtherCAT PortABoxInfo="#x0100000d"/>
-		</Box>
-		<Box File="Drive 15 (ClearPath EtherCAT Integrated ServoMotor).xti" Id="15">
-			<EtherCAT PortABoxInfo="#x0100000e"/>
-		</Box>
-		<Box File="Drive 16 (ClearPath EtherCAT Integrated ServoMotor).xti" Id="16">
-			<EtherCAT PortABoxInfo="#x0100000f"/>
-		</Box>
-		<Box File="Drive 17 (ClearPath EtherCAT Integrated ServoMotor).xti" Id="17">
-			<EtherCAT PortABoxInfo="#x01000010"/>
-		</Box>
-		<Box File="Drive 18 (ClearPath EtherCAT Integrated ServoMotor).xti" Id="18">
-			<EtherCAT PortABoxInfo="#x01000011"/>
-		</Box>
-		<Box File="Drive 36 (ClearPath EtherCAT Integrated ServoMotor).xti" Id="36">
-			<EtherCAT PortABoxInfo="#x01000012"/>
-		</Box>
-		<EtherCAT/>
+		<EtherCAT>
+			<SyncUnit Name="safetySync" NoDeleteIfUnused="true"/>
+		</EtherCAT>
 	</Device>
 	<Mappings>
 		<OwnerA>

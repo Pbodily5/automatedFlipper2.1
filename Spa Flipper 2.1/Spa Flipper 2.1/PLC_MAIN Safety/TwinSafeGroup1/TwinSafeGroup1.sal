@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<safetyApplication Crc="3549693228" xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" dslVersion="1.5.0.0" Id="c31fffe1-f283-4eeb-ba25-1300dadd29e5" name="" mapState="false" mapDiag="false" groupOrderId="0" passificationAllowed="false" temporaryDeactivationAllowed="false" permamentDeactivationAllowed="false" xmlid="0" analogFBOutputReplacementValues="Zero" verifyAnalogFBInputsIfStart="false" userFbId="00000000-0000-0000-0000-000000000000" xmlns="http://schemas.microsoft.com/dsltools/SafetyApplicationLanguage">
+<safetyApplication Crc="2137744748" xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" dslVersion="1.5.0.0" Id="c31fffe1-f283-4eeb-ba25-1300dadd29e5" name="" mapState="false" mapDiag="false" groupOrderId="0" passificationAllowed="false" temporaryDeactivationAllowed="false" permamentDeactivationAllowed="false" xmlid="0" analogFBOutputReplacementValues="Zero" verifyAnalogFBInputsIfStart="false" userFbId="00000000-0000-0000-0000-000000000000" xmlns="http://schemas.microsoft.com/dsltools/SafetyApplicationLanguage">
   <networks>
     <safetyApplicationHasNetworks Id="7a8d216e-3c21-45e2-b07f-239b6b246af7">
       <Network Id="f851133c-16ab-41db-aa61-140a3c6152c6" name="Network1" networkName="Network1" intId="1" networkOrderId="0">
         <functionBlocks>
           <networkHasFunctionBlocks Id="3bb37b16-5e3e-4ee2-9b27-ceaa78917a2e">
-            <fBEstop Id="729e10da-79af-4791-af9b-6e9eb53abf45" name="FBEstop1" instanceName="FBEstop1" orderOfExecution="1" mapState="false" mapDiag="false" functionName="safeEstop" safeInputsAfterDiscError="false">
+            <fBEstop Id="729e10da-79af-4791-af9b-6e9eb53abf45" name="FBEstop1" instanceName="FBEstop1" orderOfExecution="1" mapState="true" mapDiag="false" functionName="safeEstop" safeInputsAfterDiscError="false">
               <inPorts>
                 <functioBlockHasInPorts Id="0d4313f2-31f3-4006-9507-0d5dd8176c59">
                   <inPort Id="9e671cd4-1c2b-441b-8900-82ff9b3dd9bc" name="Restart" portName="Restart" portNum="2" objectIndex="0" varId="1" filter="3" portDataType="1" maxDeviation="0" resetTime="0" />
@@ -201,7 +201,7 @@
             </fBOr>
           </networkHasFunctionBlocks>
           <networkHasFunctionBlocks Id="ef54c208-ba1e-426e-b12c-f40fd5bbe8a3">
-            <fBMon Id="673856b7-3a39-4513-a9d5-476fd05a5ef2" name="FBMon1" instanceName="FBMon1" orderOfExecution="5" mapState="false" mapDiag="false" functionName="safeMon" safeInputsAfterDiscError="false" manualFunctionTest="false">
+            <fBMon Id="673856b7-3a39-4513-a9d5-476fd05a5ef2" name="FBMon1" instanceName="FBMon1" orderOfExecution="5" mapState="true" mapDiag="false" functionName="safeMon" safeInputsAfterDiscError="false" manualFunctionTest="false">
               <inPorts>
                 <functioBlockHasInPorts Id="176909b9-9f38-40dc-b203-aa4fe7aaa05b">
                   <inPort Id="28022261-d665-406f-8c17-94a261c55880" name="Restart" portName="Restart" portNum="2" objectIndex="0" varId="1" filter="3" portDataType="1" maxDeviation="0" resetTime="0" />
@@ -338,7 +338,7 @@
             </fBOr>
           </networkHasFunctionBlocks>
           <networkHasFunctionBlocks Id="d07e4696-bf84-4510-ad36-96489aa54889">
-            <fBMon Id="aca1819a-a7b6-4d31-b7f3-9c0aa663ad05" name="FBMon2" instanceName="FBMon2" orderOfExecution="8" mapState="false" mapDiag="false" functionName="safeMon" safeInputsAfterDiscError="false" manualFunctionTest="false">
+            <fBMon Id="aca1819a-a7b6-4d31-b7f3-9c0aa663ad05" name="FBMon2" instanceName="FBMon2" orderOfExecution="8" mapState="true" mapDiag="false" functionName="safeMon" safeInputsAfterDiscError="false" manualFunctionTest="false">
               <inPorts>
                 <functioBlockHasInPorts Id="e5857ee9-9725-47a0-a0f4-7863c459ea66">
                   <inPort Id="e866cec6-7ed2-4544-8e21-71b9680d5f75" name="Restart" portName="Restart" portNum="2" objectIndex="0" varId="1" filter="3" portDataType="1" maxDeviation="0" resetTime="0" />

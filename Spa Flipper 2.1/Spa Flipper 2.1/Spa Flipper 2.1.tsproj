@@ -1548,11 +1548,14 @@ External Setpoint Generation:
 			<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 18 (EK1200)^Term 8 (EL1918)">
 				<Link VarA="PlcTask Inputs^GVL_devices.fbEstop.bEstopFbError" VarB="StandardInputs^Standard Out Var 18"/>
 				<Link VarA="PlcTask Inputs^GVL_devices.fbEstop.bEstopSigOk" VarB="StandardInputs^Standard Out Var 19"/>
+				<Link VarA="PlcTask Inputs^GVL_devices.fbEstop.nEstopFbState" VarB="Function Block Info Data^TwinSafeGroup1.Network1.FBEstop1 Info Data^State"/>
 				<Link VarA="PlcTask Inputs^GVL_devices.fbLtCurtains.bCurtainsMuted" VarB="StandardInputs^Standard Out Var 17"/>
 				<Link VarA="PlcTask Inputs^GVL_devices.fbLtCurtains.bLftCurtainFbError" VarB="StandardInputs^Standard Out Var 11"/>
 				<Link VarA="PlcTask Inputs^GVL_devices.fbLtCurtains.bLftCurtainSigOk" VarB="StandardInputs^Standard Out Var 12"/>
 				<Link VarA="PlcTask Inputs^GVL_devices.fbLtCurtains.bRhtCurtainFbError" VarB="StandardInputs^Standard Out Var 14"/>
 				<Link VarA="PlcTask Inputs^GVL_devices.fbLtCurtains.bRhtCurtainSigOk" VarB="StandardInputs^Standard Out Var 15"/>
+				<Link VarA="PlcTask Inputs^GVL_devices.fbLtCurtains.nLftCurtainFbState" VarB="Function Block Info Data^TwinSafeGroup1.Network1.FBMon1 Info Data^State"/>
+				<Link VarA="PlcTask Inputs^GVL_devices.fbLtCurtains.nRhtCurtainFbState" VarB="Function Block Info Data^TwinSafeGroup1.Network1.FBMon2 Info Data^State"/>
 				<Link VarA="PlcTask Inputs^GVL_machine.bComErr" VarB="StandardInputs^Standard Out Var 8"/>
 				<Link VarA="PlcTask Inputs^GVL_machine.bFbErr" VarB="StandardInputs^Standard Out Var 20"/>
 				<Link VarA="PlcTask Inputs^GVL_machine.bFbRun" VarB="StandardInputs^Standard Out Var 9"/>
