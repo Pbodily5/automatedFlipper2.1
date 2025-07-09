@@ -1517,6 +1517,7 @@ External Setpoint Generation:
 	</Project>
 	<Mappings>
 		<MappingInfo Identifier="{00000000-2001-0850-0020-500810000403}" Id="#x02030020"/>
+		<MappingInfo Identifier="{03040010-0010-0304-1000-040310000403}" Id="#x02030010" Watchdog="04000000040000000400000004000000"/>
 		<OwnerA Name="TIPC^PLC_MAIN^PLC_MAIN Instance">
 			<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 18 (EK1200)^Term 2 (EL1008)">
 				<Link VarA="PlcTask Inputs^GVL_devices.fbColumn0Motor.bHomeSensor" VarB="Channel 6^Input"/>
@@ -1543,6 +1544,28 @@ External Setpoint Generation:
 			</OwnerB>
 			<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 18 (EK1200)^Term 7 (EL3024)">
 				<Link VarA="PlcTask Inputs^GVL_devices.fbTable.tableDistSens.nSensor" VarB="AI Standard Channel 1^Value"/>
+			</OwnerB>
+			<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 18 (EK1200)^Term 8 (EL1918)">
+				<Link VarA="PlcTask Inputs^GVL_devices.fbEstop.bEstopFbError" VarB="StandardInputs^Standard Out Var 18"/>
+				<Link VarA="PlcTask Inputs^GVL_devices.fbEstop.bEstopSigOk" VarB="StandardInputs^Standard Out Var 19"/>
+				<Link VarA="PlcTask Inputs^GVL_devices.fbLtCurtains.bCurtainsMuted" VarB="StandardInputs^Standard Out Var 17"/>
+				<Link VarA="PlcTask Inputs^GVL_devices.fbLtCurtains.bLftCurtainFbError" VarB="StandardInputs^Standard Out Var 11"/>
+				<Link VarA="PlcTask Inputs^GVL_devices.fbLtCurtains.bLftCurtainSigOk" VarB="StandardInputs^Standard Out Var 12"/>
+				<Link VarA="PlcTask Inputs^GVL_devices.fbLtCurtains.bRhtCurtainFbError" VarB="StandardInputs^Standard Out Var 14"/>
+				<Link VarA="PlcTask Inputs^GVL_devices.fbLtCurtains.bRhtCurtainSigOk" VarB="StandardInputs^Standard Out Var 15"/>
+				<Link VarA="PlcTask Inputs^GVL_machine.bComErr" VarB="StandardInputs^Standard Out Var 8"/>
+				<Link VarA="PlcTask Inputs^GVL_machine.bFbErr" VarB="StandardInputs^Standard Out Var 20"/>
+				<Link VarA="PlcTask Inputs^GVL_machine.bFbRun" VarB="StandardInputs^Standard Out Var 9"/>
+				<Link VarA="PlcTask Inputs^GVL_machine.bInRun" VarB="StandardInputs^Standard Out Var 10"/>
+				<Link VarA="PlcTask Inputs^GVL_machine.bOtherErr" VarB="StandardInputs^Standard Out Var 13"/>
+				<Link VarA="PlcTask Inputs^GVL_machine.bSafetyOk" VarB="StandardInputs^Standard Out Var 16"/>
+				<Link VarA="PlcTask Outputs^GVL_devices.fbEstop.bResetEstopFb" VarB="StandardOutputs^Standard In Var 4"/>
+				<Link VarA="PlcTask Outputs^GVL_devices.fbLtCurtains.bMuteCurtains" VarB="StandardOutputs^Standard In Var 3"/>
+				<Link VarA="PlcTask Outputs^GVL_devices.fbLtCurtains.bResetLftCurtainFb" VarB="StandardOutputs^Standard In Var 5"/>
+				<Link VarA="PlcTask Outputs^GVL_devices.fbLtCurtains.bResetRhtCurtainFb" VarB="StandardOutputs^Standard In Var 6"/>
+				<Link VarA="PlcTask Outputs^GVL_machine.bRunSafety" VarB="StandardOutputs^Standard In Var 2"/>
+				<Link VarA="PlcTask Outputs^GVL_machine.bSafetyBypass" VarB="StandardOutputs^Standard In Var 7"/>
+				<Link VarA="PlcTask Outputs^GVL_machine.bSafetyErrorAck" VarB="StandardOutputs^Standard In Var 1"/>
 			</OwnerB>
 		</OwnerA>
 	</Mappings>
