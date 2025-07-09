@@ -33,18 +33,38 @@
 		<Box File="Term 18 (EK1200).xti" Id="1">
 			<EtherCAT PortABoxInfo="#x00ffffff"/>
 		</Box>
+		<Box File="Drive 27 (ClearPath EtherCAT Integrated ServoMotor).xti" Id="27">
+			<EtherCAT PortABoxInfo="#x01000009"/>
+		</Box>
+		<Box File="Drive 28 (ClearPath EtherCAT Integrated ServoMotor).xti" Id="28">
+			<EtherCAT PortABoxInfo="#x0100001b"/>
+		</Box>
+		<Box File="Drive 29 (ClearPath EtherCAT Integrated ServoMotor).xti" Id="29">
+			<EtherCAT PortABoxInfo="#x0100001c"/>
+		</Box>
+		<Box File="Drive 30 (ClearPath EtherCAT Integrated ServoMotor).xti" Id="30">
+			<EtherCAT PortABoxInfo="#x0100001d"/>
+		</Box>
+		<Box File="Drive 31 (ClearPath EtherCAT Integrated ServoMotor).xti" Id="31">
+			<EtherCAT PortABoxInfo="#x0100001e"/>
+		</Box>
+		<Box File="Drive 32 (ClearPath EtherCAT Integrated ServoMotor).xti" Id="32">
+			<EtherCAT PortABoxInfo="#x0100001f"/>
+		</Box>
+		<Box File="Drive 33 (ClearPath EtherCAT Integrated ServoMotor).xti" Id="33">
+			<EtherCAT PortABoxInfo="#x01000020"/>
+		</Box>
+		<Box File="Drive 34 (ClearPath EtherCAT Integrated ServoMotor).xti" Id="34">
+			<EtherCAT PortABoxInfo="#x01000021"/>
+		</Box>
+		<Box File="Drive 35 (ClearPath EtherCAT Integrated ServoMotor).xti" Id="35">
+			<EtherCAT PortABoxInfo="#x01000022"/>
+		</Box>
+		<Box File="Drive 36 (ClearPath EtherCAT Integrated ServoMotor).xti" Id="36">
+			<EtherCAT PortABoxInfo="#x01000023"/>
+		</Box>
 		<EtherCAT>
 			<SyncUnit Name="safetySync" NoDeleteIfUnused="true"/>
 		</EtherCAT>
 	</Device>
-	<Mappings>
-		<OwnerA>
-			<OwnerB Name="TIID^Device 1 (EtherCAT)">
-				<Link VarA="Term 18 (EK1200)^Term 5 (EL2904)^Module 1 (FSOES)^RxPDO^FSOE" VarB="Term 18 (EK1200)^Term 8 (EL1918)^ConnectionInputs^Message_21 TxPDO"/>
-				<Link VarA="Term 18 (EK1200)^Term 5 (EL2904)^Module 1 (FSOES)^TxPDO^FSOE" VarB="Term 18 (EK1200)^Term 8 (EL1918)^ConnectionOutputs^Message_21 RxPDO"/>
-				<Link VarA="Term 18 (EK1200)^Term 8 (EL1918)^ConnectionInputs^Message_21 TxPDO" VarB="Term 18 (EK1200)^Term 5 (EL2904)^Module 1 (FSOES)^RxPDO^FSOE"/>
-				<Link VarA="Term 18 (EK1200)^Term 8 (EL1918)^ConnectionOutputs^Message_21 RxPDO" VarB="Term 18 (EK1200)^Term 5 (EL2904)^Module 1 (FSOES)^TxPDO^FSOE"/>
-			</OwnerB>
-		</OwnerA>
-	</Mappings>
 </TcSmItem>

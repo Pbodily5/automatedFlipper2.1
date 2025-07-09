@@ -29,7 +29,7 @@
 			</ArrayInfo>
 		</DataType>
 	</DataTypes>
-	<Box Id="5" BoxType="9099" BoxFlags="#x00000020">
+	<Box Id="14" BoxType="9099" BoxFlags="#x00000020">
 		<Name>__FILENAME__</Name>
 		<ImageId>118</ImageId>
 		<EtherCAT SlaveType="2" PdiType="#x0005" MboxDataLinkLayer="true" StateMBoxPolling="true" CycleMBoxPollingTime="0" CoeType="3" FoeType="1" VendorId="#x00000002" ProductCode="#x0b583052" RevisionNo="#x00130000" InfoDataAddr="true" TimeoutMailbox2="2000" CheckRevisionNoType="3" PortPhys="51" MaxSlotCount="2" Type="EL2904, 4 Ch. Safety Output 24V, 0.5A, TwinSAFE" Desc="EL2904">
@@ -103,7 +103,7 @@
 			<Slot Name="">
 				<SlotData>0000010001000400000000000000000000000000000000000000000000000000</SlotData>
 				<ModuleIdent>290</ModuleIdent>
-				<Module Id="#x03090001" Type="FSOES" Class="290">
+				<Module Id="#x03090003" Type="FSOES" Class="290">
 					<Name>Module 1 (FSOES)</Name>
 					<ImageId>118</ImageId>
 					<ModuleData>020000002201000000000c000000000000000000000000000000000000000000</ModuleData>
@@ -115,7 +115,7 @@
 			<Slot Name="">
 				<SlotData>0000010001000400000000000000000000000000000000000000000000000000</SlotData>
 				<ModuleIdent>200</ModuleIdent>
-				<Module Id="#x03090002" Type="DO" Class="200">
+				<Module Id="#x03090005" Type="DO" Class="200">
 					<Name>Module 2 (DO)</Name>
 					<ImageId>118</ImageId>
 					<ModuleData>02000000c8000000000004000000000000000000000000000000000000000000</ModuleData>

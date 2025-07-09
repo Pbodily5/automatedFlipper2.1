@@ -1004,11 +1004,45 @@ External Setpoint Generation:
 		</Motion>
 		<Plc>
 			<Project GUID="{6036E6EF-E0ED-4D41-BFCF-5B60AD71A3FE}" Name="PLC_MAIN" PrjFilePath="PLC_MAIN\PLC_MAIN.plcproj" TmcFilePath="PLC_MAIN\PLC_MAIN.tmc" ReloadTmc="true" AmsPort="851" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="PLC_MAIN\PLC_MAIN.tmc" TmcHash="{C38F5880-EEE1-5ABF-3138-5A4C13289D49}">
+				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="PLC_MAIN\PLC_MAIN.tmc" TmcHash="{5E9191C8-5E95-7706-ECB2-49B2D7ED06CE}">
 					<Name>PLC_MAIN Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 					<Vars VarGrpType="1">
 						<Name>PlcTask Inputs</Name>
+						<Var>
+							<Name>GVL_machine.bSafetyOk</Name>
+							<Comment><![CDATA[ Safety protocol enacted ]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL_machine.bFbRun</Name>
+							<Comment><![CDATA[ Safety Function Blocks are running]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL_machine.bInRun</Name>
+							<Comment><![CDATA[ Safety Program is Running]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL_machine.bFbErr</Name>
+							<Comment><![CDATA[ A Safety Function Block contains an error]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL_machine.bComErr</Name>
+							<Comment><![CDATA[ Safety program communication error]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL_machine.bOtherErr</Name>
+							<Comment><![CDATA[ Other safety error exist. (EDM FB)]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL_machine.bTestErr</Name>
+							<Type>BOOL</Type>
+						</Var>
 						<Var>
 							<Name>GVL_devices.fbLtCurtains.bBtn</Name>
 							<Type>BOOL</Type>
@@ -1236,43 +1270,24 @@ External Setpoint Generation:
 							<Name>GVL_devices.fbColumn3Motor.refMasterAxis.NcToPlc</Name>
 							<Type GUID="{25521FAA-EA5F-4C7F-8864-BBCCDACD2E98}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
 						</Var>
-						<Var>
-							<Name>GVL_machine.bSafetyOk</Name>
-							<Comment><![CDATA[ Safety protocol enacted ]]></Comment>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>GVL_machine.bFbRun</Name>
-							<Comment><![CDATA[ Safety Function Blocks are running]]></Comment>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>GVL_machine.bInRun</Name>
-							<Comment><![CDATA[ Safety Program is Running]]></Comment>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>GVL_machine.bFbErr</Name>
-							<Comment><![CDATA[ A Safety Function Block contains an error]]></Comment>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>GVL_machine.bComErr</Name>
-							<Comment><![CDATA[ Safety program communication error]]></Comment>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>GVL_machine.bOtherErr</Name>
-							<Comment><![CDATA[ Other safety error exist. (EDM FB)]]></Comment>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>GVL_machine.bTestErr</Name>
-							<Type>BOOL</Type>
-						</Var>
 					</Vars>
 					<Vars VarGrpType="2" AreaNo="1">
 						<Name>PlcTask Outputs</Name>
+						<Var>
+							<Name>GVL_machine.bRunSafety</Name>
+							<Comment><![CDATA[////////////////// SAFETY /////////////////////////////////]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL_machine.bSafetyErrorAck</Name>
+							<Comment><![CDATA[ Sequence to acknowledge safety error : False > True > False.]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL_machine.bSafetyBypass</Name>
+							<Comment><![CDATA[Used to Bypass entire safety PLC. Should Only be accessible with high level credentials. ]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
 						<Var>
 							<Name>GVL_devices.fbLtBars.bGreenLight</Name>
 							<Type>BOOL</Type>
@@ -1451,21 +1466,6 @@ External Setpoint Generation:
 							<Name>GVL_devices.fbColumn3Motor.refMasterAxis.PlcToNc</Name>
 							<Type GUID="{96B75FEB-2D84-43BE-A3EC-D9A681F27D52}" Namespace="MC">PLCTONC_AXIS_REF</Type>
 						</Var>
-						<Var>
-							<Name>GVL_machine.bRunSafety</Name>
-							<Comment><![CDATA[////////////////// SAFETY /////////////////////////////////]]></Comment>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>GVL_machine.bSafetyErrorAck</Name>
-							<Comment><![CDATA[ Sequence to acknowledge safety error : False > True > False.]]></Comment>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>GVL_machine.bSafetyBypass</Name>
-							<Comment><![CDATA[Used to Bypass entire safety PLC. Should Only be accessible with high level credentials. ]]></Comment>
-							<Type>BOOL</Type>
-						</Var>
 					</Vars>
 					<Contexts>
 						<Context>
@@ -1515,61 +1515,4 @@ External Setpoint Generation:
 			<Device File="Device 1 (EtherCAT).xti" Id="1"/>
 		</Io>
 	</Project>
-	<Mappings>
-		<MappingInfo Identifier="{00000000-2001-0850-0020-500810000403}" Id="#x02030020"/>
-		<MappingInfo Identifier="{03040010-0010-0304-1000-040310000403}" Id="#x02030010" Watchdog="04000000040000000400000004000000"/>
-		<OwnerA Name="TIPC^PLC_MAIN^PLC_MAIN Instance">
-			<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 18 (EK1200)^Term 2 (EL1008)">
-				<Link VarA="PlcTask Inputs^GVL_devices.fbColumn0Motor.bHomeSensor" VarB="Channel 6^Input"/>
-				<Link VarA="PlcTask Inputs^GVL_devices.fbColumn2Motor.bHomeSensor" VarB="Channel 5^Input"/>
-				<Link VarA="PlcTask Inputs^GVL_devices.fbLftWidthMotor.bClampSensor" VarB="Channel 1^Input"/>
-				<Link VarA="PlcTask Inputs^GVL_devices.fbLftWidthMotor.bHomeSensor" VarB="Channel 4^Input"/>
-				<Link VarA="PlcTask Inputs^GVL_devices.fbRhtWidthMotor.bClampSensor" VarB="Channel 2^Input"/>
-				<Link VarA="PlcTask Inputs^GVL_devices.fbRhtWidthMotor.bHomeSensor" VarB="Channel 3^Input"/>
-				<Link VarA="PlcTask Inputs^GVL_devices.fbTable.bLoadedSensor" VarB="Channel 7^Input"/>
-			</OwnerB>
-			<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 18 (EK1200)^Term 3 (EL2008)">
-				<Link VarA="PlcTask Outputs^GVL_devices.fbLftClampMotor.bBrake" VarB="Channel 7^Output"/>
-				<Link VarA="PlcTask Outputs^GVL_devices.fbLftRotationMotor.bBrake" VarB="Channel 5^Output"/>
-				<Link VarA="PlcTask Outputs^GVL_devices.fbLtBars.bGreenLight" VarB="Channel 1^Output"/>
-				<Link VarA="PlcTask Outputs^GVL_devices.fbLtBars.bRedLight" VarB="Channel 3^Output"/>
-				<Link VarA="PlcTask Outputs^GVL_devices.fbLtBars.bYellowLight" VarB="Channel 2^Output"/>
-				<Link VarA="PlcTask Outputs^GVL_devices.fbRhtClampMotor.bBrake" VarB="Channel 6^Output"/>
-				<Link VarA="PlcTask Outputs^GVL_devices.fbRhtRotationMotor.bBrake" VarB="Channel 4^Output"/>
-			</OwnerB>
-			<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 18 (EK1200)^Term 4 (EL2008)">
-				<Link VarA="PlcTask Outputs^GVL_devices.fbTable.bTableBlackWire" VarB="Channel 5^Output"/>
-				<Link VarA="PlcTask Outputs^GVL_devices.fbTable.bTableBlueWire" VarB="Channel 6^Output"/>
-				<Link VarA="PlcTask Outputs^GVL_devices.fbTable.bTableGreenWire" VarB="Channel 4^Output"/>
-			</OwnerB>
-			<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 18 (EK1200)^Term 7 (EL3024)">
-				<Link VarA="PlcTask Inputs^GVL_devices.fbTable.tableDistSens.nSensor" VarB="AI Standard Channel 1^Value"/>
-			</OwnerB>
-			<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 18 (EK1200)^Term 8 (EL1918)">
-				<Link VarA="PlcTask Inputs^GVL_devices.fbEstop.bEstopFbError" VarB="StandardInputs^Standard Out Var 18"/>
-				<Link VarA="PlcTask Inputs^GVL_devices.fbEstop.bEstopSigOk" VarB="StandardInputs^Standard Out Var 19"/>
-				<Link VarA="PlcTask Inputs^GVL_devices.fbEstop.nEstopFbState" VarB="Function Block Info Data^TwinSafeGroup1.Network1.FBEstop1 Info Data^State"/>
-				<Link VarA="PlcTask Inputs^GVL_devices.fbLtCurtains.bCurtainsMuted" VarB="StandardInputs^Standard Out Var 17"/>
-				<Link VarA="PlcTask Inputs^GVL_devices.fbLtCurtains.bLftCurtainFbError" VarB="StandardInputs^Standard Out Var 11"/>
-				<Link VarA="PlcTask Inputs^GVL_devices.fbLtCurtains.bLftCurtainSigOk" VarB="StandardInputs^Standard Out Var 12"/>
-				<Link VarA="PlcTask Inputs^GVL_devices.fbLtCurtains.bRhtCurtainFbError" VarB="StandardInputs^Standard Out Var 14"/>
-				<Link VarA="PlcTask Inputs^GVL_devices.fbLtCurtains.bRhtCurtainSigOk" VarB="StandardInputs^Standard Out Var 15"/>
-				<Link VarA="PlcTask Inputs^GVL_devices.fbLtCurtains.nLftCurtainFbState" VarB="Function Block Info Data^TwinSafeGroup1.Network1.FBMon1 Info Data^State"/>
-				<Link VarA="PlcTask Inputs^GVL_devices.fbLtCurtains.nRhtCurtainFbState" VarB="Function Block Info Data^TwinSafeGroup1.Network1.FBMon2 Info Data^State"/>
-				<Link VarA="PlcTask Inputs^GVL_machine.bComErr" VarB="StandardInputs^Standard Out Var 8"/>
-				<Link VarA="PlcTask Inputs^GVL_machine.bFbErr" VarB="StandardInputs^Standard Out Var 20"/>
-				<Link VarA="PlcTask Inputs^GVL_machine.bFbRun" VarB="StandardInputs^Standard Out Var 9"/>
-				<Link VarA="PlcTask Inputs^GVL_machine.bInRun" VarB="StandardInputs^Standard Out Var 10"/>
-				<Link VarA="PlcTask Inputs^GVL_machine.bOtherErr" VarB="StandardInputs^Standard Out Var 13"/>
-				<Link VarA="PlcTask Inputs^GVL_machine.bSafetyOk" VarB="StandardInputs^Standard Out Var 16"/>
-				<Link VarA="PlcTask Outputs^GVL_devices.fbEstop.bResetEstopFb" VarB="StandardOutputs^Standard In Var 4"/>
-				<Link VarA="PlcTask Outputs^GVL_devices.fbLtCurtains.bMuteCurtains" VarB="StandardOutputs^Standard In Var 3"/>
-				<Link VarA="PlcTask Outputs^GVL_devices.fbLtCurtains.bResetLftCurtainFb" VarB="StandardOutputs^Standard In Var 5"/>
-				<Link VarA="PlcTask Outputs^GVL_devices.fbLtCurtains.bResetRhtCurtainFb" VarB="StandardOutputs^Standard In Var 6"/>
-				<Link VarA="PlcTask Outputs^GVL_machine.bRunSafety" VarB="StandardOutputs^Standard In Var 2"/>
-				<Link VarA="PlcTask Outputs^GVL_machine.bSafetyBypass" VarB="StandardOutputs^Standard In Var 7"/>
-				<Link VarA="PlcTask Outputs^GVL_machine.bSafetyErrorAck" VarB="StandardOutputs^Standard In Var 1"/>
-			</OwnerB>
-		</OwnerA>
-	</Mappings>
 </TcSmProject>
