@@ -107,7 +107,7 @@ IF fbWaitInit.Q THEN
 								torqueAccelerationIn:= 50, 
 								torqueDecelerationIn:= 50, 
 								homeVelocityIn:= 3, 
-								homeSetPositionIn:= -65.5, 
+								homeSetPositionIn:= -66.14, 
 								homeTorqueLimitIn:= 20,
 								jogTorqueIn := 100);
 		END_IF
@@ -122,7 +122,7 @@ IF fbWaitInit.Q THEN
 								torqueAccelerationIn:= 50, 
 								torqueDecelerationIn:= 50, 
 								homeVelocityIn:= 3, 
-								homeSetPositionIn:= 65.50, 
+								homeSetPositionIn:= 63.1, 
 								homeTorqueLimitIn:= 20,
 								jogTorqueIn := 100);
 		END_IF
@@ -196,9 +196,5 @@ IF fbWaitInit.Q THEN
 	END_IF
 END_IF]]></ST>
     </Implementation>
-    <LineIds Name="motorsInit">
-      <LineId Id="3" Count="180" />
-      <LineId Id="2" Count="0" />
-    </LineIds>
   </POU>
 </TcPlcObject>

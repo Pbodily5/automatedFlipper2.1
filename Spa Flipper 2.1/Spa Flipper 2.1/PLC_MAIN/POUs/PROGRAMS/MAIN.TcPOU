@@ -41,7 +41,7 @@ END_VAR
 // === CYCLIC CALLS ===
 safetyHandler();
 eflex();
-//updateIgnition(); //When Using Ignition as HMI. (Handles Ignition Clients)
+updateIgnition(); 
 updateMotors();
 fbErrorPresent(CLK := GVL_machine.bErrorPresent);
 IF fbErrorPresent.Q THEN

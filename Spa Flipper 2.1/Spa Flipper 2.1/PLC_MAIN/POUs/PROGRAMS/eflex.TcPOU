@@ -11,20 +11,20 @@ bConnect 		: BOOL := TRUE;
 
 (* published message *)
 bPublish 		: BOOL;
-sTopicPub 		: STRING(255) := 'flipper2toNodeRed';
+sTopicPub 		: STRING(255) := 'flipper2.1toNodeRed'; //Publish topic. Must match syntax of nodeRed "mqtt out - topic"
 sPayloadPub 	: STRING (255):= 'This is a test';
 x				: UDINT;
 
 (* recieved message *)
 bSubscribed 	: BOOL;
-sTopicSub 		: STRING(255) := 'toFlipper2.1PLC';
+sTopicSub 		: STRING(255) := 'toFlipper2.1PLC'; //Suscribe topic. Must match syntax of nodeRed "mqtt in - topic"
 sTopicRcv 		: STRING(255);
 sPayloadRcv 	: STRING(255);
 
 fbMessageQueue	: FB_IotMqttMessageQueue;
 fbMessage		: FB_IotMqttMessage;
 fbJsonDataType 	: FB_JsonReadWriteDataType;
-eflexMsgIn 		: ST_eflexMsgIn;
+eflexMsgIn 		: ST_eflexMsgIn; //Custom Data Structure that must match variable types of eflex variables being sent through nodeRed. 
 sBuffer 		: STRING(255);
 END_VAR
 ]]></Declaration>

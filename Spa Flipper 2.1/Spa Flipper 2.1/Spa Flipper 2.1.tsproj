@@ -1004,7 +1004,7 @@ External Setpoint Generation:
 		</Motion>
 		<Plc>
 			<Project GUID="{6036E6EF-E0ED-4D41-BFCF-5B60AD71A3FE}" Name="PLC_MAIN" PrjFilePath="PLC_MAIN\PLC_MAIN.plcproj" TmcFilePath="PLC_MAIN\PLC_MAIN.tmc" ReloadTmc="true" AmsPort="851" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="PLC_MAIN\PLC_MAIN.tmc" TmcHash="{68F51DA0-0B2E-5C1E-943D-C996942649FC}">
+				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="PLC_MAIN\PLC_MAIN.tmc" TmcHash="{0927C03A-BB8D-FC4D-0EFD-673CD6B0C514}">
 					<Name>PLC_MAIN Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 					<Vars VarGrpType="1">
@@ -1532,12 +1532,12 @@ External Setpoint Generation:
 			</OwnerB>
 			<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 10 (EK1200)^Term 12 (EL2008)">
 				<Link VarA="PlcTask Outputs^GVL_devices.fbLftClampMotor.bBrake" VarB="Channel 7^Output"/>
-				<Link VarA="PlcTask Outputs^GVL_devices.fbLftRotationMotor.bBrake" VarB="Channel 5^Output"/>
+				<Link VarA="PlcTask Outputs^GVL_devices.fbLftRotationMotor.bBrake" VarB="Channel 4^Output"/>
 				<Link VarA="PlcTask Outputs^GVL_devices.fbLtBars.bGreenLight" VarB="Channel 1^Output"/>
 				<Link VarA="PlcTask Outputs^GVL_devices.fbLtBars.bRedLight" VarB="Channel 3^Output"/>
 				<Link VarA="PlcTask Outputs^GVL_devices.fbLtBars.bYellowLight" VarB="Channel 2^Output"/>
 				<Link VarA="PlcTask Outputs^GVL_devices.fbRhtClampMotor.bBrake" VarB="Channel 6^Output"/>
-				<Link VarA="PlcTask Outputs^GVL_devices.fbRhtRotationMotor.bBrake" VarB="Channel 4^Output"/>
+				<Link VarA="PlcTask Outputs^GVL_devices.fbRhtRotationMotor.bBrake" VarB="Channel 5^Output"/>
 			</OwnerB>
 			<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 10 (EK1200)^Term 13 (EL2008)">
 				<Link VarA="PlcTask Outputs^GVL_devices.fbTable.bTableBlackWire" VarB="Channel 5^Output"/>
