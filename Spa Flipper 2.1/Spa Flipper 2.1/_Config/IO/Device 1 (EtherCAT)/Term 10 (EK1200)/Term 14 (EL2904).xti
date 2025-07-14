@@ -115,7 +115,7 @@
 			<Slot Name="">
 				<SlotData>0000010001000400000000000000000000000000000000000000000000000000</SlotData>
 				<ModuleIdent>200</ModuleIdent>
-				<Module Id="#x03090005" Type="DO" Class="200">
+				<Module Id="#x03090004" Type="DO" Class="200">
 					<Name>Module 2 (DO)</Name>
 					<ImageId>118</ImageId>
 					<ModuleData>02000000c8000000000004000000000000000000000000000000000000000000</ModuleData>

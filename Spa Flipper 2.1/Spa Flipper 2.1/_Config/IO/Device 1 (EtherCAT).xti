@@ -30,41 +30,54 @@
 		<Image Id="1" AddrType="9" ImageType="3">
 			<Name>Image</Name>
 		</Image>
-		<Box File="Term 18 (EK1200).xti" Id="1">
+		<Image Id="4" AddrType="10" ImageType="3">
+			<Name>Image-2</Name>
+		</Image>
+		<Box File="Term 10 (EK1200).xti" Id="10">
 			<EtherCAT PortABoxInfo="#x00ffffff"/>
 		</Box>
+		<Box File="Drive 19 (ClearPath EtherCAT Integrated ServoMotor).xti" Id="19">
+			<EtherCAT PortABoxInfo="#x01000012"/>
+		</Box>
+		<Box File="Drive 20 (ClearPath EtherCAT Integrated ServoMotor).xti" Id="20">
+			<EtherCAT PortABoxInfo="#x01000013"/>
+		</Box>
+		<Box File="Drive 21 (ClearPath EtherCAT Integrated ServoMotor).xti" Id="21">
+			<EtherCAT PortABoxInfo="#x01000014"/>
+		</Box>
+		<Box File="Drive 22 (ClearPath EtherCAT Integrated ServoMotor).xti" Id="22">
+			<EtherCAT PortABoxInfo="#x01000015"/>
+		</Box>
+		<Box File="Drive 23 (ClearPath EtherCAT Integrated ServoMotor).xti" Id="23">
+			<EtherCAT PortABoxInfo="#x01000016"/>
+		</Box>
+		<Box File="Drive 24 (ClearPath EtherCAT Integrated ServoMotor).xti" Id="24">
+			<EtherCAT PortABoxInfo="#x01000017"/>
+		</Box>
+		<Box File="Drive 25 (ClearPath EtherCAT Integrated ServoMotor).xti" Id="25">
+			<EtherCAT PortABoxInfo="#x01000018"/>
+		</Box>
+		<Box File="Drive 26 (ClearPath EtherCAT Integrated ServoMotor).xti" Id="26">
+			<EtherCAT PortABoxInfo="#x01000019"/>
+		</Box>
 		<Box File="Drive 27 (ClearPath EtherCAT Integrated ServoMotor).xti" Id="27">
-			<EtherCAT PortABoxInfo="#x01000009"/>
+			<EtherCAT PortABoxInfo="#x0100001a"/>
 		</Box>
 		<Box File="Drive 28 (ClearPath EtherCAT Integrated ServoMotor).xti" Id="28">
 			<EtherCAT PortABoxInfo="#x0100001b"/>
-		</Box>
-		<Box File="Drive 29 (ClearPath EtherCAT Integrated ServoMotor).xti" Id="29">
-			<EtherCAT PortABoxInfo="#x0100001c"/>
-		</Box>
-		<Box File="Drive 30 (ClearPath EtherCAT Integrated ServoMotor).xti" Id="30">
-			<EtherCAT PortABoxInfo="#x0100001d"/>
-		</Box>
-		<Box File="Drive 31 (ClearPath EtherCAT Integrated ServoMotor).xti" Id="31">
-			<EtherCAT PortABoxInfo="#x0100001e"/>
-		</Box>
-		<Box File="Drive 32 (ClearPath EtherCAT Integrated ServoMotor).xti" Id="32">
-			<EtherCAT PortABoxInfo="#x0100001f"/>
-		</Box>
-		<Box File="Drive 33 (ClearPath EtherCAT Integrated ServoMotor).xti" Id="33">
-			<EtherCAT PortABoxInfo="#x01000020"/>
-		</Box>
-		<Box File="Drive 34 (ClearPath EtherCAT Integrated ServoMotor).xti" Id="34">
-			<EtherCAT PortABoxInfo="#x01000021"/>
-		</Box>
-		<Box File="Drive 35 (ClearPath EtherCAT Integrated ServoMotor).xti" Id="35">
-			<EtherCAT PortABoxInfo="#x01000022"/>
-		</Box>
-		<Box File="Drive 36 (ClearPath EtherCAT Integrated ServoMotor).xti" Id="36">
-			<EtherCAT PortABoxInfo="#x01000023"/>
 		</Box>
 		<EtherCAT>
 			<SyncUnit Name="safetySync" NoDeleteIfUnused="true"/>
 		</EtherCAT>
 	</Device>
+	<Mappings>
+		<OwnerA>
+			<OwnerB Name="TIID^Device 1 (EtherCAT)">
+				<Link VarA="Term 10 (EK1200)^Term 14 (EL2904)^Module 1 (FSOES)^RxPDO^FSOE" VarB="Term 10 (EK1200)^Term 17 (EL1918)^ConnectionInputs^Message_21 TxPDO"/>
+				<Link VarA="Term 10 (EK1200)^Term 14 (EL2904)^Module 1 (FSOES)^TxPDO^FSOE" VarB="Term 10 (EK1200)^Term 17 (EL1918)^ConnectionOutputs^Message_21 RxPDO"/>
+				<Link VarA="Term 10 (EK1200)^Term 17 (EL1918)^ConnectionInputs^Message_21 TxPDO" VarB="Term 10 (EK1200)^Term 14 (EL2904)^Module 1 (FSOES)^RxPDO^FSOE"/>
+				<Link VarA="Term 10 (EK1200)^Term 17 (EL1918)^ConnectionOutputs^Message_21 RxPDO" VarB="Term 10 (EK1200)^Term 14 (EL2904)^Module 1 (FSOES)^TxPDO^FSOE"/>
+			</OwnerB>
+		</OwnerA>
+	</Mappings>
 </TcSmItem>

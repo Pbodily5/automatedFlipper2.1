@@ -1424,13 +1424,18 @@ External Setpoint Generation:
 			</Relations>
 		</DataType>
 	</DataTypes>
-	<Axis Id="8" CreateSymbols="true" AxisType="1">
+	<Axis Id="7" CreateSymbols="true" AxisType="1" GroupId="6">
 		<Name>__FILENAME__</Name>
 		<AxisPara>
+			<Dynamic AccelerationMaximum="15" DecelerationMaximum="15" Acceleration="200" Deceleration="200"/>
+			<Velo RefSearch="10" RefSync="10" Maximum="15"/>
 			<OtherSettings AllowMotionCmdToSlave="true"/>
 		</AxisPara>
 		<Encoder Name="Enc" EncType="19">
-			<EncPara MaxCount="#xffffffff"/>
+			<EncPara ScaleFactorNumerator="9.75e-05" ScaleFactorDenominator="10" MaxCount="#xffffffff">
+				<SoftEndMinControl Enable="true" Range="-622"/>
+				<SoftEndMaxControl Enable="true"/>
+			</EncPara>
 			<Vars VarGrpType="1">
 				<Name>Inputs</Name>
 				<Var>
@@ -1488,8 +1493,8 @@ External Setpoint Generation:
 			</Vars>
 		</Encoder>
 		<Drive Name="Drive" DrvType="16">
-			<DrvPara MaxCount="#xffffffff" DriveControlDWord="#x00000100">
-				<Analog TorqueSetpointScale="10" ScaleFactorActTorque="0.1"/>
+			<DrvPara MaxCount="#xffffffff" DriveControlDWord="#x00020100">
+				<Analog VeloReferenz="10" TorqueSetpointScale="10" ScaleFactorActTorque="0.1"/>
 				<TimeComp TaskDelayCycles="1"/>
 			</DrvPara>
 			<Vars VarGrpType="1">
@@ -1563,4 +1568,27 @@ External Setpoint Generation:
 			</Var>
 		</Vars>
 	</Axis>
+	<Mappings>
+		<OwnerA>
+			<OwnerB Name="TIID^Device 1 (EtherCAT)^Drive 25 (ClearPath EtherCAT Integrated ServoMotor)">
+				<Link VarA="Drive^Inputs^In^nDataIn1" VarB="TxPDO 1^Following Error Actual Value"/>
+				<Link VarA="Drive^Inputs^In^nDataIn3[0]" VarB="TxPDO 1^Torque Actual Value"/>
+				<Link VarA="Drive^Inputs^In^nState1" VarB="TxPDO 1^Statusword" Size="8"/>
+				<Link VarA="Drive^Inputs^In^nState2" VarB="TxPDO 1^Statusword" Size="8" OffsB="8"/>
+				<Link VarA="Drive^Inputs^In^nState4" VarB="WcState^InputToggle" Size="1" OffsA="1"/>
+				<Link VarA="Drive^Inputs^In^nState4" VarB="WcState^WcState" Size="1"/>
+				<Link VarA="Drive^Inputs^In^nState5" VarB="TxPDO 1^Modes of Operation Display"/>
+				<Link VarA="Drive^Outputs^Out^nCtrl1" VarB="RxPDO 1^Controlword" Size="8"/>
+				<Link VarA="Drive^Outputs^Out^nCtrl2" VarB="RxPDO 1^Controlword" Size="8" OffsB="8"/>
+				<Link VarA="Drive^Outputs^Out^nCtrl5" VarB="RxPDO 1^Modes of Operation"/>
+				<Link VarA="Drive^Outputs^Out^nDataOut1" VarB="RxPDO 1^Target Position"/>
+				<Link VarA="Drive^Outputs^Out^nDataOut2" VarB="RxPDO 1^Target Velocity"/>
+				<Link VarA="Drive^Outputs^Out^nDataOut4[0]" VarB="RxPDO 1^Target Torque"/>
+				<Link VarA="Enc^Inputs^In^nDataIn1" VarB="TxPDO 1^Position Actual Value"/>
+				<Link VarA="Enc^Inputs^In^nDataIn7" VarB="TxPDO 1^Velocity Actual Value"/>
+				<Link VarA="Enc^Inputs^In^nState4" VarB="WcState^InputToggle" Size="1" OffsA="1"/>
+				<Link VarA="Enc^Inputs^In^nState4" VarB="WcState^WcState" Size="1"/>
+			</OwnerB>
+		</OwnerA>
+	</Mappings>
 </TcSmItem>

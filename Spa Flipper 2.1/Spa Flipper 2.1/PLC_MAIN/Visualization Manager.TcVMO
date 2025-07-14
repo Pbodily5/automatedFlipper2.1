@@ -19,14 +19,14 @@
             <v n="VisuInternal">false</v>
             <v n="CurrentVisuGlobal">true</v>
             <v n="FileTransferMode">true</v>
-            <v n="VisuStyle">"Basic style, 3.1.6.0 (Beckhoff Automation GmbH)"</v>
+            <v n="VisuStyle">"Default, 3.1.6.0 (Beckhoff Automation GmbH)"</v>
             <v n="MaxNumOfClients">100</v>
             <n n="Language" />
             <v n="NumpadDialog">"VisuDialogs.Numpad"</v>
             <v n="KeypadDialog">"VisuDialogs.Keypad"</v>
             <v n="InputWithLimitsDialog">"VisuDialogs.TextinputWithLimits"</v>
             <v n="UseInputWithLimits">false</v>
-            <v n="TouchHandlingActive">false</v>
+            <v n="TouchHandlingActive">true</v>
             <v n="SemiTransparentDrawingActive">true</v>
             <v n="UpdateColorvariablesAfterActivationDone">true</v>
             <v n="TransferSvgAndConvertedImages">false</v>
@@ -54,7 +54,7 @@
               <v>FB_Reinit</v>
               <v>9e866bf9-f7ae-47d7-bccc-3a8f65df6913</v>
             </d>
-            <v n="FbName">"NotImportant"</v>
+            <v n="FbName">"__VisuInitInstantiation_Fb"</v>
             <v n="FbGuid">{1a6ffffe-f375-4c8c-9d84-1903ac99364e}</v>
           </o>
           <o n="TargetProperties" t="VisualizationTargetProperties">
