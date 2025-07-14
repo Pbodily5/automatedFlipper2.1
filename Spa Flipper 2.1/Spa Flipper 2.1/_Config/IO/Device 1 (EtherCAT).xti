@@ -60,11 +60,11 @@
 		<Box File="Drive 26 (ClearPath EtherCAT Integrated ServoMotor).xti" Id="26">
 			<EtherCAT PortABoxInfo="#x01000019"/>
 		</Box>
-		<Box File="Drive 27 (ClearPath EtherCAT Integrated ServoMotor).xti" Id="27">
+		<Box File="Drive 37 (ClearPath EtherCAT Integrated ServoMotor).xti" Id="37">
 			<EtherCAT PortABoxInfo="#x0100001a"/>
 		</Box>
 		<Box File="Drive 28 (ClearPath EtherCAT Integrated ServoMotor).xti" Id="28">
-			<EtherCAT PortABoxInfo="#x0100001b"/>
+			<EtherCAT PortABoxInfo="#x01000025"/>
 		</Box>
 		<EtherCAT>
 			<SyncUnit Name="safetySync" NoDeleteIfUnused="true"/>

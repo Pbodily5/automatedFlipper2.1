@@ -1427,7 +1427,7 @@
                     </o>
                     <o>
                       <v n="Id">2422045748L</v>
-                      <v n="Value">196</v>
+                      <v n="Value" t="Int16">196</v>
                     </o>
                     <o>
                       <v n="Id">2134141914L</v>
@@ -1495,7 +1495,7 @@
                     </o>
                     <o>
                       <v n="Id">2478807622L</v>
-                      <v n="Value">"Icons.rotate-ccw-black0"</v>
+                      <v n="Value">"Icons.rotate-cw-black"</v>
                     </o>
                     <o>
                       <v n="Id">390574330L</v>

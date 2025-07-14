@@ -3,7 +3,7 @@
 	<ImageDatas>
 		<ImageData Id="1000">424de6000000000000007600000028000000100000000e000000010004000000000070000000120b0000120b000000000000000000000000000000008000008000000080800080000000800080008080000080808000c0c0c0000000ff0000ff000000ffff00ff000000ff00ff00ffff0000ffffff00dddddffffffdddddddddffffffffdddddddfffffff87fdddddfffffff8666fdddfff8fff866668fddff767f866668ffddf8666666667fffddff76666668ffffddfff766666fffffddffff866666ffffdddffff86666fffdddddffff8667ffdddddddffff88ffdddddddddffffffddddd</ImageData>
 	</ImageDatas>
-	<Box Id="27" BoxType="9099" BoxFlags="#x00000020">
+	<Box Id="37" BoxType="9099" BoxFlags="#x00000020">
 		<Name>__FILENAME__</Name>
 		<ImageId>1000</ImageId>
 		<EtherCAT SlaveType="2" PdiType="#x0e08" MboxDataLinkLayer="true" StateMBoxPolling="true" CycleMBoxPollingTime="0" CoeType="47" FoeType="1" VendorId="#x00000c96" ProductCode="#x00000001" RevisionNo="#x00000002" InfoDataAddr="true" InfoDataSoeDS401="true" TimeoutMailbox1="2000" TimeoutMailbox2="20000" PortPhys="17" MaxSlotCount="256" MaxSlotGroupCount="1" SlotPdoIncrement="1" SlotIndexIncrement="16" Type="ClearPath EC (CoE Rev 2)" Desc="ClearPath EtherCAT Integrated ServoMotor">

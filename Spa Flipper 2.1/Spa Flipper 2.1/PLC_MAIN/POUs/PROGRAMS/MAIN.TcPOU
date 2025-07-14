@@ -3,15 +3,15 @@
   <POU Name="MAIN" Id="{898c31ac-8209-4430-8256-484cd892e55e}" SpecialFunc="None">
     <Declaration><![CDATA[PROGRAM MAIN
 VAR
-	eSafetyState 	: E_safetyState := INIT;
-	bSafetyInit 	: BOOL;
-	sSafetyResetMsg : STRING := '';
-	bDispSafetyResetMsg : BOOL;
+	eSafetyState 	: E_safetyState := INIT; //Current State of Safety Program in 'safetyHandler()' method
+	bSafetyInit 	: BOOL; //Initialization of safety program
+	sSafetyResetMsg : STRING := ''; //Msg to display the device that triggered the safety protocol
+	bDispSafetyResetMsg : BOOL; //Whether or not to disp the safety screen
 	nDispSafetyMsgCount : INT;
 	bSafetyResetBtn : BOOL;
 	bClearSafetyScrn : BOOL;
 	bSafetyFaultAck : BOOL;
-	fbSafetyBypassTim 	: TON;
+	fbSafetyBypassTim 	: TON; //Timer to trigger reminder that safety is currently bypassed
 	fbSafetyBypassTrig 	: R_TRIG;
 	fbEstopTrig			: R_TRIG;
 	bBypassResetEstop 	: BOOL;
@@ -41,7 +41,7 @@ END_VAR
 // === CYCLIC CALLS ===
 safetyHandler();
 eflex();
-updateIgnition();
+//updateIgnition(); //When Using Ignition as HMI. (Handles Ignition Clients)
 updateMotors();
 fbErrorPresent(CLK := GVL_machine.bErrorPresent);
 IF fbErrorPresent.Q THEN
@@ -385,33 +385,5 @@ END_FOR
 GVL_ignition.nNumClients := nCount;]]></ST>
       </Implementation>
     </Method>
-    <LineIds Name="MAIN">
-      <LineId Id="3" Count="166" />
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="MAIN.decoupleMotors">
-      <LineId Id="3" Count="8" />
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="MAIN.safetyHandler">
-      <LineId Id="3" Count="18" />
-      <LineId Id="131" Count="1" />
-      <LineId Id="22" Count="6" />
-      <LineId Id="133" Count="1" />
-      <LineId Id="29" Count="73" />
-      <LineId Id="135" Count="0" />
-      <LineId Id="103" Count="1" />
-      <LineId Id="136" Count="0" />
-      <LineId Id="105" Count="10" />
-      <LineId Id="137" Count="0" />
-      <LineId Id="116" Count="1" />
-      <LineId Id="138" Count="0" />
-      <LineId Id="118" Count="9" />
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="MAIN.updateIgnition">
-      <LineId Id="3" Count="11" />
-      <LineId Id="2" Count="0" />
-    </LineIds>
   </POU>
 </TcPlcObject>

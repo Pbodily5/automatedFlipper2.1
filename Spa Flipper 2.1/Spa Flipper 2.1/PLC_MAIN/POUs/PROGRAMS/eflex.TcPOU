@@ -17,7 +17,7 @@ x				: UDINT;
 
 (* recieved message *)
 bSubscribed 	: BOOL;
-sTopicSub 		: STRING(255) := 'toFlipper2PLC';
+sTopicSub 		: STRING(255) := 'toFlipper2.1PLC';
 sTopicRcv 		: STRING(255);
 sPayloadRcv 	: STRING(255);
 
@@ -80,9 +80,5 @@ IF GVL_eflex.bEflexPresent THEN
 	END_IF
 END_IF]]></ST>
     </Implementation>
-    <LineIds Name="eflex">
-      <LineId Id="3" Count="48" />
-      <LineId Id="2" Count="0" />
-    </LineIds>
   </POU>
 </TcPlcObject>

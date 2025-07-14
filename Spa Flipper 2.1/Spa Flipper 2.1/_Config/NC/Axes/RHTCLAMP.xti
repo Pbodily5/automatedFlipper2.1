@@ -1570,7 +1570,7 @@ External Setpoint Generation:
 	</Axis>
 	<Mappings>
 		<OwnerA>
-			<OwnerB Name="TIID^Device 1 (EtherCAT)^Drive 27 (ClearPath EtherCAT Integrated ServoMotor)">
+			<OwnerB Name="TIID^Device 1 (EtherCAT)^Drive 37 (ClearPath EtherCAT Integrated ServoMotor)">
 				<Link VarA="Drive^Inputs^In^nDataIn1" VarB="TxPDO 1^Following Error Actual Value"/>
 				<Link VarA="Drive^Inputs^In^nDataIn3[0]" VarB="TxPDO 1^Torque Actual Value"/>
 				<Link VarA="Drive^Inputs^In^nState1" VarB="TxPDO 1^Statusword" Size="8"/>

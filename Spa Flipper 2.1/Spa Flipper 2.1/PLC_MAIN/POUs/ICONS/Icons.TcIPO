@@ -4,72 +4,67 @@
     <XmlArchive>
       <Data>
         <o xml:space="preserve" t="ImagePoolObject">
-          <v n="UniqueIdGenerator">"29"</v>
+          <v n="UniqueIdGenerator">"51"</v>
           <l n="BitmapPool" t="ArrayList" cet="ImagePoolItem">
-            <o>
-              <v n="BitmapID">"home-black"</v>
-              <v n="FileID">"5ce3da45-db07-42e7-a21c-a00fff4ed8f6|Flipper Icons\Menu\home-black.svg"</v>
-              <v n="ItemID">2</v>
-            </o>
-            <o>
-              <v n="BitmapID">"reset-black"</v>
-              <v n="FileID">"5ce3da45-db07-42e7-a21c-a00fff4ed8f6|Flipper Icons\Menu\reset-black.svg"</v>
-              <v n="ItemID">3</v>
-            </o>
             <o>
               <v n="BitmapID">"clamp-black"</v>
               <v n="FileID">"5ce3da45-db07-42e7-a21c-a00fff4ed8f6|Flipper Icons\Clamp\clamp-black.svg"</v>
-              <v n="ItemID">5</v>
-            </o>
-            <o>
-              <v n="BitmapID">"Unclamp-black"</v>
-              <v n="FileID">"5ce3da45-db07-42e7-a21c-a00fff4ed8f6|Flipper Icons\Clamp\Unclamp-black.svg"</v>
-              <v n="ItemID">7</v>
-            </o>
-            <o>
-              <v n="BitmapID">"down-black"</v>
-              <v n="FileID">"5ce3da45-db07-42e7-a21c-a00fff4ed8f6|Flipper Icons\Column_Table\down-black.svg"</v>
-              <v n="ItemID">9</v>
-            </o>
-            <o>
-              <v n="BitmapID">"up-black"</v>
-              <v n="FileID">"5ce3da45-db07-42e7-a21c-a00fff4ed8f6|Flipper Icons\Column_Table\up-black.svg"</v>
-              <v n="ItemID">11</v>
-            </o>
-            <o>
-              <v n="BitmapID">"rotate-ccw-black"</v>
-              <v n="FileID">"5ce3da45-db07-42e7-a21c-a00fff4ed8f6|Flipper Icons\Rotation\rotate-ccw-black.svg"</v>
-              <v n="ItemID">13</v>
-            </o>
-            <o>
-              <v n="BitmapID">"rotate-ccw-black0"</v>
-              <v n="FileID">"5ce3da45-db07-42e7-a21c-a00fff4ed8f6|Flipper Icons\Rotation\rotate-cw-black.svg"</v>
-              <v n="ItemID">15</v>
-            </o>
-            <o>
-              <v n="BitmapID">"width-in-black"</v>
-              <v n="FileID">"5ce3da45-db07-42e7-a21c-a00fff4ed8f6|Flipper Icons\Width\width-in-black.svg"</v>
-              <v n="ItemID">17</v>
-            </o>
-            <o>
-              <v n="BitmapID">"width-out-black"</v>
-              <v n="FileID">"5ce3da45-db07-42e7-a21c-a00fff4ed8f6|Flipper Icons\Width\width-out-black.svg"</v>
-              <v n="ItemID">20</v>
-            </o>
-            <o>
-              <v n="BitmapID">"reset-black0"</v>
-              <v n="FileID">"5ce3da45-db07-42e7-a21c-a00fff4ed8f6|Flipper Icons\Menu\reset-black.svg"</v>
-              <v n="ItemID">24</v>
+              <v n="ItemID">28</v>
             </o>
             <o>
               <v n="BitmapID">"disabled-black"</v>
               <v n="FileID">"5ce3da45-db07-42e7-a21c-a00fff4ed8f6|Flipper Icons\Menu\disabled-black.svg"</v>
-              <v n="ItemID">26</v>
+              <v n="ItemID">30</v>
+            </o>
+            <o>
+              <v n="BitmapID">"down-black"</v>
+              <v n="FileID">"5ce3da45-db07-42e7-a21c-a00fff4ed8f6|Flipper Icons\Column_Table\down-black.svg"</v>
+              <v n="ItemID">32</v>
+            </o>
+            <o>
+              <v n="BitmapID">"home-black"</v>
+              <v n="FileID">"5ce3da45-db07-42e7-a21c-a00fff4ed8f6|Flipper Icons\Menu\home-black.svg"</v>
+              <v n="ItemID">34</v>
+            </o>
+            <o>
+              <v n="BitmapID">"reset-black"</v>
+              <v n="FileID">"5ce3da45-db07-42e7-a21c-a00fff4ed8f6|Flipper Icons\Menu\reset-black.svg"</v>
+              <v n="ItemID">36</v>
+            </o>
+            <o>
+              <v n="BitmapID">"rotate-ccw-black"</v>
+              <v n="FileID">"5ce3da45-db07-42e7-a21c-a00fff4ed8f6|Flipper Icons\Rotation\rotate-ccw-black.svg"</v>
+              <v n="ItemID">38</v>
+            </o>
+            <o>
+              <v n="BitmapID">"rotate-cw-black"</v>
+              <v n="FileID">"5ce3da45-db07-42e7-a21c-a00fff4ed8f6|Flipper Icons\Rotation\rotate-cw-black.svg"</v>
+              <v n="ItemID">40</v>
+            </o>
+            <o>
+              <v n="BitmapID">"Unclamp-black"</v>
+              <v n="FileID">"5ce3da45-db07-42e7-a21c-a00fff4ed8f6|Flipper Icons\Clamp\Unclamp-black.svg"</v>
+              <v n="ItemID">42</v>
+            </o>
+            <o>
+              <v n="BitmapID">"up-black"</v>
+              <v n="FileID">"5ce3da45-db07-42e7-a21c-a00fff4ed8f6|Flipper Icons\Column_Table\up-black.svg"</v>
+              <v n="ItemID">44</v>
+            </o>
+            <o>
+              <v n="BitmapID">"width-in-black"</v>
+              <v n="FileID">"5ce3da45-db07-42e7-a21c-a00fff4ed8f6|Flipper Icons\Width\width-in-black.svg"</v>
+              <v n="ItemID">46</v>
+            </o>
+            <o>
+              <v n="BitmapID">"width-out-black"</v>
+              <v n="FileID">"5ce3da45-db07-42e7-a21c-a00fff4ed8f6|Flipper Icons\Width\width-out-black.svg"</v>
+              <v n="ItemID">48</v>
             </o>
             <o>
               <v n="BitmapID">""</v>
               <v n="FileID">""</v>
-              <v n="ItemID">28</v>
+              <v n="ItemID">50</v>
             </o>
           </l>
           <v n="GuidInit">{5519e630-dff4-4204-adec-cb5554fc28aa}</v>

@@ -52,8 +52,10 @@ END_VAR
 				 sStringCombine4 := '';
 			16992: sMsg := 'The master axis start position does not permit synchronization';
 			17056: sMsg := 'Group/axis consequential error';
+			17504: sMsg := 'Minimum software position limit';
 			17505: sMsg := 'Maximum software position limit (axis start)';
 			17135: sMsg := 'Axis is locked for motion commands because a stop command is still active';
+			18000: sMsg := 'Drive hardware not ready to operate';
 		ELSE
 			sMsg := 'No Message Data';
 		END_CASE
@@ -70,13 +72,5 @@ END_VAR
 	
 ]]></ST>
     </Implementation>
-    <LineIds Name="F_recordErrorData">
-      <LineId Id="3" Count="19" />
-      <LineId Id="61" Count="5" />
-      <LineId Id="69" Count="0" />
-      <LineId Id="68" Count="0" />
-      <LineId Id="23" Count="15" />
-      <LineId Id="2" Count="0" />
-    </LineIds>
   </POU>
 </TcPlcObject>
