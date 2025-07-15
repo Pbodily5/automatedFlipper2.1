@@ -3,20 +3,66 @@
   <POU Name="FB_MultiMotorController" Id="{768fffa5-dcc7-4ac1-8696-c781292a10d5}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK FB_MultiMotorController
 VAR_INPUT
+	bExecute : BOOL; // Used to execute command. If error occurs excecute must go false and true again to execute command again. 
 	aMotorRef :ARRAY[1..4] OF POINTER TO FB_teknicMotorEC; // Array of addresses of up to four motors to control. *Fill array in order of index **Must fill entire array. Unused spots - enter 0.
 	eMethod : E_teknicMotorMethods; // Method to call for control of specified motors
 END_VAR
 VAR_OUTPUT
+	bDone 			: BOOL;
+	bBusy			: BOOL;
+	bError 			: BOOL;
+	nErrorID 		: UDINT;
+	sControllerMsg 	: STRING; // String used to display messages from the controller FB.
 END_VAR
 VAR
-	sControllerMsg : STRING; // String used to display messages from the controller FB.
+	fbExecute 		: R_TRIG;
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[(* Example call- FB_multiMotorController(aMotorRef := [ADR(FB_teknicMotor1),ADR(FB_teknicMotor2),0,0],sMethod := moveToJog); *)
+      <ST><![CDATA[(* Example call- FB_multiMotorController(bExecute := TRUE, aMotorRef := [ADR(FB_teknicMotor1),ADR(FB_teknicMotor2),0,0],sMethod := moveToJog); *)
+fbExecute(CLK := bExecute);
+IF NOT bExecute THEN
+(* reset at falling edge of Execute *)
+	bDone					:= FALSE;
+	bError 					:= FALSE;
+	nErrorID 				:= 0;
+END_IF
+
+IF fbExecute.Q THEN
+	bBusy := TRUE;			
+END_IF
+		
 CASE eMethod OF 
 	brakeOff://
+		IF aMotorRef[1] <> 0 THEN
+			aMotorRef[1]^.brakeOff();
+		END_IF
+		IF aMotorRef[2] <> 0 THEN
+			aMotorRef[2]^.brakeOff();
+		END_IF
+		IF aMotorRef[3] <> 0 THEN
+			aMotorRef[3]^.brakeOff();
+		END_IF
+		IF aMotorRef[4] <> 0 THEN
+			aMotorRef[4]^.brakeOff();
+		END_IF
+		bDone := TRUE;
+		
 	brakeOn://
+		IF aMotorRef[1] <> 0 THEN
+			aMotorRef[1]^.brakeOn();
+		END_IF
+		IF aMotorRef[2] <> 0 THEN
+			aMotorRef[2]^.brakeOn();
+		END_IF
+		IF aMotorRef[3] <> 0 THEN
+			aMotorRef[3]^.brakeOn();
+		END_IF
+		IF aMotorRef[4] <> 0 THEN
+			aMotorRef[4]^.brakeOn();
+		END_IF
+		bDone := TRUE;
+		
 	checkOutputs://
 	coupleToAxis://
 	decoupleAxis://
@@ -42,8 +88,31 @@ END_CASE]]></ST>
     </Implementation>
     <LineIds Name="FB_MultiMotorController">
       <LineId Id="9" Count="0" />
+      <LineId Id="99" Count="0" />
+      <LineId Id="84" Count="1" />
+      <LineId Id="87" Count="0" />
+      <LineId Id="89" Count="1" />
+      <LineId Id="83" Count="0" />
+      <LineId Id="100" Count="2" />
+      <LineId Id="82" Count="0" />
+      <LineId Id="104" Count="0" />
       <LineId Id="20" Count="1" />
-      <LineId Id="23" Count="13" />
+      <LineId Id="66" Count="0" />
+      <LineId Id="58" Count="0" />
+      <LineId Id="67" Count="0" />
+      <LineId Id="69" Count="1" />
+      <LineId Id="68" Count="0" />
+      <LineId Id="72" Count="1" />
+      <LineId Id="71" Count="0" />
+      <LineId Id="75" Count="1" />
+      <LineId Id="74" Count="0" />
+      <LineId Id="63" Count="0" />
+      <LineId Id="106" Count="0" />
+      <LineId Id="23" Count="0" />
+      <LineId Id="108" Count="11" />
+      <LineId Id="107" Count="0" />
+      <LineId Id="120" Count="0" />
+      <LineId Id="24" Count="12" />
       <LineId Id="44" Count="1" />
       <LineId Id="37" Count="4" />
       <LineId Id="47" Count="0" />
