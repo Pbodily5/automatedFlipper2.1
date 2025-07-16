@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <POU Name="multiControl" Id="{7ac8876c-7553-4aa3-8d03-b92ac1cc6e8f}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM multiControl
+VAR
+	multiCtrlFrameIndex : INT; //Index used to switch frame on multiControlScreen
+	
+	// Motor Disp //
+	nMotorControlIndex : BOOL; // Index used to change disp of motor controls. 0-Rotation, 1- Clamping, 2-Columns, 3-Width. 
+	bHideDispMotor3 : BOOL; //Used to hide or show controls for motor 3. 
+	bHideDispMotor4	: BOOL;
+	sMotorDisp1 : STRING; // Used to dynamically change the title of motor 1. 
+	sMotorDisp2 : STRING;
+	sMotorDisp3 : STRING;
+	sMotorDisp4 : STRING;
+
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[CASE nMotorControlIndex OF 
+	0:// Rotation Selected
+	    bHideDispMotor3 := TRUE;
+	    bHideDispMotor4 := TRUE;
+		sMotorDisp1 := 'LEFT ROTATION';
+		sMotorDisp2 := 'RIGHT ROTATION';
+		sMotorDisp3 := '';
+		sMotorDisp4 := '';
+	1:// Clamping Selected
+	2:// Columns Selected
+	3:// Width Selected
+END_CASE]]></ST>
+    </Implementation>
+    <LineIds Name="multiControl">
+      <LineId Id="5" Count="0" />
+      <LineId Id="27" Count="0" />
+      <LineId Id="34" Count="5" />
+      <LineId Id="29" Count="2" />
+      <LineId Id="28" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

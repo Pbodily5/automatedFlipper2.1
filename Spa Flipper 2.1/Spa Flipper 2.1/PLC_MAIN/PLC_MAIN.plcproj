@@ -137,6 +137,9 @@
     <Compile Include="POUs\PROGRAMS\MAIN.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="POUs\PROGRAMS\multiControl.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="POUs\PROGRAMS\manual.TcPOU">
       <SubType>Code</SubType>
     </Compile>
@@ -152,19 +155,43 @@
     <Compile Include="Visualization Manager.TcVMO">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="VISUs\VISUs\baseInSkiOutScreen.TcVIS">
+    <Compile Include="VISUs\VISUs\Auto Screens\baseInSkiOutScreen.TcVIS">
       <SubType>Code</SubType>
       <DependentUpon>Visualization Manager.TcVMO</DependentUpon>
     </Compile>
-    <Compile Include="VISUs\VISUs\continueAutoScreen.TcVIS">
+    <Compile Include="VISUs\VISUs\Auto Screens\continueAutoScreen.TcVIS">
       <SubType>Code</SubType>
       <DependentUpon>Visualization Manager.TcVMO</DependentUpon>
     </Compile>
-    <Compile Include="VISUs\VISUs\eflexScreen.TcVIS">
+    <Compile Include="VISUs\VISUs\Auto Screens\eflexScreen.TcVIS">
       <SubType>Code</SubType>
       <DependentUpon>Visualization Manager.TcVMO</DependentUpon>
     </Compile>
-    <Compile Include="VISUs\VISUs\Maintenance Screens\maintenance1Screen.TcVIS">
+    <Compile Include="VISUs\VISUs\Auto Screens\loadSpaScreen.TcVIS">
+      <SubType>Code</SubType>
+      <DependentUpon>Visualization Manager.TcVMO</DependentUpon>
+    </Compile>
+    <Compile Include="VISUs\VISUs\Auto Screens\machineHomingScreen.TcVIS">
+      <SubType>Code</SubType>
+      <DependentUpon>Visualization Manager.TcVMO</DependentUpon>
+    </Compile>
+    <Compile Include="VISUs\VISUs\Auto Screens\studsInScreen.TcVIS">
+      <SubType>Code</SubType>
+      <DependentUpon>Visualization Manager.TcVMO</DependentUpon>
+    </Compile>
+    <Compile Include="VISUs\VISUs\Auto Screens\tempEflexScreen.TcVIS">
+      <SubType>Code</SubType>
+      <DependentUpon>Visualization Manager.TcVMO</DependentUpon>
+    </Compile>
+    <Compile Include="VISUs\VISUs\Auto Screens\unloadSpaScreen.TcVIS">
+      <SubType>Code</SubType>
+      <DependentUpon>Visualization Manager.TcVMO</DependentUpon>
+    </Compile>
+    <Compile Include="VISUs\VISUs\multiControlScreens\multiControlHelp.TcVIS">
+      <SubType>Code</SubType>
+      <DependentUpon>Visualization Manager.TcVMO</DependentUpon>
+    </Compile>
+    <Compile Include="VISUs\VISUs\multiControlScreens\multiControlScreen.TcVIS">
       <SubType>Code</SubType>
       <DependentUpon>Visualization Manager.TcVMO</DependentUpon>
     </Compile>
@@ -172,23 +199,15 @@
       <SubType>Code</SubType>
       <DependentUpon>Visualization Manager.TcVMO</DependentUpon>
     </Compile>
-    <Compile Include="VISUs\VISUs\loadSpaScreen.TcVIS">
-      <SubType>Code</SubType>
-      <DependentUpon>Visualization Manager.TcVMO</DependentUpon>
-    </Compile>
-    <Compile Include="VISUs\VISUs\machineHomingScreen.TcVIS">
-      <SubType>Code</SubType>
-      <DependentUpon>Visualization Manager.TcVMO</DependentUpon>
-    </Compile>
     <Compile Include="VISUs\VISUs\mainScreen.TcVIS">
       <SubType>Code</SubType>
       <DependentUpon>Visualization Manager.TcVMO</DependentUpon>
     </Compile>
-    <Compile Include="VISUs\VISUs\Maintenance Screens\rotationControl.TcVIS">
+    <Compile Include="VISUs\VISUs\multiControlScreens\machineMapScreen.TcVIS">
       <SubType>Code</SubType>
       <DependentUpon>Visualization Manager.TcVMO</DependentUpon>
     </Compile>
-    <Compile Include="VISUs\VISUs\Maintenance Screens\machineMapScreen.TcVIS">
+    <Compile Include="VISUs\VISUs\multiControlScreens\motorControlScreen.TcVIS">
       <SubType>Code</SubType>
       <DependentUpon>Visualization Manager.TcVMO</DependentUpon>
     </Compile>
@@ -209,18 +228,6 @@
       <DependentUpon>Visualization Manager.TcVMO</DependentUpon>
     </Compile>
     <Compile Include="VISUs\VISUs\settingsScreen.TcVIS">
-      <SubType>Code</SubType>
-      <DependentUpon>Visualization Manager.TcVMO</DependentUpon>
-    </Compile>
-    <Compile Include="VISUs\VISUs\studsInScreen.TcVIS">
-      <SubType>Code</SubType>
-      <DependentUpon>Visualization Manager.TcVMO</DependentUpon>
-    </Compile>
-    <Compile Include="VISUs\VISUs\tempEflexScreen.TcVIS">
-      <SubType>Code</SubType>
-      <DependentUpon>Visualization Manager.TcVMO</DependentUpon>
-    </Compile>
-    <Compile Include="VISUs\VISUs\unloadSpaScreen.TcVIS">
       <SubType>Code</SubType>
       <DependentUpon>Visualization Manager.TcVMO</DependentUpon>
     </Compile>
@@ -318,7 +325,8 @@
     <Folder Include="POUs\PROGRAMS" />
     <Folder Include="VISUs" />
     <Folder Include="VISUs\VISUs" />
-    <Folder Include="VISUs\VISUs\Maintenance Screens" />
+    <Folder Include="VISUs\VISUs\multiControlScreens" />
+    <Folder Include="VISUs\VISUs\Auto Screens" />
   </ItemGroup>
   <ItemGroup>
     <None Include="PLC_MAIN.tmc">
