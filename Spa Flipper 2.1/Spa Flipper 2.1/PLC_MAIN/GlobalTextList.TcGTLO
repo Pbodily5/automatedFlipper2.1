@@ -76,6 +76,11 @@
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"972"</v>
+              <v n="TextDefault">"BUSY"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"655"</v>
               <v n="TextDefault">"BYPASS SAFETY"</v>
               <l n="LanguageTexts" t="ArrayList" />
@@ -111,6 +116,36 @@
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"147"</v>
+              <v n="TextDefault">"COLUMN 0"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"332"</v>
+              <v n="TextDefault">"COLUMN 1"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"149"</v>
+              <v n="TextDefault">"COLUMN 2"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"796"</v>
+              <v n="TextDefault">"COLUMN 3"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"925"</v>
+              <v n="TextDefault">"COLUMN0"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"396"</v>
+              <v n="TextDefault">"COLUMN1"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"863"</v>
               <v n="TextDefault">"COLUMNS"</v>
               <l n="LanguageTexts" t="ArrayList" />
@@ -129,6 +164,11 @@
               <v n="TextID">"2"</v>
               <v n="TextDefault">"CONTINUE
 PROGRAM"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"215"</v>
+              <v n="TextDefault">"CONTROLS"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
@@ -159,8 +199,23 @@ PROGRAM"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"293"</v>
+              <v n="TextDefault">"DONE"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"1034"</v>
               <v n="TextDefault">"EFLEX"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"853"</v>
+              <v n="TextDefault">"ENCODER : %f3.2"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"220"</v>
+              <v n="TextDefault">"ERROR"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
@@ -174,6 +229,16 @@ PROGRAM"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"210"</v>
+              <v n="TextDefault">"ERROR ID: "</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"819"</v>
+              <v n="TextDefault">"ERROR ID: %f3.2"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"359"</v>
               <v n="TextDefault">"ERROR MESSAGE"</v>
               <l n="LanguageTexts" t="ArrayList" />
@@ -181,6 +246,11 @@ PROGRAM"</v>
             <o>
               <v n="TextID">"764"</v>
               <v n="TextDefault">"ERRORS"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"348"</v>
+              <v n="TextDefault">"EXECUTE"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
@@ -206,6 +276,51 @@ PROGRAM"</v>
             <o>
               <v n="TextID">"313"</v>
               <v n="TextDefault">"Label"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"797"</v>
+              <v n="TextDefault">"LeFT CLAMP"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"911"</v>
+              <v n="TextDefault">"LEFT CLAMP"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"137"</v>
+              <v n="TextDefault">"LeFT ROTATION"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"583"</v>
+              <v n="TextDefault">"LEFT ROTATION"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"274"</v>
+              <v n="TextDefault">"LEFT WIDTH"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"363"</v>
+              <v n="TextDefault">"LFT CLAMP"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"222"</v>
+              <v n="TextDefault">"LFT CLAMPING"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"589"</v>
+              <v n="TextDefault">"LFT ROTATION"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"139"</v>
+              <v n="TextDefault">"LFT WIDTH"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
@@ -237,6 +352,11 @@ PROGRAM"</v>
               <v n="TextID">"1074"</v>
               <v n="TextDefault">"MANUAL
  (FULL CONTROL)"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"969"</v>
+              <v n="TextDefault">"MAP"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
@@ -287,6 +407,21 @@ CONTINUE PROGRAM? "</v>
               <v n="TextID">"297"</v>
               <v n="TextDefault">"RESTART
 PROGRAM"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"54"</v>
+              <v n="TextDefault">"RIGHT CLAMP"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"360"</v>
+              <v n="TextDefault">"RIGHT ROTATION"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"20"</v>
+              <v n="TextDefault">"RIGHT WIDTH"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
