@@ -61,6 +61,11 @@
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"1160"</v>
+              <v n="TextDefault">"ACTIVE"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"94"</v>
               <v n="TextDefault">"AUTO"</v>
               <l n="LanguageTexts" t="ArrayList" />
@@ -578,6 +583,21 @@ PROGRAM"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"74"</v>
+              <v n="TextDefault">"Set Position: %3.2f "</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"309"</v>
+              <v n="TextDefault">"Set Position: %3.2f in"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"1120"</v>
+              <v n="TextDefault">"Set Position: %3.2f in."</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"169"</v>
               <v n="TextDefault">"Set Position: %f3.2"</v>
               <l n="LanguageTexts" t="ArrayList" />
@@ -595,6 +615,11 @@ PROGRAM"</v>
             <o>
               <v n="TextID">"1146"</v>
               <v n="TextDefault">"Set Torque: %3.2f"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"123"</v>
+              <v n="TextDefault">"Set Torque: %3.2f percent"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>

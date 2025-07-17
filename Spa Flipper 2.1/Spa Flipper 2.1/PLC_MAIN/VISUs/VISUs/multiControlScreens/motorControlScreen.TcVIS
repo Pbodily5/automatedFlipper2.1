@@ -1629,7 +1629,7 @@
                     </o>
                     <o>
                       <v n="Id">1999528970L</v>
-                      <v n="Value">"multiControl.aMotorBusy[1]"</v>
+                      <v n="Value">"multiControl.aMotorActive[1]"</v>
                     </o>
                     <o>
                       <v n="Id">3719097617L</v>
@@ -1687,7 +1687,7 @@
                     </o>
                     <o>
                       <v n="Id">390574330L</v>
-                      <v n="Value">"BUSY"</v>
+                      <v n="Value">"ACTIVE"</v>
                     </o>
                     <o>
                       <v n="Id">2597686782L</v>
@@ -1695,7 +1695,7 @@
                     </o>
                     <o>
                       <v n="Id">823443203L</v>
-                      <v n="Value">"972"</v>
+                      <v n="Value">"1160"</v>
                     </o>
                   </l>
                 </o>
@@ -2631,7 +2631,7 @@
                     </o>
                     <o>
                       <v n="Id">390574330L</v>
-                      <v n="Value">"Set Position: %3.2f"</v>
+                      <v n="Value">"Set Position: %3.2f "</v>
                     </o>
                     <o>
                       <v n="Id">2597686782L</v>
@@ -2647,7 +2647,7 @@
                     </o>
                     <o>
                       <v n="Id">823443203L</v>
-                      <v n="Value">"567"</v>
+                      <v n="Value">"74"</v>
                     </o>
                   </l>
                 </o>
@@ -5259,7 +5259,7 @@
                     </o>
                     <o>
                       <v n="Id">390574330L</v>
-                      <v n="Value">"Set Position: %3.2f"</v>
+                      <v n="Value">"Set Position: %3.2f "</v>
                     </o>
                     <o>
                       <v n="Id">2597686782L</v>
@@ -5275,7 +5275,7 @@
                     </o>
                     <o>
                       <v n="Id">823443203L</v>
-                      <v n="Value">"567"</v>
+                      <v n="Value">"74"</v>
                     </o>
                   </l>
                 </o>
@@ -5583,7 +5583,7 @@
                     </o>
                     <o>
                       <v n="Id">1999528970L</v>
-                      <v n="Value">"multiControl.aMotorBusy[2]"</v>
+                      <v n="Value">"multiControl.aMotorActive[2]"</v>
                     </o>
                     <o>
                       <v n="Id">3719097617L</v>
@@ -5641,7 +5641,7 @@
                     </o>
                     <o>
                       <v n="Id">390574330L</v>
-                      <v n="Value">"BUSY"</v>
+                      <v n="Value">"ACTIVE"</v>
                     </o>
                     <o>
                       <v n="Id">2597686782L</v>
@@ -5649,7 +5649,7 @@
                     </o>
                     <o>
                       <v n="Id">823443203L</v>
-                      <v n="Value">"972"</v>
+                      <v n="Value">"1160"</v>
                     </o>
                   </l>
                 </o>
@@ -7084,7 +7084,7 @@
                     </o>
                     <o>
                       <v n="Id">1999528970L</v>
-                      <v n="Value">"multiControl.aMotorBusy[3]"</v>
+                      <v n="Value">"multiControl.aMotorActive[3]"</v>
                     </o>
                     <o>
                       <v n="Id">3719097617L</v>
@@ -7142,7 +7142,7 @@
                     </o>
                     <o>
                       <v n="Id">390574330L</v>
-                      <v n="Value">"BUSY"</v>
+                      <v n="Value">"ACTIVE"</v>
                     </o>
                     <o>
                       <v n="Id">2597686782L</v>
@@ -7154,7 +7154,7 @@
                     </o>
                     <o>
                       <v n="Id">823443203L</v>
-                      <v n="Value">"972"</v>
+                      <v n="Value">"1160"</v>
                     </o>
                   </l>
                 </o>
@@ -8110,7 +8110,7 @@
                     </o>
                     <o>
                       <v n="Id">390574330L</v>
-                      <v n="Value">"Set Position: %3.2f"</v>
+                      <v n="Value">"Set Position: %3.2f "</v>
                     </o>
                     <o>
                       <v n="Id">2597686782L</v>
@@ -8130,7 +8130,7 @@
                     </o>
                     <o>
                       <v n="Id">823443203L</v>
-                      <v n="Value">"567"</v>
+                      <v n="Value">"74"</v>
                     </o>
                   </l>
                 </o>
@@ -9021,7 +9021,7 @@
                     </o>
                     <o>
                       <v n="Id">1999528970L</v>
-                      <v n="Value">"multiControl.aMotorBusy[4]"</v>
+                      <v n="Value">"multiControl.aMotorActive[4]"</v>
                     </o>
                     <o>
                       <v n="Id">3719097617L</v>
@@ -9079,7 +9079,7 @@
                     </o>
                     <o>
                       <v n="Id">390574330L</v>
-                      <v n="Value">"BUSY"</v>
+                      <v n="Value">"ACTIVE"</v>
                     </o>
                     <o>
                       <v n="Id">2597686782L</v>
@@ -9091,7 +9091,7 @@
                     </o>
                     <o>
                       <v n="Id">823443203L</v>
-                      <v n="Value">"972"</v>
+                      <v n="Value">"1160"</v>
                     </o>
                   </l>
                 </o>

@@ -7383,6 +7383,17 @@ CASE estopState OF
 END_CASE]]></ST>
       </Implementation>
     </Method>
+    <Property Name="homeTorqueLimitIn" Id="{267a3c5f-090d-4904-b27d-b5af8ce01237}">
+      <Declaration><![CDATA[PROPERTY homeTorqueLimitIn : LREAL]]></Declaration>
+      <Set Name="Set" Id="{82a12e77-36d7-47ac-b67a-8f56374dc0d7}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[homeTorqueLimit := homeTorqueLimitIn;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
     <Method Name="homeToSensor" Id="{dc133354-1b8e-489e-84ec-ada86bf51b30}">
       <Declaration><![CDATA[METHOD homeToSensor : INT //0:Not done, 1:done, 13: error
 VAR_INPUT
@@ -7677,6 +7688,17 @@ END_VAR
 ]]></Declaration>
         <Implementation>
           <ST><![CDATA[isEnabled := NOT fbMotor.Status.Disabled;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="isMotorInverted" Id="{411e130f-f2e1-42cd-8ed1-9bfc092a429c}">
+      <Declaration><![CDATA[PROPERTY isMotorInverted : BOOL]]></Declaration>
+      <Get Name="Get" Id="{84a09ab3-0c81-4f5e-a5e6-da743c695fa1}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[isMotorInverted := bMotorInverted;]]></ST>
         </Implementation>
       </Get>
     </Property>
@@ -8213,6 +8235,9 @@ END_CASE
       <LineId Id="3" Count="64" />
       <LineId Id="2" Count="0" />
     </LineIds>
+    <LineIds Name="FB_teknicMotorEC.homeTorqueLimitIn.Set">
+      <LineId Id="2" Count="0" />
+    </LineIds>
     <LineIds Name="FB_teknicMotorEC.homeToSensor">
       <LineId Id="3" Count="97" />
       <LineId Id="2" Count="0" />
@@ -8237,6 +8262,9 @@ END_CASE
       <LineId Id="2" Count="0" />
     </LineIds>
     <LineIds Name="FB_teknicMotorEC.isEnabled.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_teknicMotorEC.isMotorInverted.Get">
       <LineId Id="2" Count="0" />
     </LineIds>
     <LineIds Name="FB_teknicMotorEC.isStopped.Get">
