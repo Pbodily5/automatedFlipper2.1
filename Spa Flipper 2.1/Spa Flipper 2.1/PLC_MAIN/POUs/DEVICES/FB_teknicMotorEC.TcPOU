@@ -7522,7 +7522,9 @@ IF bIdleDisabled THEN
 				bMotorHomeStatus := fbMotor.Status.Homed;
 				homeToTorque := 1; 
 			2:// Active
+				homeToTorque := 3;
 			3:// Busy
+				homeToTorque := 3;
 			4:// Command Aborted
 			13:// Error
 				stError.errorState := MCHOME;
@@ -7560,7 +7562,9 @@ IF bIdleDisabled THEN
 					nHomeState := 0;
 					homeToTorque := 1;
 				2:// Active
+					homeToTorque := 3;
 				3:// Busy
+					homeToTorque := 3;
 				4:// Command Aborted
 					fbMotorMoveAbsolute.Execute := FALSE;
 					nHomeState := 0;
@@ -7700,6 +7704,17 @@ motorError.errorLoc := stError.errorLoc;
 motorerror.errorMsg := stError.errorMsg;
 motorError.errorState := stError.errorState;
 ]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="motorErrorId" Id="{ed1a26c0-3c18-439f-a430-18c0edd9d273}">
+      <Declaration><![CDATA[PROPERTY motorErrorId : UDINT]]></Declaration>
+      <Get Name="Get" Id="{61591a72-497b-4758-ab9c-c6fc517b8a98}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[motorErrorId := stError.errorId;]]></ST>
         </Implementation>
       </Get>
     </Property>
@@ -8051,51 +8066,7 @@ END_VAR
       <Implementation>
         <ST><![CDATA[stError.errorId := stOutput.ErrorID;
 brakeOn();
-
-//CASE error.errorState OF 
-//	MCHOME: //
-//		error.errorId := motorHomeOut.ErrorID;
-//		//error.errorMsg:= 
-//	MCREADDRIVEOPERATIONMODE: //
-//		error.errorId := motorReadModeOut.ErrorID;
-//		//error.errorMsg:= 
-//	MCWRITEDRIVEOPERATIONMODE: //
-//		error.errorId := motorWriteModeOut.ErrorID;
-//		//error.errorMsg:= 
-//	MCHALT: //
-//		error.errorId := motorHaltOut.ErrorID;
-//		//error.errorMsg:= 
-//	MCSTOP: //
-//		error.errorId := motorStopOut.ErrorID;
-//		//error.errorMsg:= 
-//	MCJOG: //
-//		error.errorId := motorJogOut.ErrorID;
-//		//error.errorMsg:= 
-//	MCMOVEABSOLUTE: //
-//		error.errorId := motorMoveAbsoluteOut.ErrorID;
-//		//error.errorMsg:= 
-//	MCMOVERELATIVE: //
-//		error.errorId := motorMoveRelativeOut.ErrorID;
-//		//error.errorMsg:= 
-//	MCPOWER: //
-//		error.errorId := motorPowerOut.ErrorID;
-//		//error.errorMsg:= 
-//	MCRESET: //
-//		error.errorId := motorResetOut.ErrorID;
-//		//error.errorMsg:= 
-//	MCSETPOSITION: //
-//		error.errorId := motorSetPositionOut.ErrorID;
-//		//error.errorMsg:= 
-//	MCWRITEPARAMETER: //
-//		error.errorId := motorWriteOut.ErrorID;
-//		//error.errorMsg:= 
-//	MCREADSTATUS: //
-//		error.errorId := motorReadStatusOut.ErrorID;
-//		//error.errorMsg:= 
-//	MCTORQUECONTROL: //
-//		error.errorId := motorTorqueOut.ErrorID;
-//		//error.errorMsg:= 
-//END_CASE]]></ST>
+]]></ST>
       </Implementation>
     </Method>
     <Method Name="stop" Id="{ca1bcbd3-5151-4386-a120-148a35dc2daf}">
@@ -8247,7 +8218,15 @@ END_CASE
       <LineId Id="2" Count="0" />
     </LineIds>
     <LineIds Name="FB_teknicMotorEC.homeToTorque">
-      <LineId Id="3" Count="69" />
+      <LineId Id="3" Count="18" />
+      <LineId Id="80" Count="0" />
+      <LineId Id="22" Count="0" />
+      <LineId Id="79" Count="0" />
+      <LineId Id="23" Count="36" />
+      <LineId Id="81" Count="0" />
+      <LineId Id="60" Count="0" />
+      <LineId Id="83" Count="0" />
+      <LineId Id="61" Count="11" />
       <LineId Id="2" Count="0" />
     </LineIds>
     <LineIds Name="FB_teknicMotorEC.init">
@@ -8266,6 +8245,9 @@ END_CASE
     </LineIds>
     <LineIds Name="FB_teknicMotorEC.motorError.Get">
       <LineId Id="3" Count="3" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_teknicMotorEC.motorErrorId.Get">
       <LineId Id="2" Count="0" />
     </LineIds>
     <LineIds Name="FB_teknicMotorEC.motorIdle.Set">
@@ -8304,7 +8286,7 @@ END_CASE
       <LineId Id="2" Count="0" />
     </LineIds>
     <LineIds Name="FB_teknicMotorEC.setError">
-      <LineId Id="3" Count="45" />
+      <LineId Id="3" Count="1" />
       <LineId Id="2" Count="0" />
     </LineIds>
     <LineIds Name="FB_teknicMotorEC.stop">

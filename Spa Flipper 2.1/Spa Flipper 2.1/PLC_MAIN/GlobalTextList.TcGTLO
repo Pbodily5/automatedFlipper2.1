@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.13">
   <GlobalTextList Name="GlobalTextList" Id="{a0178120-d07b-4fd2-b49b-9e0d0770f796}">
     <XmlArchive>
       <Data>
@@ -73,6 +73,12 @@
             <o>
               <v n="TextID">"62"</v>
               <v n="TextDefault">"AUTOMATED A Series Flipper 2"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"33"</v>
+              <v n="TextDefault">"AWAY FROM 
+HOME"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
@@ -290,6 +296,16 @@ action on motor"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"756"</v>
+              <v n="TextDefault">"ERROR ID: %3.2f"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"189"</v>
+              <v n="TextDefault">"ERROR ID: %5d"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"819"</v>
               <v n="TextDefault">"ERROR ID: %f3.2"</v>
               <l n="LanguageTexts" t="ArrayList" />
@@ -469,6 +485,11 @@ Please wait..."</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"631"</v>
+              <v n="TextDefault">"POSITION : %3.2f"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"975"</v>
               <v n="TextDefault">"POSITION : %f3.2"</v>
               <l n="LanguageTexts" t="ArrayList" />
@@ -552,6 +573,11 @@ PROGRAM"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"567"</v>
+              <v n="TextDefault">"Set Position: %3.2f"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"169"</v>
               <v n="TextDefault">"Set Position: %f3.2"</v>
               <l n="LanguageTexts" t="ArrayList" />
@@ -567,6 +593,11 @@ PROGRAM"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"1146"</v>
+              <v n="TextDefault">"Set Torque: %3.2f"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"878"</v>
               <v n="TextDefault">"Set Torque: %f3.2"</v>
               <l n="LanguageTexts" t="ArrayList" />
@@ -579,6 +610,11 @@ PROGRAM"</v>
             <o>
               <v n="TextID">"542"</v>
               <v n="TextDefault">"Spa Model: %s"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"485"</v>
+              <v n="TextDefault">"SPEED : %3.2f"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
@@ -646,8 +682,19 @@ execute selected action"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"1213"</v>
+              <v n="TextDefault">"TORQUE : %3.2f"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"686"</v>
               <v n="TextDefault">"TORQUE : %f3.2"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"1020"</v>
+              <v n="TextDefault">"TOWARDS
+HOME"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>

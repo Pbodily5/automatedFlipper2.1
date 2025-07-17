@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.13">
   <POU Name="FB_MultiMotorController" Id="{768fffa5-dcc7-4ac1-8696-c781292a10d5}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK FB_MultiMotorController
 VAR_INPUT
@@ -17,6 +17,7 @@ END_VAR
 VAR
 	fbExecute 		: R_TRIG;
 	bDone: INT;
+	i : INT;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -28,58 +29,90 @@ IF NOT bExecute THEN
 	aError[1.4] 			:= FALSE;
 	aErrorID[1.4] 			:= 0;
 END_IF
-		
-CASE eMethod OF 
-	brakeOff://
-		IF aMotorRef[1] <> 0 THEN
-			aMotorRef[1]^.brakeOff();
-		END_IF
-		IF aMotorRef[2] <> 0 THEN
-			aMotorRef[2]^.brakeOff();
-		END_IF
-		IF aMotorRef[3] <> 0 THEN
-			aMotorRef[3]^.brakeOff();
-		END_IF
-		IF aMotorRef[4] <> 0 THEN
-			aMotorRef[4]^.brakeOff();
-		END_IF
-		
-	brakeOn://
-		IF aMotorRef[1] <> 0 THEN
-			aMotorRef[1]^.brakeOn();
-		END_IF
-		IF aMotorRef[2] <> 0 THEN
-			aMotorRef[2]^.brakeOn();
-		END_IF
-		IF aMotorRef[3] <> 0 THEN
-			aMotorRef[3]^.brakeOn();
-		END_IF
-		IF aMotorRef[4] <> 0 THEN
-			aMotorRef[4]^.brakeOn();
-		END_IF
-		
-	checkOutputs://
-	coupleToAxis://
-	decoupleAxis://
-	disable://
-	enable://
-	estop://
-	homeToSensor://
-	homeToTorque://
-	motorInit://
-	moveTo://
-	moveToJog://
-	moveToSensor://
-	moveToTorque://
-	readMotorParameter://
-		sControllerMsg := LREAL_TO_STRING(aMotorRef[1]^.readValue);
-	removeStop://
-	motorReset://
-	resetMotorCommands://
-	setError://
-	stop://
-	writeMotorParameter://
-END_CASE]]></ST>
+IF bExecute THEN		
+	CASE eMethod OF 
+		brakeOff://
+			FOR i := 1 TO 4 BY 1 DO
+				IF aMotorRef[i] <> 0 THEN
+					IF aMotorRef[i]^.brakeOff() THEN
+						aDone[i] := TRUE;
+					END_IF
+				END_IF
+			END_FOR
+			
+		brakeOn://
+			FOR i := 1 TO 4 BY 1 DO
+				IF aMotorRef[i] <> 0 THEN
+					IF aMotorRef[i]^.brakeOn() THEN
+						aDone[i] := TRUE;
+					END_IF
+				END_IF
+			END_FOR
+		checkOutputs://
+		coupleToAxis://
+		decoupleAxis://
+		disable://
+			FOR i := 1 TO 4 BY 1 DO
+				IF aMotorRef[i] <> 0 THEN
+					CASE aMotorRef[i]^.disable() OF
+						1:// Done
+							aDone[i] := TRUE;
+						13:// Error
+							aError[i] := TRUE;	
+					END_CASE
+				END_IF
+			END_FOR
+		enable://
+			FOR i := 1 TO 4 BY 1 DO
+				IF aMotorRef[i] <> 0 THEN
+					CASE aMotorRef[i]^.enable() OF
+						1:// Done
+							aDone[i] := TRUE;
+						13:// Error
+							aError[i] := TRUE;	
+					END_CASE
+				END_IF
+			END_FOR
+		estop://
+		homeToSensor://
+			FOR i := 1 TO 4 BY 1 DO
+				IF aMotorRef[i] <> 0 THEN
+					CASE aMotorRef[i]^.homeToSensor(0) OF
+						1:// Done
+							aDone[i] := TRUE;
+						13:// Error
+							aError[i] := TRUE;	
+					END_CASE
+				END_IF
+			END_FOR
+		homeToTorque://
+			FOR i := 1 TO 4 BY 1 DO
+				IF aMotorRef[i] <> 0 THEN
+					CASE aMotorRef[i]^.homeToTorque() OF
+						1:// Done
+							aDone[i] := TRUE;
+						3://Busy
+							aBusy[i] := TRUE;
+						13:// Error
+							aError[i] := TRUE;	
+					END_CASE
+				END_IF
+			END_FOR
+		motorInit://
+		moveTo://
+		moveToJog://
+		moveToSensor://
+		moveToTorque://
+		readMotorParameter://
+			//sControllerMsg := LREAL_TO_STRING(aMotorRef[1]^.readValue);
+		removeStop://
+		motorReset://
+		resetMotorCommands://
+		setError://
+		stop://
+		writeMotorParameter://
+	END_CASE
+END_IF]]></ST>
     </Implementation>
     <LineIds Name="FB_MultiMotorController">
       <LineId Id="9" Count="0" />
@@ -90,23 +123,37 @@ END_CASE]]></ST>
       <LineId Id="83" Count="0" />
       <LineId Id="104" Count="0" />
       <LineId Id="20" Count="1" />
-      <LineId Id="66" Count="0" />
-      <LineId Id="58" Count="0" />
-      <LineId Id="67" Count="0" />
-      <LineId Id="69" Count="1" />
-      <LineId Id="68" Count="0" />
-      <LineId Id="72" Count="1" />
-      <LineId Id="71" Count="0" />
-      <LineId Id="75" Count="1" />
+      <LineId Id="148" Count="5" />
       <LineId Id="74" Count="0" />
       <LineId Id="63" Count="0" />
       <LineId Id="23" Count="0" />
-      <LineId Id="108" Count="12" />
-      <LineId Id="24" Count="12" />
+      <LineId Id="141" Count="1" />
+      <LineId Id="144" Count="0" />
+      <LineId Id="146" Count="1" />
+      <LineId Id="145" Count="0" />
+      <LineId Id="143" Count="0" />
+      <LineId Id="24" Count="3" />
+      <LineId Id="155" Count="3" />
+      <LineId Id="161" Count="2" />
+      <LineId Id="159" Count="1" />
+      <LineId Id="154" Count="0" />
+      <LineId Id="28" Count="0" />
+      <LineId Id="165" Count="8" />
+      <LineId Id="164" Count="0" />
+      <LineId Id="29" Count="1" />
+      <LineId Id="176" Count="8" />
+      <LineId Id="175" Count="0" />
+      <LineId Id="31" Count="0" />
+      <LineId Id="186" Count="4" />
+      <LineId Id="195" Count="1" />
+      <LineId Id="191" Count="3" />
+      <LineId Id="185" Count="0" />
+      <LineId Id="32" Count="4" />
       <LineId Id="44" Count="1" />
       <LineId Id="37" Count="4" />
       <LineId Id="47" Count="0" />
       <LineId Id="22" Count="0" />
+      <LineId Id="174" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>

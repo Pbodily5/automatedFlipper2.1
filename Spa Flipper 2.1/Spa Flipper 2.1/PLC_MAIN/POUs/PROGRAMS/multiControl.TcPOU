@@ -5,44 +5,63 @@
 VAR
 	multiCtrlFrameIndex : INT; //Index used to switch frame on multiControlScreen
 	
-	aActionList : ARRAY[1..4] OF STRING := ['BMW','FORD','MERCEDES','FIAT'];
-	pMotorRef1 : POINTER TO FB_teknicMotorEC;
-	pMotorRef2 : POINTER TO FB_teknicMotorEC;
-	pMotorRef3 : POINTER TO FB_teknicMotorEC;
-	pMotorRef4 : POINTER TO FB_teknicMotorEC;
-	aMotorRef :ARRAY[1..4] OF POINTER TO FB_teknicMotorEC;
-
+	aActionList 		: ARRAY[1..10] OF STRING := ['BRAKE OFF','BRAKE ON','DISABLE','ENABLE','HOME TO SENSOR','HOME TO TORQUE','MOVE TO POSITION','JOG','MOVE TO TORQUE','RESET']; //List of usable actions found in FB_MultiMotorController.
+	nActionIndex 		: INT;
+	nPrevActionIndex 	: INT;
+	pMotorRef1 			: POINTER TO FB_teknicMotorEC;
+	pMotorRef2 			: POINTER TO FB_teknicMotorEC;
+	pMotorRef3 			: POINTER TO FB_teknicMotorEC;
+	pMotorRef4 			: POINTER TO FB_teknicMotorEC;
+	aMotorEnabledRef 	: ARRAY[1..4] OF POINTER TO FB_teknicMotorEC; //Used to act on only motors currently enabled
+	aMotorRef 			: ARRAY[1..4] OF POINTER TO FB_teknicMotorEC; // Used to update live values of motors in selection 
 
 	// Motor Disp //
-	nMotorControlIndex : INT; // Index used to change disp of motor controls. 0-Rotation, 1- Clamping, 2-Columns, 3-Width. 
-	bMotorEnable1 : BOOL;
-	bMotorEnable2 : BOOL;
-	bMotorEnable3 : BOOL;
-	bMotorEnable4 : BOOL;
-
-	bHideDispMotor3 : BOOL; //Used to hide or show controls for motor 3. 
-	bHideDispMotor4	: BOOL;
+	nMotorControlIndex 		: INT; // Index used to change disp of motor controls. 0-Rotation, 1- Clamping, 2-Columns, 3-Width. 
+	nPrevMotorControlIndex 	: INT; // INdex used to reset selections when frame changes 
+	aDispFontColor 			: ARRAY[1..4] OF DWORD; // Used to change font color of motor display when toggled. 
+	bHideDispMotor3 		: BOOL; //Used to hide or show controls for motor 3. 
+	bHideDispMotor4			: BOOL;
+	bHideDirection			: BOOL; //Hides direction of buttons based on selected action
+	
+	aMotorBusy 		: ARRAY[1..4] OF BOOL;
+	aMotorError 	: ARRAY[1..4] OF BOOL;
+	aMotorErrorId 	: ARRAY[1..4] OF UDINT;
+	aMotorDone 		: ARRAY[1..4] OF BOOL;
 	
 	sMotorDisp1 : STRING; // Used to dynamically change the title of motor 1. 
 	sMotorDisp2 : STRING;
 	sMotorDisp3 : STRING;
 	sMotorDisp4 : STRING;
 	
-	nCounter : INT;
-	aMotorSpeed : ARRAY[1..4] OF LREAL;
-	aMotorPos : ARRAY[1..4] OF LREAL;
-	aMotorTorque : ARRAY[1..4] OF LREAL;
+	// Motor Control //
+	aMotorEnable 	: ARRAY[1..4] OF BOOL; //Array defining whether a motor is selected and should be used for the current action. 
+	nCounter 		: INT; //Index for FOR loops.
+	aMotorSpeed 	: ARRAY[1..4] OF LREAL; //Displays motors' speeds
+	aMotorPos 		: ARRAY[1..4] OF LREAL; //Displays motors' positions
+	aMotorTorque 	: ARRAY[1..4] OF LREAL; //Displays motors' torques
+	aMotorSetPos 	: ARRAY[1..4] OF LREAL; //User set position for motors
+	aMotorSetTorq 	: ARRAY[1..4] OF LREAL; //User set torque for motors
+	bHomeDirection  : BOOL; // Direction of moves.
+	bExecute 		: BOOL; // Execute selected action 
+	i : INT;
+	
+	fbMultiMotorController : FB_MultiMotorController;
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[CASE nMotorControlIndex OF 
+      <ST><![CDATA[
+CASE nMotorControlIndex OF 
 	0:// Rotation Selected
-		IF bMotorEnable1 THEN
+		aMotorRef[1] := ADR(GVL_devices.fbLftRotationMotor);
+		aMotorRef[2] := ADR(GVL_devices.fbRhtRotationMotor);
+		aMotorRef[3] := 0;
+		aMotorRef[4] := 0;
+		IF aMotorEnable[1] THEN
 			pMotorRef1 := ADR(GVL_devices.fbLftRotationMotor);
 		ELSE
 			pMotorRef1 := 0;
 		END_IF
-		IF bMotorEnable2 THEN
+		IF aMotorEnable[2] THEN
 			pMotorRef2 := ADR(GVL_devices.fbRhtRotationMotor);
 		ELSE
 			pMotorRef2 := 0;
@@ -56,12 +75,16 @@ END_VAR
 		sMotorDisp3 := '';
 		sMotorDisp4 := '';
 	1:// Clamping Selected
-		IF bMotorEnable1 THEN
+		aMotorRef[1] := ADR(GVL_devices.fbLftClampMotor);
+		aMotorRef[2] := ADR(GVL_devices.fbRhtClampMotor);
+		aMotorRef[3] := 0;
+		aMotorRef[4] := 0;
+		IF aMotorEnable[1] THEN
 			pMotorRef1 := ADR(GVL_devices.fbLftClampMotor);
 		ELSE
 			pMotorRef1 := 0;
 		END_IF
-		IF bMotorEnable2 THEN
+		IF aMotorEnable[2] THEN
 			pMotorRef2 := ADR(GVL_devices.fbRhtClampMotor);
 		ELSE
 			pMotorRef2 := 0;
@@ -74,23 +97,29 @@ END_VAR
 		sMotorDisp2 := 'RIGHT CLAMPING';
 		sMotorDisp3 := '';
 		sMotorDisp4 := '';
+		
 	2:// Columns Selected
-		IF bMotorEnable1 THEN
+		aMotorRef[1] := ADR(GVL_devices.fbColumn0Motor);
+		aMotorRef[2] := ADR(GVL_devices.fbColumn1Motor);
+		aMotorRef[3] := ADR(GVL_devices.fbColumn2Motor);
+		aMotorRef[4] := ADR(GVL_devices.fbColumn3Motor);
+		
+		IF aMotorEnable[1] THEN
 			pMotorRef1 := ADR(GVL_devices.fbColumn0Motor);
 		ELSE
 			pMotorRef1 := 0;
 		END_IF
-		IF bMotorEnable2 THEN
+		IF aMotorEnable[2] THEN
 			pMotorRef2 := ADR(GVL_devices.fbColumn1Motor);
 		ELSE
 			pMotorRef2 := 0;
 		END_IF
-		IF bMotorEnable3 THEN
+		IF aMotorEnable[3] THEN
 			pMotorRef3 := ADR(GVL_devices.fbColumn2Motor);
 		ELSE
 			pMotorRef3 := 0;
 		END_IF
-		IF bMotorEnable4 THEN
+		IF aMotorEnable[4] THEN
 			pMotorRef4 := ADR(GVL_devices.fbColumn3Motor);
 		ELSE
 			pMotorRef4 := 0;
@@ -102,12 +131,16 @@ END_VAR
 		sMotorDisp3 := 'COLUMN 2';
 		sMotorDisp4 := 'COLUMN 3';
 	3:// Width Selected
-		IF bMotorEnable1 THEN
+		aMotorRef[1] := ADR(GVL_devices.fbLftWidthMotor);
+		aMotorRef[2] := ADR(GVL_devices.fbRhtWidthMotor);
+		aMotorRef[3] := 0;
+		aMotorRef[4] := 0;
+		IF aMotorEnable[1] THEN
 			pMotorRef1 := ADR(GVL_devices.fbLftWidthMotor);
 		ELSE
 			pMotorRef1 := 0;
 		END_IF
-		IF bMotorEnable2 THEN
+		IF aMotorEnable[2] THEN
 			pMotorRef2 := ADR(GVL_devices.fbRhtWidthMotor);
 		ELSE
 			pMotorRef2 := 0;
@@ -122,10 +155,18 @@ END_VAR
 		sMotorDisp4 := '';
 END_CASE
 
-aMotorRef[1] := pMotorRef1;
-aMotorRef[2] := pMotorRef2;
-aMotorRef[3] := pMotorRef3;
-aMotorRef[4] := pMotorRef4;
+aMotorEnabledRef[1] := pMotorRef1;
+aMotorEnabledRef[2] := pMotorRef2;
+aMotorEnabledRef[3] := pMotorRef3;
+aMotorEnabledRef[4] := pMotorRef4;
+
+FOR nCounter := 1 TO 4 BY 1 DO
+	IF aMotorEnable[nCounter] THEN
+		aDispFontColor[nCounter] := 16#FFFFFFFF;
+	ELSE
+		aDispFontColor[nCounter] := 16#FF000000;
+	END_IF
+END_FOR
 
 FOR nCounter := 1 TO 4 BY 1 DO
 	IF aMotorRef[nCounter] <> 0 THEN
@@ -144,11 +185,96 @@ FOR nCounter := 1 TO 4 BY 1 DO
 		aMotorTorque[nCounter] := aMotorRef[nCounter]^.fbMotor.NcToPlc.ActTorque;
 	END_IF
 END_FOR
+
+// === Clear selections and user inputs when frame changes === //
+IF nPrevMotorControlIndex <> nMotorControlIndex OR nActionIndex <> nPrevActionIndex THEN
+	FOR nCounter := 1 TO 4 BY 1 DO
+		aMotorEnable[nCounter] := FALSE;
+		aMotorSetPos[nCounter] := 0;
+		aMotorSetTorq[nCounter] := 0;
+		aMotorBusy[nCounter] := FALSE;
+		aMotorError[nCounter] := FALSE;
+		aMotorErrorId[nCounter] := 0;
+		aMotorDone[nCounter] := FALSE;
+	END_FOR
+	nPrevMotorControlIndex := nMotorControlIndex;
+	nPrevActionIndex := nActionIndex;
+END_IF
+
+bHideDirection := TRUE;
+CASE nActionIndex OF 
+	1:// Brake Off
+		IF bExecute THEN
+			FOR i := 1 TO 4 BY 1 DO
+				IF aMotorRef[i] <> 0 THEN
+					IF aMotorRef[i]^.brakeOff() THEN
+						aMotorDone[i] := TRUE;
+					END_IF
+				END_IF
+			END_FOR
+		END_IF
+		
+	2:// Brake On
+		IF bExecute THEN
+			FOR i := 1 TO 4 BY 1 DO
+				IF aMotorRef[i] <> 0 THEN
+					IF aMotorRef[i]^.brakeOn() THEN
+						aMotorDone[i] := TRUE;
+					END_IF
+				END_IF
+			END_FOR
+		END_IF
+		
+	3:// Disable
+		IF bExecute THEN
+			FOR i := 1 TO 4 BY 1 DO
+				IF aMotorRef[i] <> 0 THEN
+					CASE aMotorRef[i]^.disable() OF
+						1:// Done
+							aMotorDone[i] := TRUE;
+						13:// Error
+							aMotorError[i] := TRUE;	
+							aMotorErrorId[i] := aMotorRef[i]^.motorErrorId;
+					END_CASE
+				END_IF
+			END_FOR
+		END_IF
+			
+	4:// Enable
+		IF bExecute THEN
+			FOR i := 1 TO 4 BY 1 DO
+				IF aMotorRef[i] <> 0 THEN
+					CASE aMotorRef[i]^.enable() OF
+						1:// Done
+							aMotorDone[i] := TRUE;
+						13:// Error
+							aMotorError[i] := TRUE;	
+							aMotorErrorId[i] := aMotorRef[i]^.motorErrorId;
+					END_CASE
+				END_IF
+			END_FOR
+		END_IF
+	5:// homeToSensor
+		
+	6:// homeToTorque
+		
+	7:// moveTo
+		
+	8:// moveToJog
+		
+	9:// moveToTorque
+		
+	10:// reset
+	
+END_CASE
 ]]></ST>
     </Implementation>
     <LineIds Name="multiControl">
+      <LineId Id="257" Count="0" />
       <LineId Id="5" Count="0" />
       <LineId Id="27" Count="0" />
+      <LineId Id="228" Count="2" />
+      <LineId Id="227" Count="0" />
       <LineId Id="42" Count="0" />
       <LineId Id="56" Count="0" />
       <LineId Id="58" Count="1" />
@@ -158,27 +284,89 @@ END_FOR
       <LineId Id="70" Count="1" />
       <LineId Id="34" Count="5" />
       <LineId Id="29" Count="0" />
+      <LineId Id="224" Count="2" />
+      <LineId Id="223" Count="0" />
       <LineId Id="73" Count="16" />
       <LineId Id="72" Count="0" />
+      <LineId Id="222" Count="0" />
       <LineId Id="30" Count="0" />
+      <LineId Id="218" Count="2" />
+      <LineId Id="217" Count="0" />
+      <LineId Id="221" Count="0" />
       <LineId Id="109" Count="9" />
       <LineId Id="126" Count="8" />
       <LineId Id="119" Count="0" />
       <LineId Id="121" Count="4" />
       <LineId Id="108" Count="0" />
       <LineId Id="31" Count="0" />
+      <LineId Id="214" Count="2" />
+      <LineId Id="213" Count="0" />
       <LineId Id="91" Count="16" />
       <LineId Id="90" Count="0" />
       <LineId Id="28" Count="0" />
       <LineId Id="182" Count="0" />
       <LineId Id="60" Count="0" />
       <LineId Id="62" Count="2" />
-      <LineId Id="195" Count="4" />
+      <LineId Id="240" Count="0" />
+      <LineId Id="239" Count="0" />
+      <LineId Id="241" Count="0" />
+      <LineId Id="243" Count="0" />
+      <LineId Id="245" Count="1" />
+      <LineId Id="244" Count="0" />
+      <LineId Id="242" Count="0" />
+      <LineId Id="247" Count="0" />
+      <LineId Id="196" Count="3" />
       <LineId Id="194" Count="0" />
       <LineId Id="201" Count="4" />
       <LineId Id="200" Count="0" />
       <LineId Id="207" Count="4" />
       <LineId Id="206" Count="0" />
+      <LineId Id="265" Count="0" />
+      <LineId Id="251" Count="0" />
+      <LineId Id="250" Count="0" />
+      <LineId Id="252" Count="0" />
+      <LineId Id="254" Count="0" />
+      <LineId Id="266" Count="1" />
+      <LineId Id="280" Count="3" />
+      <LineId Id="255" Count="1" />
+      <LineId Id="409" Count="0" />
+      <LineId Id="253" Count="0" />
+      <LineId Id="300" Count="0" />
+      <LineId Id="288" Count="0" />
+      <LineId Id="287" Count="0" />
+      <LineId Id="289" Count="0" />
+      <LineId Id="397" Count="0" />
+      <LineId Id="400" Count="5" />
+      <LineId Id="398" Count="1" />
+      <LineId Id="304" Count="0" />
+      <LineId Id="291" Count="0" />
+      <LineId Id="410" Count="7" />
+      <LineId Id="315" Count="0" />
+      <LineId Id="418" Count="0" />
+      <LineId Id="292" Count="0" />
+      <LineId Id="430" Count="0" />
+      <LineId Id="419" Count="6" />
+      <LineId Id="429" Count="0" />
+      <LineId Id="426" Count="1" />
+      <LineId Id="324" Count="0" />
+      <LineId Id="431" Count="0" />
+      <LineId Id="428" Count="0" />
+      <LineId Id="293" Count="0" />
+      <LineId Id="432" Count="11" />
+      <LineId Id="333" Count="0" />
+      <LineId Id="294" Count="0" />
+      <LineId Id="342" Count="0" />
+      <LineId Id="295" Count="0" />
+      <LineId Id="351" Count="0" />
+      <LineId Id="296" Count="0" />
+      <LineId Id="360" Count="0" />
+      <LineId Id="297" Count="0" />
+      <LineId Id="369" Count="0" />
+      <LineId Id="298" Count="0" />
+      <LineId Id="378" Count="0" />
+      <LineId Id="299" Count="0" />
+      <LineId Id="387" Count="0" />
+      <LineId Id="290" Count="0" />
       <LineId Id="61" Count="0" />
     </LineIds>
   </POU>

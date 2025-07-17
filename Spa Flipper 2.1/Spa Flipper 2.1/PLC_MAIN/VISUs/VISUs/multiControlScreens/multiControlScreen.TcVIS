@@ -1029,7 +1029,7 @@
                       <l n="Value" t="ArrayList" cet="NamedStyleColor">
                         <o>
                           <v n="Color">-2830136</v>
-                          <v n="CanonicalName">"Element-Alarm-Fill-Color"</v>
+                          <v n="CanonicalName">"Element-Alarmtable-SelectionColor"</v>
                         </o>
                       </l>
                     </o>
@@ -1086,6 +1086,10 @@
                     <o>
                       <v n="Id">2880254039L</v>
                       <v n="Value">""</v>
+                    </o>
+                    <o>
+                      <v n="Id">1999528970L</v>
+                      <v n="Value">"multiControl.nMotorControlIndex = 0"</v>
                     </o>
                     <o>
                       <v n="Id">823443203L</v>
@@ -6620,7 +6624,7 @@ multiControl.nMotorControlIndex := 0;"</v>
                       <l n="Value" t="ArrayList" cet="NamedStyleColor">
                         <o>
                           <v n="Color">-2830136</v>
-                          <v n="CanonicalName">"Element-Alarm-Fill-Color"</v>
+                          <v n="CanonicalName">"Element-Alarmtable-SelectionColor"</v>
                         </o>
                       </l>
                     </o>
@@ -6677,6 +6681,10 @@ multiControl.nMotorControlIndex := 0;"</v>
                     <o>
                       <v n="Id">2880254039L</v>
                       <v n="Value">""</v>
+                    </o>
+                    <o>
+                      <v n="Id">1999528970L</v>
+                      <v n="Value">"multiControl.nMotorControlIndex = 2"</v>
                     </o>
                     <o>
                       <v n="Id">823443203L</v>
@@ -6811,7 +6819,7 @@ multiControl.nMotorControlIndex := 2;
                       <l n="Value" t="ArrayList" cet="NamedStyleColor">
                         <o>
                           <v n="Color">-2830136</v>
-                          <v n="CanonicalName">"Element-Alarm-Fill-Color"</v>
+                          <v n="CanonicalName">"Element-Alarmtable-SelectionColor"</v>
                         </o>
                       </l>
                     </o>
@@ -6868,6 +6876,10 @@ multiControl.nMotorControlIndex := 2;
                     <o>
                       <v n="Id">2880254039L</v>
                       <v n="Value">""</v>
+                    </o>
+                    <o>
+                      <v n="Id">1999528970L</v>
+                      <v n="Value">"multiControl.nMotorControlIndex = 3"</v>
                     </o>
                     <o>
                       <v n="Id">823443203L</v>
@@ -7002,7 +7014,7 @@ multiControl.nMotorControlIndex := 3;
                       <l n="Value" t="ArrayList" cet="NamedStyleColor">
                         <o>
                           <v n="Color">-2830136</v>
-                          <v n="CanonicalName">"Element-Alarm-Fill-Color"</v>
+                          <v n="CanonicalName">"Element-Alarmtable-SelectionColor"</v>
                         </o>
                       </l>
                     </o>
@@ -7059,6 +7071,10 @@ multiControl.nMotorControlIndex := 3;
                     <o>
                       <v n="Id">2880254039L</v>
                       <v n="Value">""</v>
+                    </o>
+                    <o>
+                      <v n="Id">1999528970L</v>
+                      <v n="Value">"multiControl.nMotorControlIndex = 1"</v>
                     </o>
                     <o>
                       <v n="Id">823443203L</v>
@@ -7193,7 +7209,7 @@ multiControl.nMotorControlIndex := 1;
                       <l n="Value" t="ArrayList" cet="NamedStyleColor">
                         <o>
                           <v n="Color">-2830136</v>
-                          <v n="CanonicalName">"Element-Alarm-Fill-Color"</v>
+                          <v n="CanonicalName">"Element-Alarmtable-SelectionColor"</v>
                         </o>
                       </l>
                     </o>
@@ -7252,6 +7268,10 @@ multiControl.nMotorControlIndex := 1;
                       <v n="Value">""</v>
                     </o>
                     <o>
+                      <v n="Id">1999528970L</v>
+                      <v n="Value">"multiControl.multiCtrlFrameIndex = 2"</v>
+                    </o>
+                    <o>
                       <v n="Id">823443203L</v>
                       <v n="Value">"733"</v>
                     </o>
@@ -7263,11 +7283,12 @@ multiControl.nMotorControlIndex := 1;
                 <v n="VisualElementIdentifier">"GenElemInst_69"</v>
                 <n n="VisualElementOfflinePaintCommands" />
                 <n n="VisualElementFrameInformation" />
-                <d n="VisualElementInputActions" t="Hashtable" ckt="String" cvt="STSnippetInputAction[]">
+                <d n="VisualElementInputActions" t="Hashtable" ckt="String" cvt="IInputAction[]">
                   <v>OnMouseDown</v>
                   <a cet="STSnippetInputAction">
                     <o>
-                      <v n="STSnippet">"multiControl.multiCtrlFrameIndex := 3;"</v>
+                      <v n="STSnippet">"multiControl.multiCtrlFrameIndex := 2;
+multiControl.nMotorControlIndex := 10;"</v>
                     </o>
                   </a>
                 </d>
@@ -7382,7 +7403,7 @@ multiControl.nMotorControlIndex := 1;
                       <l n="Value" t="ArrayList" cet="NamedStyleColor">
                         <o>
                           <v n="Color">-2830136</v>
-                          <v n="CanonicalName">"Element-Alarm-Fill-Color"</v>
+                          <v n="CanonicalName">"Element-Alarmtable-SelectionColor"</v>
                         </o>
                       </l>
                     </o>
@@ -7442,7 +7463,7 @@ multiControl.nMotorControlIndex := 1;
                     </o>
                     <o>
                       <v n="Id">1999528970L</v>
-                      <v n="Value">"multiControl.multiCtrlFrameIndex = 2"</v>
+                      <v n="Value">"multiControl.multiCtrlFrameIndex = 1"</v>
                     </o>
                     <o>
                       <v n="Id">823443203L</v>
@@ -7456,11 +7477,13 @@ multiControl.nMotorControlIndex := 1;
                 <v n="VisualElementIdentifier">"GenElemInst_73"</v>
                 <n n="VisualElementOfflinePaintCommands" />
                 <n n="VisualElementFrameInformation" />
-                <d n="VisualElementInputActions" t="Hashtable" ckt="String" cvt="STSnippetInputAction[]">
+                <d n="VisualElementInputActions" t="Hashtable" ckt="String" cvt="IInputAction[]">
                   <v>OnMouseDown</v>
                   <a cet="STSnippetInputAction">
                     <o>
-                      <v n="STSnippet">"multiControl.multiCtrlFrameIndex := 2;"</v>
+                      <v n="STSnippet">"multiControl.multiCtrlFrameIndex := 1;
+multiControl.nMotorControlIndex := 10;
+"</v>
                     </o>
                   </a>
                 </d>
@@ -7705,7 +7728,6 @@ multiControl.nMotorControlIndex := 1;
         <Type n="String">System.String</Type>
         <Type n="StructuredTypeNode">{503c5b2e-e80e-4ee7-ae00-c5b93a62b1aa}</Type>
         <Type n="STSnippetInputAction">{6302d3fe-6ea5-4c42-819a-a9734a133b3d}</Type>
-        <Type n="STSnippetInputAction[]">_3S.CoDeSys.VisualElem.STSnippetInputAction[], VisualElem.plugin, Version=3.5.13.32, Culture=neutral, PublicKeyToken=null</Type>
         <Type n="TextDocument">{f3878285-8e4f-490b-bb1b-9acbb7eb04db}</Type>
         <Type n="TextLine">{a5de0b0b-1cb5-4913-ac21-9d70293ec00d}</Type>
         <Type n="TypeClass">{16f7aa24-038f-444e-9d81-b001bc091d35}</Type>

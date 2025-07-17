@@ -1465,7 +1465,7 @@
                     </o>
                     <o>
                       <v n="Id">3649724534L</v>
-                      <v n="Value">20</v>
+                      <v n="Value" t="Int16">60</v>
                     </o>
                     <o>
                       <v n="Id">1943969894L</v>
@@ -1780,7 +1780,7 @@
                     </o>
                     <o>
                       <v n="Id">4036189354L</v>
-                      <v n="Value">40</v>
+                      <v n="Value" t="Int16">300</v>
                     </o>
                     <o>
                       <v n="Id">3669839856L</v>
@@ -1788,7 +1788,7 @@
                     </o>
                     <o>
                       <v n="Id">2318311169L</v>
-                      <v n="Value">4</v>
+                      <v n="Value">10</v>
                     </o>
                     <o>
                       <v n="Id">3146216842L</v>
@@ -1805,9 +1805,9 @@
                     <o>
                       <v n="Id">3234392039L</v>
                       <o n="Value" t="DataVariableInformation">
-                        <v n="DataArrayType">"ARRAY [1..4] OF STRING"</v>
+                        <v n="DataArrayType">"ARRAY [1..10] OF STRING"</v>
                         <v n="ColumnCount">1</v>
-                        <v n="RowCount">4</v>
+                        <v n="RowCount">10</v>
                         <v n="FirstColumnIndex">0</v>
                         <v n="FirstRowIndex">1</v>
                         <a n="ColumnTypes" cet="TypeClass">
