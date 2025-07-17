@@ -1,10 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.13">
   <POU Name="multiControl" Id="{7ac8876c-7553-4aa3-8d03-b92ac1cc6e8f}" SpecialFunc="None">
     <Declaration><![CDATA[PROGRAM multiControl
 VAR
 	multiCtrlFrameIndex : INT; //Index used to switch frame on multiControlScreen
 	
+	aActionList : ARRAY[1..4] OF STRING := ['BMW','FORD','MERCEDES','FIAT'];
 	pMotorRef1 : POINTER TO FB_teknicMotorEC;
 	pMotorRef2 : POINTER TO FB_teknicMotorEC;
 	pMotorRef3 : POINTER TO FB_teknicMotorEC;
@@ -13,7 +14,7 @@ VAR
 
 
 	// Motor Disp //
-	nMotorControlIndex : BOOL; // Index used to change disp of motor controls. 0-Rotation, 1- Clamping, 2-Columns, 3-Width. 
+	nMotorControlIndex : INT; // Index used to change disp of motor controls. 0-Rotation, 1- Clamping, 2-Columns, 3-Width. 
 	bMotorEnable1 : BOOL;
 	bMotorEnable2 : BOOL;
 	bMotorEnable3 : BOOL;
@@ -26,7 +27,11 @@ VAR
 	sMotorDisp2 : STRING;
 	sMotorDisp3 : STRING;
 	sMotorDisp4 : STRING;
-
+	
+	nCounter : INT;
+	aMotorSpeed : ARRAY[1..4] OF LREAL;
+	aMotorPos : ARRAY[1..4] OF LREAL;
+	aMotorTorque : ARRAY[1..4] OF LREAL;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -71,31 +76,31 @@ END_VAR
 		sMotorDisp4 := '';
 	2:// Columns Selected
 		IF bMotorEnable1 THEN
-			pMotorRef1 := ADR(GVL_devices.fbLftClampMotor);
+			pMotorRef1 := ADR(GVL_devices.fbColumn0Motor);
 		ELSE
 			pMotorRef1 := 0;
 		END_IF
 		IF bMotorEnable2 THEN
-			pMotorRef2 := ADR(GVL_devices.fbRhtClampMotor);
+			pMotorRef2 := ADR(GVL_devices.fbColumn1Motor);
 		ELSE
 			pMotorRef2 := 0;
 		END_IF
 		IF bMotorEnable3 THEN
-			pMotorRef3 := ADR(GVL_devices.fbLftClampMotor);
+			pMotorRef3 := ADR(GVL_devices.fbColumn2Motor);
 		ELSE
 			pMotorRef3 := 0;
 		END_IF
 		IF bMotorEnable4 THEN
-			pMotorRef4 := ADR(GVL_devices.fbRhtClampMotor);
+			pMotorRef4 := ADR(GVL_devices.fbColumn3Motor);
 		ELSE
 			pMotorRef4 := 0;
 		END_IF
 	    bHideDispMotor3 := FALSE;
 	    bHideDispMotor4 := FALSE;
-		sMotorDisp1 := 'LEFT CLAMPING';
-		sMotorDisp2 := 'RIGHT CLAMPING';
-		sMotorDisp3 := '';
-		sMotorDisp4 := '';
+		sMotorDisp1 := 'COLUMN 0';
+		sMotorDisp2 := 'COLUMN 1';
+		sMotorDisp3 := 'COLUMN 2';
+		sMotorDisp4 := 'COLUMN 3';
 	3:// Width Selected
 		IF bMotorEnable1 THEN
 			pMotorRef1 := ADR(GVL_devices.fbLftWidthMotor);
@@ -116,10 +121,29 @@ END_VAR
 		sMotorDisp3 := '';
 		sMotorDisp4 := '';
 END_CASE
+
 aMotorRef[1] := pMotorRef1;
 aMotorRef[2] := pMotorRef2;
 aMotorRef[3] := pMotorRef3;
 aMotorRef[4] := pMotorRef4;
+
+FOR nCounter := 1 TO 4 BY 1 DO
+	IF aMotorRef[nCounter] <> 0 THEN
+		aMotorSpeed[nCounter] := aMotorRef[nCounter]^.fbMotor.NcToPlc.ActVelo;
+	END_IF
+END_FOR
+
+FOR nCounter := 1 TO 4 BY 1 DO
+	IF aMotorRef[nCounter] <> 0 THEN
+		aMotorPos[nCounter] := aMotorRef[nCounter]^.fbMotor.NcToPlc.ActPos;
+	END_IF
+END_FOR
+
+FOR nCounter := 1 TO 4 BY 1 DO
+	IF aMotorRef[nCounter] <> 0 THEN
+		aMotorTorque[nCounter] := aMotorRef[nCounter]^.fbMotor.NcToPlc.ActTorque;
+	END_IF
+END_FOR
 ]]></ST>
     </Implementation>
     <LineIds Name="multiControl">
@@ -146,8 +170,15 @@ aMotorRef[4] := pMotorRef4;
       <LineId Id="91" Count="16" />
       <LineId Id="90" Count="0" />
       <LineId Id="28" Count="0" />
+      <LineId Id="182" Count="0" />
       <LineId Id="60" Count="0" />
       <LineId Id="62" Count="2" />
+      <LineId Id="195" Count="4" />
+      <LineId Id="194" Count="0" />
+      <LineId Id="201" Count="4" />
+      <LineId Id="200" Count="0" />
+      <LineId Id="207" Count="4" />
+      <LineId Id="206" Count="0" />
       <LineId Id="61" Count="0" />
     </LineIds>
   </POU>
