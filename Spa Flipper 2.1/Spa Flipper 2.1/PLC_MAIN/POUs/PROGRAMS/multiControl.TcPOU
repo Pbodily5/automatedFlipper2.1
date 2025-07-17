@@ -5,10 +5,23 @@
 VAR
 	multiCtrlFrameIndex : INT; //Index used to switch frame on multiControlScreen
 	
+	pMotorRef1 : POINTER TO FB_teknicMotorEC;
+	pMotorRef2 : POINTER TO FB_teknicMotorEC;
+	pMotorRef3 : POINTER TO FB_teknicMotorEC;
+	pMotorRef4 : POINTER TO FB_teknicMotorEC;
+	aMotorRef :ARRAY[1..4] OF POINTER TO FB_teknicMotorEC;
+
+
 	// Motor Disp //
 	nMotorControlIndex : BOOL; // Index used to change disp of motor controls. 0-Rotation, 1- Clamping, 2-Columns, 3-Width. 
+	bMotorEnable1 : BOOL;
+	bMotorEnable2 : BOOL;
+	bMotorEnable3 : BOOL;
+	bMotorEnable4 : BOOL;
+
 	bHideDispMotor3 : BOOL; //Used to hide or show controls for motor 3. 
 	bHideDispMotor4	: BOOL;
+	
 	sMotorDisp1 : STRING; // Used to dynamically change the title of motor 1. 
 	sMotorDisp2 : STRING;
 	sMotorDisp3 : STRING;
@@ -19,6 +32,18 @@ END_VAR
     <Implementation>
       <ST><![CDATA[CASE nMotorControlIndex OF 
 	0:// Rotation Selected
+		IF bMotorEnable1 THEN
+			pMotorRef1 := ADR(GVL_devices.fbLftRotationMotor);
+		ELSE
+			pMotorRef1 := 0;
+		END_IF
+		IF bMotorEnable2 THEN
+			pMotorRef2 := ADR(GVL_devices.fbRhtRotationMotor);
+		ELSE
+			pMotorRef2 := 0;
+		END_IF
+		pMotorRef3 := 0;
+		pMotorRef4 := 0;
 	    bHideDispMotor3 := TRUE;
 	    bHideDispMotor4 := TRUE;
 		sMotorDisp1 := 'LEFT ROTATION';
@@ -26,16 +51,104 @@ END_VAR
 		sMotorDisp3 := '';
 		sMotorDisp4 := '';
 	1:// Clamping Selected
+		IF bMotorEnable1 THEN
+			pMotorRef1 := ADR(GVL_devices.fbLftClampMotor);
+		ELSE
+			pMotorRef1 := 0;
+		END_IF
+		IF bMotorEnable2 THEN
+			pMotorRef2 := ADR(GVL_devices.fbRhtClampMotor);
+		ELSE
+			pMotorRef2 := 0;
+		END_IF
+		pMotorRef3 := 0;
+		pMotorRef4 := 0;
+	    bHideDispMotor3 := TRUE;
+	    bHideDispMotor4 := TRUE;
+		sMotorDisp1 := 'LEFT CLAMPING';
+		sMotorDisp2 := 'RIGHT CLAMPING';
+		sMotorDisp3 := '';
+		sMotorDisp4 := '';
 	2:// Columns Selected
+		IF bMotorEnable1 THEN
+			pMotorRef1 := ADR(GVL_devices.fbLftClampMotor);
+		ELSE
+			pMotorRef1 := 0;
+		END_IF
+		IF bMotorEnable2 THEN
+			pMotorRef2 := ADR(GVL_devices.fbRhtClampMotor);
+		ELSE
+			pMotorRef2 := 0;
+		END_IF
+		IF bMotorEnable3 THEN
+			pMotorRef3 := ADR(GVL_devices.fbLftClampMotor);
+		ELSE
+			pMotorRef3 := 0;
+		END_IF
+		IF bMotorEnable4 THEN
+			pMotorRef4 := ADR(GVL_devices.fbRhtClampMotor);
+		ELSE
+			pMotorRef4 := 0;
+		END_IF
+	    bHideDispMotor3 := FALSE;
+	    bHideDispMotor4 := FALSE;
+		sMotorDisp1 := 'LEFT CLAMPING';
+		sMotorDisp2 := 'RIGHT CLAMPING';
+		sMotorDisp3 := '';
+		sMotorDisp4 := '';
 	3:// Width Selected
-END_CASE]]></ST>
+		IF bMotorEnable1 THEN
+			pMotorRef1 := ADR(GVL_devices.fbLftWidthMotor);
+		ELSE
+			pMotorRef1 := 0;
+		END_IF
+		IF bMotorEnable2 THEN
+			pMotorRef2 := ADR(GVL_devices.fbRhtWidthMotor);
+		ELSE
+			pMotorRef2 := 0;
+		END_IF
+		pMotorRef3 := 0;
+		pMotorRef4 := 0;
+	    bHideDispMotor3 := TRUE;
+	    bHideDispMotor4 := TRUE;
+		sMotorDisp1 := 'LEFT WIDTH';
+		sMotorDisp2 := 'RIGHT WIDTH';
+		sMotorDisp3 := '';
+		sMotorDisp4 := '';
+END_CASE
+aMotorRef[1] := pMotorRef1;
+aMotorRef[2] := pMotorRef2;
+aMotorRef[3] := pMotorRef3;
+aMotorRef[4] := pMotorRef4;
+]]></ST>
     </Implementation>
     <LineIds Name="multiControl">
       <LineId Id="5" Count="0" />
       <LineId Id="27" Count="0" />
+      <LineId Id="42" Count="0" />
+      <LineId Id="56" Count="0" />
+      <LineId Id="58" Count="1" />
+      <LineId Id="57" Count="0" />
+      <LineId Id="66" Count="3" />
+      <LineId Id="65" Count="0" />
+      <LineId Id="70" Count="1" />
       <LineId Id="34" Count="5" />
-      <LineId Id="29" Count="2" />
+      <LineId Id="29" Count="0" />
+      <LineId Id="73" Count="16" />
+      <LineId Id="72" Count="0" />
+      <LineId Id="30" Count="0" />
+      <LineId Id="109" Count="9" />
+      <LineId Id="126" Count="8" />
+      <LineId Id="119" Count="0" />
+      <LineId Id="121" Count="4" />
+      <LineId Id="108" Count="0" />
+      <LineId Id="31" Count="0" />
+      <LineId Id="91" Count="16" />
+      <LineId Id="90" Count="0" />
       <LineId Id="28" Count="0" />
+      <LineId Id="60" Count="0" />
+      <LineId Id="62" Count="2" />
+      <LineId Id="61" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>
