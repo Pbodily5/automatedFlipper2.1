@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.13">
   <Visu Name="machineMapScreen" Id="{38e19128-55c1-4aa5-9ab6-0d4856cb7fe6}">
     <XmlArchive>
       <Data>
@@ -4499,7 +4499,7 @@
                     </o>
                     <o>
                       <v n="Id">390574330L</v>
-                      <v n="Value">"COLUMN 3"</v>
+                      <v n="Value">"COLUMN 2"</v>
                     </o>
                     <o>
                       <v n="Id">2597686782L</v>
@@ -4507,7 +4507,7 @@
                     </o>
                     <o>
                       <v n="Id">823443203L</v>
-                      <v n="Value">"796"</v>
+                      <v n="Value">"149"</v>
                     </o>
                   </l>
                 </o>
@@ -4827,7 +4827,7 @@
                     </o>
                     <o>
                       <v n="Id">390574330L</v>
-                      <v n="Value">"COLUMN 2"</v>
+                      <v n="Value">"COLUMN 3"</v>
                     </o>
                     <o>
                       <v n="Id">2597686782L</v>
@@ -4835,7 +4835,7 @@
                     </o>
                     <o>
                       <v n="Id">823443203L</v>
-                      <v n="Value">"149"</v>
+                      <v n="Value">"796"</v>
                     </o>
                   </l>
                 </o>
