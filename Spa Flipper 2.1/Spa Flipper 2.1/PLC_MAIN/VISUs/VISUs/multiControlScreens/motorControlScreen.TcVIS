@@ -2646,6 +2646,10 @@
                       <v n="Value">"multiControl.aMotorSetPos[1]"</v>
                     </o>
                     <o>
+                      <v n="Id">2880254039L</v>
+                      <v n="Value">"multiControl.bHideSetPos"</v>
+                    </o>
+                    <o>
                       <v n="Id">823443203L</v>
                       <v n="Value">"74"</v>
                     </o>
@@ -2835,6 +2839,10 @@
                     <o>
                       <v n="Id">823443203L</v>
                       <v n="Value">"1146"</v>
+                    </o>
+                    <o>
+                      <v n="Id">2880254039L</v>
+                      <v n="Value">"multiControl.bHideSetTorq"</v>
                     </o>
                   </l>
                 </o>
@@ -5087,6 +5095,10 @@
                       <v n="Id">823443203L</v>
                       <v n="Value">"1146"</v>
                     </o>
+                    <o>
+                      <v n="Id">2880254039L</v>
+                      <v n="Value">"multiControl.bHideSetTorq"</v>
+                    </o>
                   </l>
                 </o>
                 <v n="VisualElementName">"Button"</v>
@@ -5272,6 +5284,10 @@
                     <o>
                       <v n="Id">2477733581L</v>
                       <v n="Value">"multiControl.aMotorSetPos[2]"</v>
+                    </o>
+                    <o>
+                      <v n="Id">2880254039L</v>
+                      <v n="Value">"multiControl.bHideSetPos"</v>
                     </o>
                     <o>
                       <v n="Id">823443203L</v>
@@ -8122,7 +8138,7 @@
                     </o>
                     <o>
                       <v n="Id">2880254039L</v>
-                      <v n="Value">"multiControl.bHideDispMotor3"</v>
+                      <v n="Value">"multiControl.bHideDispMotor3 OR multiControl.bHideSetPos"</v>
                     </o>
                     <o>
                       <v n="Id">2477733581L</v>
@@ -8313,7 +8329,7 @@
                     </o>
                     <o>
                       <v n="Id">2880254039L</v>
-                      <v n="Value">"multiControl.bHideDispMotor3"</v>
+                      <v n="Value">"multiControl.bHideDispMotor3 OR multiControl.bHideSetTorq"</v>
                     </o>
                     <o>
                       <v n="Id">2477733581L</v>
@@ -8702,7 +8718,7 @@
                     </o>
                     <o>
                       <v n="Id">2880254039L</v>
-                      <v n="Value">"multiControl.bHideDispMotor4"</v>
+                      <v n="Value">"multiControl.bHideDispMotor4 OR multiControl.bHideSetTorq"</v>
                     </o>
                     <o>
                       <v n="Id">2477733581L</v>
@@ -8896,7 +8912,7 @@
                     </o>
                     <o>
                       <v n="Id">2880254039L</v>
-                      <v n="Value">"multiControl.bHideDispMotor4"</v>
+                      <v n="Value">"multiControl.bHideDispMotor4 OR multiControl.bHideSetPos"</v>
                     </o>
                     <o>
                       <v n="Id">2477733581L</v>

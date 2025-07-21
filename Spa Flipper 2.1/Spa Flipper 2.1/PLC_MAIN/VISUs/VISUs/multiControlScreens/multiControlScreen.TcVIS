@@ -298,7 +298,7 @@ GVL_machine.bMotorsInitialized := FALSE;"</v>
                           <o t="DynamicArrayNode">
                             <o n="DynamicArrayNodeCounterNode" t="BasicTypeNode">
                               <v n="Flags">0L</v>
-                              <v n="BasicTypeNodeValue" t="Int16">3</v>
+                              <v n="BasicTypeNodeValue" t="Int16">4</v>
                               <v n="BasicTypeNodeAcceptsExpression">false</v>
                               <n n="BasicTypeNodeFastAccess" />
                               <a n="BasicTypeNodeEnumValues" et="String" />
@@ -450,6 +450,36 @@ GVL_machine.bMotorsInitialized := FALSE;"</v>
                                 <n n="DescriptionTextID" />
                                 <v n="DescriptionUseParent">false</v>
                               </o>
+                              <o>
+                                <v n="VisuNodeReferenceGuid">{00000000-0000-0000-0000-000000000000}</v>
+                                <n n="VisuNodeReference" />
+                                <v n="VisNodeRefs33">"parametersScreen"</v>
+                                <l n="TypeNodeChildren" t="ArrayList" />
+                                <o n="TypeNodeType" t="TypeNodeType">
+                                  <v n="TypeClass" t="TypeClass">Userdef</v>
+                                  <v n="QualifiedName">"IVisualisation"</v>
+                                  <v n="Name">"IVisualisation"</v>
+                                </o>
+                                <v n="TypeNodeName">"[3]"</v>
+                                <o n="TypeNodeAttributes" t="TypeNodeAttributes2">
+                                  <v n="AttrFlags">0UL</v>
+                                  <d n="TypeNodeAttributesData" t="CaseInsensitiveHashtable" ckt="String" cvt="String">
+                                    <v>conditionalshow</v>
+                                    <v>visu_elemdev</v>
+                                    <v>ieccodeconversion_useexistinginterface</v>
+                                    <v>_3S.CoDeSys.VisuGenerated.IVisualisationIEC</v>
+                                    <v>''NORMAL__COMMENT</v>
+                                    <v> interface contains additional methods to IVisualElement</v>
+                                  </d>
+                                  <v n="ConvDone">true</v>
+                                </o>
+                                <v n="TypeNodeId" t="Int16">1</v>
+                                <v n="TypeNodeIdLong">3091543759L</v>
+                                <n n="LibraryId" />
+                                <n n="DisplayTextId" />
+                                <n n="DescriptionTextID" />
+                                <v n="DescriptionUseParent">false</v>
+                              </o>
                             </l>
                             <o n="TypeNodeType" t="TypeNodeType">
                               <v n="TypeClass" t="TypeClass">Userdef</v>
@@ -483,7 +513,7 @@ GVL_machine.bMotorsInitialized := FALSE;"</v>
                           </o>
                           <o t="BasicTypeNode">
                             <v n="Flags">0L</v>
-                            <v n="BasicTypeNodeValue" t="Int16">3</v>
+                            <v n="BasicTypeNodeValue" t="Int16">4</v>
                             <v n="BasicTypeNodeAcceptsExpression">false</v>
                             <n n="BasicTypeNodeFastAccess" />
                             <a n="BasicTypeNodeEnumValues" et="String" />
@@ -804,39 +834,6 @@ GVL_machine.bMotorsInitialized := FALSE;"</v>
                       </o>
                     </o>
                     <o>
-                      <v n="Id">3091543759L</v>
-                      <o n="Value" t="VisualizationNode">
-                        <v n="VisuNodeReferenceGuid">{00000000-0000-0000-0000-000000000000}</v>
-                        <n n="VisuNodeReference" />
-                        <v n="VisNodeRefs33">"multiControlHelp"</v>
-                        <l n="TypeNodeChildren" t="ArrayList" />
-                        <o n="TypeNodeType" t="TypeNodeType">
-                          <v n="TypeClass" t="TypeClass">Userdef</v>
-                          <v n="QualifiedName">"IVisualisation"</v>
-                          <v n="Name">"IVisualisation"</v>
-                        </o>
-                        <v n="TypeNodeName">"[3]"</v>
-                        <o n="TypeNodeAttributes" t="TypeNodeAttributes2">
-                          <v n="AttrFlags">0UL</v>
-                          <d n="TypeNodeAttributesData" t="CaseInsensitiveHashtable" ckt="String" cvt="String">
-                            <v>conditionalshow</v>
-                            <v>visu_elemdev</v>
-                            <v>ieccodeconversion_useexistinginterface</v>
-                            <v>_3S.CoDeSys.VisuGenerated.IVisualisationIEC</v>
-                            <v>''NORMAL__COMMENT</v>
-                            <v> interface contains additional methods to IVisualElement</v>
-                          </d>
-                          <v n="ConvDone">true</v>
-                        </o>
-                        <v n="TypeNodeId" t="Int16">1</v>
-                        <v n="TypeNodeIdLong">3091543759L</v>
-                        <n n="LibraryId" />
-                        <n n="DisplayTextId" />
-                        <n n="DescriptionTextID" />
-                        <v n="DescriptionUseParent">false</v>
-                      </o>
-                    </o>
-                    <o>
                       <v n="Id">4144275464L</v>
                       <o n="Value" t="VisualizationNode">
                         <v n="VisuNodeReferenceGuid">{00000000-0000-0000-0000-000000000000}</v>
@@ -902,6 +899,39 @@ GVL_machine.bMotorsInitialized := FALSE;"</v>
                         <v n="DescriptionUseParent">false</v>
                       </o>
                     </o>
+                    <o>
+                      <v n="Id">3091543759L</v>
+                      <o n="Value" t="VisualizationNode">
+                        <v n="VisuNodeReferenceGuid">{00000000-0000-0000-0000-000000000000}</v>
+                        <n n="VisuNodeReference" />
+                        <v n="VisNodeRefs33">"parametersScreen"</v>
+                        <l n="TypeNodeChildren" t="ArrayList" />
+                        <o n="TypeNodeType" t="TypeNodeType">
+                          <v n="TypeClass" t="TypeClass">Userdef</v>
+                          <v n="QualifiedName">"IVisualisation"</v>
+                          <v n="Name">"IVisualisation"</v>
+                        </o>
+                        <v n="TypeNodeName">"[3]"</v>
+                        <o n="TypeNodeAttributes" t="TypeNodeAttributes2">
+                          <v n="AttrFlags">0UL</v>
+                          <d n="TypeNodeAttributesData" t="CaseInsensitiveHashtable" ckt="String" cvt="String">
+                            <v>conditionalshow</v>
+                            <v>visu_elemdev</v>
+                            <v>ieccodeconversion_useexistinginterface</v>
+                            <v>_3S.CoDeSys.VisuGenerated.IVisualisationIEC</v>
+                            <v>''NORMAL__COMMENT</v>
+                            <v> interface contains additional methods to IVisualElement</v>
+                          </d>
+                          <v n="ConvDone">true</v>
+                        </o>
+                        <v n="TypeNodeId" t="Int16">1</v>
+                        <v n="TypeNodeIdLong">3091543759L</v>
+                        <n n="LibraryId" />
+                        <n n="DisplayTextId" />
+                        <n n="DescriptionTextID" />
+                        <v n="DescriptionUseParent">false</v>
+                      </o>
+                    </o>
                   </l>
                 </o>
                 <v n="VisualElementName">"Frame"</v>
@@ -916,6 +946,7 @@ GVL_machine.bMotorsInitialized := FALSE;"</v>
                     <v>motorControlScreen</v>
                     <v>machineMapScreen</v>
                     <v>multiControlHelp</v>
+                    <v>parametersScreen</v>
                   </a>
                 </o>
                 <d n="VisualElementInputActions" t="Hashtable" />
@@ -2138,7 +2169,7 @@ multiControl.nMotorControlIndex := 1;
                     </o>
                     <o>
                       <v n="Id">357335551L</v>
-                      <v n="Value">252</v>
+                      <v n="Value">314</v>
                     </o>
                     <o>
                       <v n="Id">2422045748L</v>
@@ -2191,7 +2222,7 @@ multiControl.nMotorControlIndex := 1;
                     </o>
                     <o>
                       <v n="Id">1473355128L</v>
-                      <v n="Value">282</v>
+                      <v n="Value">344</v>
                     </o>
                     <o>
                       <v n="Id">493260384L</v>
@@ -2332,7 +2363,7 @@ multiControl.nMotorControlIndex := 10;"</v>
                     </o>
                     <o>
                       <v n="Id">357335551L</v>
-                      <v n="Value">315</v>
+                      <v n="Value">377</v>
                     </o>
                     <o>
                       <v n="Id">2422045748L</v>
@@ -2385,7 +2416,7 @@ multiControl.nMotorControlIndex := 10;"</v>
                     </o>
                     <o>
                       <v n="Id">1473355128L</v>
-                      <v n="Value">345</v>
+                      <v n="Value">407</v>
                     </o>
                     <o>
                       <v n="Id">493260384L</v>
@@ -2446,6 +2477,201 @@ multiControl.nMotorControlIndex := 10;
                 <a n="LMGuids" et="Guid" />
                 <d n="SubElements" t="Hashtable" />
                 <v n="VisualElementId">58</v>
+                <l n="UserManagementAccessRights" t="ArrayList" />
+              </o>
+              <o>
+                <a n="ConfiguredComplexInputs" cet="ComplexInput">
+                  <o>
+                    <n n="DescriptionTree" />
+                    <o n="VisualElemMemberList" t="VisualElemMemberList">
+                      <l n="VisualElemMemberList" t="VisualElemMemberCollection" cet="VisualElemMember">
+                        <o>
+                          <v n="Id">1186196937L</v>
+                          <v n="Value">"auto.bResetBtn"</v>
+                        </o>
+                      </l>
+                    </o>
+                    <v n="SignatureName">"Visu_ToggleInput"</v>
+                    <v n="Name">"Toggle"</v>
+                    <v n="Description">"Configure the toggling of a Boolean variable"</v>
+                  </o>
+                </a>
+                <l n="Elements" t="ArrayList" />
+                <n n="VisualElementDescription" />
+                <o n="VisualElemMemberList" t="VisualElemMemberList">
+                  <l n="VisualElemMemberList" t="VisualElemMemberCollection" cet="VisualElemMember">
+                    <o>
+                      <v n="Id">571893170L</v>
+                      <v n="Value">""</v>
+                    </o>
+                    <o>
+                      <v n="Id">2340015797L</v>
+                      <v n="Value">"HCENTER"</v>
+                    </o>
+                    <o>
+                      <v n="Id">2565699834L</v>
+                      <v n="Value">"VCENTER"</v>
+                    </o>
+                    <o>
+                      <v n="Id">4134387352L</v>
+                      <v n="Value">"NONE"</v>
+                    </o>
+                    <o>
+                      <v n="Id">1603690730L</v>
+                      <v n="Value">"Arial"</v>
+                    </o>
+                    <o>
+                      <v n="Id">4253639993L</v>
+                      <v n="Value" t="Int16">12</v>
+                    </o>
+                    <o>
+                      <v n="Id">2729990903L</v>
+                      <v n="Value">0U</v>
+                    </o>
+                    <o>
+                      <v n="Id">1213979116L</v>
+                      <v n="Value">0U</v>
+                    </o>
+                    <o>
+                      <v n="Id">3488306084L</v>
+                      <v n="Value">4278190080U</v>
+                    </o>
+                    <o>
+                      <v n="Id">1647042231L</v>
+                      <v n="Value">"&lt;toggle/tap variable&gt;"</v>
+                    </o>
+                    <o>
+                      <v n="Id">2812299069L</v>
+                      <v n="Value">4294967295U</v>
+                    </o>
+                    <o>
+                      <v n="Id">494569607L</v>
+                      <v n="Value">4278190080U</v>
+                    </o>
+                    <o>
+                      <v n="Id">3719097617L</v>
+                      <v n="Value">0</v>
+                    </o>
+                    <o>
+                      <v n="Id">1649127785L</v>
+                      <v n="Value">0</v>
+                    </o>
+                    <o>
+                      <v n="Id">357335551L</v>
+                      <v n="Value">251</v>
+                    </o>
+                    <o>
+                      <v n="Id">2422045748L</v>
+                      <v n="Value">195</v>
+                    </o>
+                    <o>
+                      <v n="Id">2134141914L</v>
+                      <v n="Value">60</v>
+                    </o>
+                    <o>
+                      <v n="Id">1651471674L</v>
+                      <v n="Value">true</v>
+                    </o>
+                    <o>
+                      <v n="Id">2341735680L</v>
+                      <l n="Value" t="ArrayList" cet="UInt32">
+                        <v>4278190080</v>
+                      </l>
+                    </o>
+                    <o>
+                      <v n="Id">438423234L</v>
+                      <l n="Value" t="ArrayList" cet="NamedStyleColor">
+                        <o>
+                          <v n="Color">-2830136</v>
+                          <v n="CanonicalName">"Element-Alarmtable-SelectionColor"</v>
+                        </o>
+                      </l>
+                    </o>
+                    <o>
+                      <v n="Id">3729828405L</v>
+                      <l n="Value" t="ArrayList" cet="FontDescription">
+                        <o>
+                          <v n="FontStyle">1</v>
+                          <v n="AdditionalFontStyle" t="UInt16">0</v>
+                          <v n="ExplicitColor">-16777216</v>
+                          <v n="FontName">"Arial"</v>
+                          <v n="FontSize">24</v>
+                          <v n="ScriptIdentification">0</v>
+                          <v n="DoubleFontSize" t="Double">0</v>
+                          <o n="NamedColor" t="NamedStyleColor">
+                            <v n="Color">-1</v>
+                            <v n="CanonicalName">"White"</v>
+                          </o>
+                        </o>
+                      </l>
+                    </o>
+                    <o>
+                      <v n="Id">550940142L</v>
+                      <v n="Value">97</v>
+                    </o>
+                    <o>
+                      <v n="Id">1473355128L</v>
+                      <v n="Value">281</v>
+                    </o>
+                    <o>
+                      <v n="Id">493260384L</v>
+                      <v n="Value">4294967295U</v>
+                    </o>
+                    <o>
+                      <v n="Id">135947015L</v>
+                      <v n="Value">4278190080U</v>
+                    </o>
+                    <o>
+                      <v n="Id">2678395525L</v>
+                      <v n="Value">1U</v>
+                    </o>
+                    <o>
+                      <v n="Id">2478807622L</v>
+                      <v n="Value">""</v>
+                    </o>
+                    <o>
+                      <v n="Id">390574330L</v>
+                      <v n="Value">"PARAMETERS"</v>
+                    </o>
+                    <o>
+                      <v n="Id">2597686782L</v>
+                      <v n="Value">false</v>
+                    </o>
+                    <o>
+                      <v n="Id">2880254039L</v>
+                      <v n="Value">""</v>
+                    </o>
+                    <o>
+                      <v n="Id">1999528970L</v>
+                      <v n="Value">"multiControl.nMotorControlIndex = 1"</v>
+                    </o>
+                    <o>
+                      <v n="Id">823443203L</v>
+                      <v n="Value">"165"</v>
+                    </o>
+                  </l>
+                </o>
+                <v n="VisualElementName">"Button"</v>
+                <v n="VisualElementTypeName">"VisuFbElemButton"</v>
+                <v n="VisualElementIsRectangle">true</v>
+                <v n="VisualElementIdentifier">"GenElemInst_75"</v>
+                <n n="VisualElementOfflinePaintCommands" />
+                <n n="VisualElementFrameInformation" />
+                <d n="VisualElementInputActions" t="Hashtable" ckt="String" cvt="IInputAction[]">
+                  <v>OnMouseDown</v>
+                  <a cet="STSnippetInputAction">
+                    <o>
+                      <v n="STSnippet">"multiControl.multiCtrlFrameIndex :=4;
+multiControl.nMotorControlIndex := 10;
+"</v>
+                    </o>
+                  </a>
+                </d>
+                <v n="VisualElementIdentification">{186273ff-e39b-4332-b6ce-896c5caa52a9}</v>
+                <v n="VisualElementOwningObjectGuid">{5a80ee74-77aa-42b2-aa02-3bc33f65ce1d}</v>
+                <a n="LMGuids" et="Guid" />
+                <d n="SubElements" t="Hashtable" />
+                <v n="VisualElementId">61</v>
                 <l n="UserManagementAccessRights" t="ArrayList" />
               </o>
             </l>
@@ -2601,7 +2827,7 @@ multiControl.nMotorControlIndex := 10;
             </o>
             <v n="DialogDut">{9bc1bf95-9d4c-4714-8da7-25bcba91f585}</v>
           </o>
-          <v n="LastUsedIdForIdentifier">73</v>
+          <v n="LastUsedIdForIdentifier">75</v>
           <o n="TextDocument" t="TextDocument">
             <a n="TextLines" cet="TextLine">
               <o>

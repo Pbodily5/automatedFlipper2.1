@@ -203,6 +203,11 @@ PROGRAM"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"484"</v>
+              <v n="TextDefault">"CONTROL LOOP CLOSED"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"215"</v>
               <v n="TextDefault">"CONTROLS"</v>
               <l n="LanguageTexts" t="ArrayList" />
@@ -210,6 +215,11 @@ PROGRAM"</v>
             <o>
               <v n="TextID">"1037"</v>
               <v n="TextDefault">"CONVEYOR HEIGHT IN"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"805"</v>
+              <v n="TextDefault">"COUPLED"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
@@ -255,8 +265,18 @@ PROGRAM"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"258"</v>
+              <v n="TextDefault">"DISABLED"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"293"</v>
               <v n="TextDefault">"DONE"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"183"</v>
+              <v n="TextDefault">"DRIVE DEVICE ERROR"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
@@ -326,6 +346,11 @@ action on motor"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"1027"</v>
+              <v n="TextDefault">"ERROR STOP"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"764"</v>
               <v n="TextDefault">"ERRORS"</v>
               <l n="LanguageTexts" t="ArrayList" />
@@ -356,8 +381,18 @@ action on motor"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"236"</v>
+              <v n="TextDefault">"HOMED"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"358"</v>
               <v n="TextDefault">"ID"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"193"</v>
+              <v n="TextDefault">"INPUT"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
@@ -457,6 +492,16 @@ action on motor"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"1035"</v>
+              <v n="TextDefault">"MODE"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"1179"</v>
+              <v n="TextDefault">"MOTION COMMANDS LOCKED"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"356"</v>
               <v n="TextDefault">"MOTOR"</v>
               <l n="LanguageTexts" t="ArrayList" />
@@ -490,6 +535,26 @@ Please wait..."</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"1483"</v>
+              <v n="TextDefault">"OPERATIONAL"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"225"</v>
+              <v n="TextDefault">"OPERTATIONAL"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"926"</v>
+              <v n="TextDefault">"OUTPUT"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"165"</v>
+              <v n="TextDefault">"PARAMETERS"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"631"</v>
               <v n="TextDefault">"POSITION : %3.2f"</v>
               <l n="LanguageTexts" t="ArrayList" />
@@ -509,6 +574,21 @@ Please wait..."</v>
               <v n="TextDefault">"Previous Program Running. 
 
 CONTINUE PROGRAM? "</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"195"</v>
+              <v n="TextDefault">"PROTECTED MODE"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"669"</v>
+              <v n="TextDefault">"READ"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"30"</v>
+              <v n="TextDefault">"Read Value: %3.2f "</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
@@ -633,6 +713,21 @@ PROGRAM"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"1296"</v>
+              <v n="TextDefault">"SOFT LIMIT MAX EXCEEDED"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"632"</v>
+              <v n="TextDefault">"SOFT LIMIT MIN EXCEEDED"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"1070"</v>
+              <v n="TextDefault">"SOLT LIMIT MIN EXCEEDED"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"542"</v>
               <v n="TextDefault">"Spa Model: %s"</v>
               <l n="LanguageTexts" t="ArrayList" />
@@ -650,6 +745,11 @@ PROGRAM"</v>
             <o>
               <v n="TextID">"317"</v>
               <v n="TextDefault">"START"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"549"</v>
+              <v n="TextDefault">"STATUS"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
@@ -723,6 +823,21 @@ HOME"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"430"</v>
+              <v n="TextDefault">"Variable Index: %3.0d"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"809"</v>
+              <v n="TextDefault">"Variable Index: %3f "</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"810"</v>
+              <v n="TextDefault">"Variable Index: %3f.0d"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"385"</v>
               <v n="TextDefault">"WARNING: Safety is not active!
 Do you wish to continue? "</v>
@@ -731,6 +846,16 @@ Do you wish to continue? "</v>
             <o>
               <v n="TextID">"158"</v>
               <v n="TextDefault">"WIDTH"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"1141"</v>
+              <v n="TextDefault">"WRITE"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"1195"</v>
+              <v n="TextDefault">"Write Value: %3.2f "</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
           </l>

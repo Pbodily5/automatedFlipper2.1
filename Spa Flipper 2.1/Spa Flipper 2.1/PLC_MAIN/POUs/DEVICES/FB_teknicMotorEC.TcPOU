@@ -7395,7 +7395,7 @@ END_VAR
       </Set>
     </Property>
     <Method Name="homeToSensor" Id="{dc133354-1b8e-489e-84ec-ada86bf51b30}">
-      <Declaration><![CDATA[METHOD homeToSensor : INT //0:Not done, 1:done, 13: error
+      <Declaration><![CDATA[METHOD homeToSensor : INT //0:Not done, 1:done, 2:Active, 13: error
 VAR_INPUT
 	stHomingSelect : INT := 0; // 0: Default Homing, 1: Sets the axis position directly to Position without executing a movement --CHANGE fHomingPos to desired Count.
 END_VAR
@@ -7427,6 +7427,7 @@ IF bIdleDisabled THEN
 						fbMotorHome.Execute := FALSE;
 						homeToSensor := 1; 
 					2:// Active
+						homeToSensor := 2;
 					3:// Busy
 					4:// Command Aborted
 					13:// Error
@@ -7452,6 +7453,7 @@ IF bIdleDisabled THEN
 					fbMotorHome.Execute := FALSE;
 					homeToSensor := 1; 
 				2:// Active
+					homeToSensor := 2;
 				3:// Busy
 				4:// Command Aborted
 				13:// Error
@@ -7491,6 +7493,7 @@ IF bIdleDisabled THEN
 				fbFreeSensorTimer(IN := FALSE);
 				homeToSensor := 1;
 			2:// Active
+				homeToSensor := 2;
 			3:// Busy
 			4:// Command Aborted
 				fbMotorMoveAbsolute.Execute := FALSE;
@@ -7506,7 +7509,7 @@ END_IF]]></ST>
       </Implementation>
     </Method>
     <Method Name="homeToTorque" Id="{daa049df-85ae-4364-90c0-22ed16b32c82}">
-      <Declaration><![CDATA[METHOD homeToTorque : INT //0:Not done, 1:done, 13: error
+      <Declaration><![CDATA[METHOD homeToTorque : INT //0:Not done, 1:done, 2:Active, 13: error
 VAR_INPUT
 END_VAR
 
@@ -7533,7 +7536,7 @@ IF bIdleDisabled THEN
 				bMotorHomeStatus := fbMotor.Status.Homed;
 				homeToTorque := 1; 
 			2:// Active
-				homeToTorque := 3;
+				homeToTorque := 2;
 			3:// Busy
 				homeToTorque := 3;
 			4:// Command Aborted
@@ -7573,7 +7576,7 @@ IF bIdleDisabled THEN
 					nHomeState := 0;
 					homeToTorque := 1;
 				2:// Active
-					homeToTorque := 3;
+					homeToTorque := 2;
 				3:// Busy
 					homeToTorque := 3;
 				4:// Command Aborted
@@ -7792,6 +7795,7 @@ IF bIdleDisabled THEN
 						moveTo := 1;
 					END_IF
 				2,3:// Active,Busy
+					moveTo := 2;
 					IF ABS(fbMotor.NcToPlc.ActPos) >= ABS(fHalfwayPos) THEN
 						moveTo := 15;
 					END_IF 
@@ -7905,6 +7909,7 @@ IF bIdleDisabled THEN
 					nMoveStateTorque := 0;
 					moveToTorque := 1;
 				2:// Active
+					moveToTorque := 2;
 				3:// Busy
 				4:// Command Aborted
 					fbMotorTorque.Execute := FALSE;
@@ -8016,6 +8021,8 @@ CASE nResetState OF
 			1:// Done
 				nResetState := 10;
 				fbMotorReset.Execute := FALSE;
+			2://Active 
+				reset := 2;
 			3:// Busy
 				reset := 2;
 			13:// Error
@@ -8067,6 +8074,8 @@ fbMotorGearOut.Execute			:= FALSE;
 fbMotorJog.JogForward 			:= FALSE;
 fbMotorJog.JogBackwards 		:= FALSE;
 fbHomeToTorque.Execute			:= FALSE;
+fbReadRealParam.Enable 			:= FALSE;
+fbWriteRealParam.Execute		:= FALSE;
 
 //Reset FB states
 nMoveState 		 := 0;
@@ -8239,7 +8248,13 @@ END_CASE
       <LineId Id="2" Count="0" />
     </LineIds>
     <LineIds Name="FB_teknicMotorEC.homeToSensor">
-      <LineId Id="3" Count="97" />
+      <LineId Id="3" Count="22" />
+      <LineId Id="108" Count="0" />
+      <LineId Id="26" Count="24" />
+      <LineId Id="109" Count="0" />
+      <LineId Id="51" Count="38" />
+      <LineId Id="110" Count="0" />
+      <LineId Id="90" Count="10" />
       <LineId Id="2" Count="0" />
     </LineIds>
     <LineIds Name="FB_teknicMotorEC.homeToTorque">
@@ -8282,7 +8297,9 @@ END_CASE
       <LineId Id="2" Count="0" />
     </LineIds>
     <LineIds Name="FB_teknicMotorEC.moveTo">
-      <LineId Id="3" Count="48" />
+      <LineId Id="3" Count="32" />
+      <LineId Id="57" Count="0" />
+      <LineId Id="36" Count="15" />
       <LineId Id="2" Count="0" />
     </LineIds>
     <LineIds Name="FB_teknicMotorEC.moveToJog">
@@ -8294,7 +8311,9 @@ END_CASE
       <LineId Id="2" Count="0" />
     </LineIds>
     <LineIds Name="FB_teknicMotorEC.moveToTorque">
-      <LineId Id="3" Count="34" />
+      <LineId Id="3" Count="23" />
+      <LineId Id="44" Count="0" />
+      <LineId Id="27" Count="10" />
       <LineId Id="2" Count="0" />
     </LineIds>
     <LineIds Name="FB_teknicMotorEC.readRealParameter">
@@ -8306,11 +8325,15 @@ END_CASE
       <LineId Id="2" Count="0" />
     </LineIds>
     <LineIds Name="FB_teknicMotorEC.reset">
-      <LineId Id="3" Count="51" />
+      <LineId Id="3" Count="25" />
+      <LineId Id="58" Count="1" />
+      <LineId Id="29" Count="25" />
       <LineId Id="2" Count="0" />
     </LineIds>
     <LineIds Name="FB_teknicMotorEC.resetMotorCommands">
-      <LineId Id="3" Count="24" />
+      <LineId Id="3" Count="15" />
+      <LineId Id="31" Count="1" />
+      <LineId Id="19" Count="8" />
       <LineId Id="2" Count="0" />
     </LineIds>
     <LineIds Name="FB_teknicMotorEC.setError">
