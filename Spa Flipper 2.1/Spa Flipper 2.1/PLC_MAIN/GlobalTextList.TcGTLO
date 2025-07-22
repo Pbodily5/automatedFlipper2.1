@@ -431,6 +431,11 @@ action on motor"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"684"</v>
+              <v n="TextDefault">"LEFT ROTATION HOME SET POS"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"274"</v>
               <v n="TextDefault">"LEFT WIDTH"</v>
               <l n="LanguageTexts" t="ArrayList" />
@@ -620,6 +625,11 @@ PROGRAM"</v>
             <o>
               <v n="TextID">"360"</v>
               <v n="TextDefault">"RIGHT ROTATION"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"639"</v>
+              <v n="TextDefault">"RIGHT ROTATION HOME SET POS"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>

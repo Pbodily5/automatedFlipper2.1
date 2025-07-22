@@ -1425,7 +1425,7 @@ External Setpoint Generation:
 		</DataType>
 	</DataTypes>
 	<NC>
-		<SafTask Priority="4" CycleTime="20000" AmsPort="501" IoAtBegin="true" SafTaskInfo="256">
+		<SafTask Priority="4" CycleTime="10000" AmsPort="501" Affinity="#x00000002" IoAtBegin="true" SafTaskInfo="256">
 			<Name>NC-Task 1 SAF</Name>
 			<Vars VarGrpType="1" InsertType="1">
 				<Name>Inputs</Name>
@@ -1437,7 +1437,7 @@ External Setpoint Generation:
 				<Name>Image</Name>
 			</Image>
 		</SafTask>
-		<SvbTask Priority="8" CycleTime="100000" AmsPort="511">
+		<SvbTask Priority="6" CycleTime="10000" AmsPort="511" Affinity="#x00000002">
 			<Name>NC-Task 1 SVB</Name>
 		</SvbTask>
 		<Axis Id="2" CreateSymbols="true" AxisType="1" GroupId="1">

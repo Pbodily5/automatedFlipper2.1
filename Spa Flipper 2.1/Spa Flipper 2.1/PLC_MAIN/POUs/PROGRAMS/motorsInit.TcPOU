@@ -25,8 +25,8 @@ IF fbWaitInit.Q THEN
 			aMoveFinish[1] := GVL_devices.fbColumn1Motor.init(
 								bMotorInvertedIn:= TRUE, 
 								bMotorDisablesIn:= FALSE, 
-								fMoveAcclIn:= 50, 
-								fMoveDclIn:= 50, 
+								fMoveAcclIn:= 200, 
+								fMoveDclIn:= 200, 
 								fMoveVelocityIn:= 10, 
 								torqueVelocityIn:= 10, 
 								torqueAccelerationIn:= 50, 
@@ -40,8 +40,8 @@ IF fbWaitInit.Q THEN
 			aMoveFinish[2] := GVL_devices.fbColumn2Motor.init(
 								bMotorInvertedIn:= TRUE, 
 								bMotorDisablesIn:= FALSE, 
-								fMoveAcclIn:= 50, 
-								fMoveDclIn:= 50, 
+								fMoveAcclIn:= 200, 
+								fMoveDclIn:= 200, 
 								fMoveVelocityIn:= 10, 
 								torqueVelocityIn:= 10, 
 								torqueAccelerationIn:= 50, 
@@ -55,8 +55,8 @@ IF fbWaitInit.Q THEN
 			aMoveFinish[3] := GVL_devices.fbColumn3Motor.init(
 								bMotorInvertedIn:= TRUE, 
 								bMotorDisablesIn:= FALSE, 
-								fMoveAcclIn:= 50, 
-								fMoveDclIn:= 50, 
+								fMoveAcclIn:= 200, 
+								fMoveDclIn:= 200, 
 								fMoveVelocityIn:= 10, 
 								torqueVelocityIn:= 10, 
 								torqueAccelerationIn:= 50, 
@@ -107,7 +107,7 @@ IF fbWaitInit.Q THEN
 								torqueAccelerationIn:= 50, 
 								torqueDecelerationIn:= 50, 
 								homeVelocityIn:= 3, 
-								homeSetPositionIn:= -66.14, 
+								homeSetPositionIn:= GVL_persistent.fLftRotationHomePos, 
 								homeTorqueLimitIn:= 20,
 								jogTorqueIn := 100);
 		END_IF
@@ -122,7 +122,7 @@ IF fbWaitInit.Q THEN
 								torqueAccelerationIn:= 50, 
 								torqueDecelerationIn:= 50, 
 								homeVelocityIn:= 3, 
-								homeSetPositionIn:= 63.1, 
+								homeSetPositionIn:= GVL_persistent.fRhtRotationHomePos,
 								homeTorqueLimitIn:= 20,
 								jogTorqueIn := 100);
 		END_IF
@@ -160,8 +160,8 @@ IF fbWaitInit.Q THEN
 			aMoveFinish[0] := GVL_devices.fbColumn0Motor.init(
 								bMotorInvertedIn:= TRUE, 
 								bMotorDisablesIn:= FALSE, 
-								fMoveAcclIn:= 50, 
-								fMoveDclIn:= 50, 
+								fMoveAcclIn:= 200, 
+								fMoveDclIn:= 200, 
 								fMoveVelocityIn:= 10, 
 								torqueVelocityIn:= 10, 
 								torqueAccelerationIn:= 50, 

@@ -982,19 +982,20 @@ External Setpoint Generation:
 			</Relations>
 		</DataType>
 	</DataTypes>
-	<Project ProjectGUID="{8329C0B3-86F6-486C-8BA1-4F35A3D38D9A}" TargetNetId="5.151.65.180.1.1" Target64Bit="true" ShowHideConfigurations="#x6">
+	<Project ProjectGUID="{8329C0B3-86F6-486C-8BA1-4F35A3D38D9A}" TargetNetId="5.151.65.180.1.1" Target64Bit="true" AutoPrioManagement="true" ShowHideConfigurations="#x6">
 		<System>
 			<Settings MaxCpus="4">
 				<Cpu/>
 				<Cpu CpuId="1"/>
 				<Cpu CpuId="2"/>
 				<Cpu CpuId="3"/>
+				<IoIdleTask Priority="8" Affinity="#x00000004"/>
 			</Settings>
 			<Tasks>
-				<Task Id="3" Priority="20" CycleTime="100000" AmsPort="350" AdtTasks="true">
+				<Task Id="3" Priority="10" CycleTime="50000" AmsPort="350" AdtTasks="true">
 					<Name>PlcTask</Name>
 				</Task>
-				<Task Id="4" Priority="30" CycleTime="2000000" AmsPort="351" DisableFpExceptions="true" AdtTasks="true">
+				<Task Id="4" Priority="12" CycleTime="1000000" AmsPort="351" Affinity="#x00000001" DisableFpExceptions="true" AdtTasks="true">
 					<Name>VISU_TASK</Name>
 				</Task>
 			</Tasks>
@@ -1474,8 +1475,8 @@ External Setpoint Generation:
 							<ManualConfig>
 								<OTCID>#x02010030</OTCID>
 							</ManualConfig>
-							<Priority>20</Priority>
-							<CycleTime>10000000</CycleTime>
+							<Priority>10</Priority>
+							<CycleTime>5000000</CycleTime>
 						</Context>
 						<Context>
 							<Id>1</Id>
@@ -1483,13 +1484,13 @@ External Setpoint Generation:
 							<ManualConfig>
 								<OTCID>#x02010040</OTCID>
 							</ManualConfig>
-							<Priority>30</Priority>
-							<CycleTime>200000000</CycleTime>
+							<Priority>12</Priority>
+							<CycleTime>100000000</CycleTime>
 						</Context>
 					</Contexts>
 					<TaskPouOids>
-						<TaskPouOid Prio="20" OTCID="#x08502001"/>
-						<TaskPouOid Prio="30" OTCID="#x08502002"/>
+						<TaskPouOid Prio="10" OTCID="#x08502001"/>
+						<TaskPouOid Prio="12" OTCID="#x08502002"/>
 					</TaskPouOids>
 				</Instance>
 			</Project>

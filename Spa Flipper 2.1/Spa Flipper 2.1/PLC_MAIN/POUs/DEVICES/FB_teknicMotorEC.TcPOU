@@ -7383,6 +7383,42 @@ CASE estopState OF
 END_CASE]]></ST>
       </Implementation>
     </Method>
+    <Method Name="homeSetToCount" Id="{88606f33-d5fc-4771-949e-bf4c8ce47cbd}">
+      <Declaration><![CDATA[METHOD homeSetToCount : INT //0:Not done, 1:done, 13: error
+VAR_INPUT
+	count : LREAL; // Homing that sets count to motor without movement of motor. 
+END_VAR
+
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[bIdle := FALSE;
+IF bIdleDisabled THEN
+		//Force motor calibration without move.
+		bMotorHomeStatus 	:= TRUE;
+		homeSetPosition		:= count;
+		stHomingMode 		:= MC_Direct;
+		
+		fbMotorHome.Execute := TRUE;
+		actHome();
+		CASE checkOutputs(stMotorHomeOut) OF 
+			1:// Done
+				fbMotorHome.Execute := FALSE;
+				homeSetToCount := 1; 
+			2:// Active
+				homeSetToCount := 2;
+			3:// Busy
+			4:// Command Aborted
+			13:// Error
+				stError.errorState := MCHOME;
+				stError.errorLoc := 'homeToZero';
+				setError(stMotorHomeOut);
+				homeSetToCount := 13;
+		END_CASE
+	
+END_IF
+		]]></ST>
+      </Implementation>
+    </Method>
     <Property Name="homeTorqueLimitIn" Id="{267a3c5f-090d-4904-b27d-b5af8ce01237}">
       <Declaration><![CDATA[PROPERTY homeTorqueLimitIn : LREAL]]></Declaration>
       <Set Name="Set" Id="{82a12e77-36d7-47ac-b67a-8f56374dc0d7}">
@@ -8204,149 +8240,5 @@ END_CASE
 ]]></ST>
       </Implementation>
     </Method>
-    <LineIds Name="FB_teknicMotorEC">
-      <LineId Id="3" Count="62" />
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_teknicMotorEC.brakeOff">
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_teknicMotorEC.brakeOn">
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_teknicMotorEC.camSensor.Get">
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_teknicMotorEC.checkOutputs">
-      <LineId Id="3" Count="10" />
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_teknicMotorEC.coupleToAxis">
-      <LineId Id="3" Count="20" />
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_teknicMotorEC.decoupleAxis">
-      <LineId Id="3" Count="16" />
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_teknicMotorEC.disable">
-      <LineId Id="3" Count="13" />
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_teknicMotorEC.distance.Get">
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_teknicMotorEC.enable">
-      <LineId Id="3" Count="12" />
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_teknicMotorEC.estop">
-      <LineId Id="3" Count="64" />
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_teknicMotorEC.homeTorqueLimitIn.Set">
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_teknicMotorEC.homeToSensor">
-      <LineId Id="3" Count="22" />
-      <LineId Id="108" Count="0" />
-      <LineId Id="26" Count="24" />
-      <LineId Id="109" Count="0" />
-      <LineId Id="51" Count="38" />
-      <LineId Id="110" Count="0" />
-      <LineId Id="90" Count="10" />
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_teknicMotorEC.homeToTorque">
-      <LineId Id="3" Count="18" />
-      <LineId Id="80" Count="0" />
-      <LineId Id="22" Count="0" />
-      <LineId Id="79" Count="0" />
-      <LineId Id="23" Count="36" />
-      <LineId Id="81" Count="0" />
-      <LineId Id="60" Count="0" />
-      <LineId Id="83" Count="0" />
-      <LineId Id="61" Count="11" />
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_teknicMotorEC.init">
-      <LineId Id="3" Count="52" />
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_teknicMotorEC.isBusy.Get">
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_teknicMotorEC.isEnabled.Get">
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_teknicMotorEC.isMotorInverted.Get">
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_teknicMotorEC.isStopped.Get">
-      <LineId Id="3" Count="0" />
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_teknicMotorEC.motorError.Get">
-      <LineId Id="3" Count="3" />
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_teknicMotorEC.motorErrorId.Get">
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_teknicMotorEC.motorIdle.Set">
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_teknicMotorEC.moveTo">
-      <LineId Id="3" Count="32" />
-      <LineId Id="57" Count="0" />
-      <LineId Id="36" Count="15" />
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_teknicMotorEC.moveToJog">
-      <LineId Id="3" Count="18" />
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_teknicMotorEC.moveToSensor">
-      <LineId Id="3" Count="21" />
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_teknicMotorEC.moveToTorque">
-      <LineId Id="3" Count="23" />
-      <LineId Id="44" Count="0" />
-      <LineId Id="27" Count="10" />
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_teknicMotorEC.readRealParameter">
-      <LineId Id="3" Count="12" />
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_teknicMotorEC.removeStop">
-      <LineId Id="3" Count="32" />
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_teknicMotorEC.reset">
-      <LineId Id="3" Count="25" />
-      <LineId Id="58" Count="1" />
-      <LineId Id="29" Count="25" />
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_teknicMotorEC.resetMotorCommands">
-      <LineId Id="3" Count="15" />
-      <LineId Id="31" Count="1" />
-      <LineId Id="19" Count="8" />
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_teknicMotorEC.setError">
-      <LineId Id="3" Count="1" />
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_teknicMotorEC.stop">
-      <LineId Id="3" Count="69" />
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_teknicMotorEC.writeRealParameter">
-      <LineId Id="3" Count="13" />
-      <LineId Id="2" Count="0" />
-    </LineIds>
   </POU>
 </TcPlcObject>

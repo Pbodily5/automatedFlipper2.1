@@ -1075,13 +1075,41 @@ CASE nHomeMachineState OF
 		IF F_checkMoveFinish(aMoveFinish,2,FALSE) THEN
 			nHomeMachineState := nHomeMachineState + 1;
 		END_IF
+		
 	2:// Decouple all Motors
 		IF NOT GVL_devices.fbColumn1Motor.fbMotor.Status.Coupled AND NOT GVL_devices.fbColumn3Motor.fbMotor.Status.Coupled THEN
-			nHomeMachineState := 0;
-			homeMachine := TRUE;
+			aMoveFinish[0] := TRUE;
 		ELSE
 			GVL_devices.fbColumn1Motor.decoupleAxis();
 			GVL_devices.fbColumn3Motor.decoupleAxis();
+		END_IF
+		
+		
+		// Set Slave motors to same counts as their masters after homing sequence
+		IF aMoveFinish[0] THEN
+			IF NOT aMoveFinish[1] THEN
+				CASE GVL_devices.fbColumn1Motor.homeSetToCount(GVL_devices.fbColumn0Motor.fbMotor.NcToPlc.ActPos) OF
+					1:// Done
+						aMoveFinish[1] := TRUE;
+					13:// Error
+						GVL_machine.motorErrorList := COLUMN1;
+						GVL_machine.bErrorPresent := TRUE;
+				END_CASE
+			END_IF
+			IF NOT aMoveFinish[2] THEN
+				CASE GVL_devices.fbColumn3Motor.homeSetToCount(GVL_devices.fbColumn2Motor.fbMotor.NcToPlc.ActPos) OF
+					1:// Done
+						aMoveFinish[2] := TRUE;
+					13:// Error
+						GVL_machine.motorErrorList := COLUMN3;
+						GVL_machine.bErrorPresent := TRUE;
+				END_CASE
+			END_IF
+		END_IF
+		
+		IF F_checkMoveFinish(aMoveFinish,3,FALSE) THEN
+			nHomeMachineState := 0;
+			homeMachine := TRUE;
 		END_IF
 END_CASE]]></ST>
       </Implementation>
@@ -1431,33 +1459,5 @@ END_VAR
 END_CASE]]></ST>
       </Implementation>
     </Method>
-    <LineIds Name="auto">
-      <LineId Id="3" Count="635" />
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="auto.backgroundCheck">
-      <LineId Id="3" Count="237" />
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="auto.homeMachine">
-      <LineId Id="3" Count="146" />
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="auto.motorFault">
-      <LineId Id="3" Count="11" />
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="auto.moveColumns">
-      <LineId Id="3" Count="61" />
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="auto.moveRotation">
-      <LineId Id="3" Count="47" />
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="auto.resetAutoProgram">
-      <LineId Id="3" Count="181" />
-      <LineId Id="2" Count="0" />
-    </LineIds>
   </POU>
 </TcPlcObject>

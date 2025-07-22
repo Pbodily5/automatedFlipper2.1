@@ -12,6 +12,8 @@
 	fCenteringTorque 		: REAL := 20; 		// % of Torque to center spa
 	fClampOnTorque 			: REAL := 27;		//% of Torque to clamp onto spa
 	fClampOpenDist			: REAL := 6.5;		//Distance to which the clamp is open and clears the lip of the spa
+	fLftRotationHomePos 	: REAL := -66.14;	//Counts set to motor after homing to torque complete. Set in motorsInit Program.
+	fRhtRotationHomePos		: REAL := 63.1;		//Counts set to motor after homing to torque complete
 
 
 END_VAR]]></Declaration>
