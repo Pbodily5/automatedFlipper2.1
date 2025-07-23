@@ -125,6 +125,9 @@
     <Compile Include="POUs\ICONS\Icons.TcIPO">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="POUs\LISTS\actionSelectList.TcTLO">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="POUs\PROGRAMS\auto.TcPOU">
       <SubType>Code</SubType>
     </Compile>
@@ -326,6 +329,7 @@
     <Folder Include="POUs\DEVICES" />
     <Folder Include="POUs\FUNCTIONS" />
     <Folder Include="POUs\ICONS" />
+    <Folder Include="POUs\LISTS" />
     <Folder Include="POUs\PROGRAMS" />
     <Folder Include="VISUs" />
     <Folder Include="VISUs\VISUs" />

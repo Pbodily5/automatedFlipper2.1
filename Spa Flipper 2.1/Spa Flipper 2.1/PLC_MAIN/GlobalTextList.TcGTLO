@@ -366,6 +366,11 @@ action on motor"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"791"</v>
+              <v n="TextDefault">"Hello "</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"733"</v>
               <v n="TextDefault">"HELP"</v>
               <l n="LanguageTexts" t="ArrayList" />
@@ -398,6 +403,16 @@ action on motor"</v>
             <o>
               <v n="TextID">"804"</v>
               <v n="TextDefault">"Integer representation of error present "</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"1061"</v>
+              <v n="TextDefault">"INVERTED"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"873"</v>
+              <v n="TextDefault">"Inverted = Negative Counts are away from home, Positive are towards home."</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>

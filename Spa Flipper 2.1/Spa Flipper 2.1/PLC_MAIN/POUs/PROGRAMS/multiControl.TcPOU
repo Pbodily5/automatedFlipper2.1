@@ -5,7 +5,7 @@
 VAR
 	multiCtrlFrameIndex : INT; //Index used to switch frame on multiControlScreen
 	
-	aActionList 		: ARRAY[1..10] OF STRING := ['BRAKE OFF','BRAKE ON','DISABLE','ENABLE','HOME TO SENSOR','HOME TO TORQUE','MOVE TO POSITION','JOG','MOVE TO TORQUE','RESET']; //List of usable actions found in FB_MultiMotorController.
+	aActionList 		: ARRAY[1..11] OF STRING := ['BRAKE OFF','BRAKE ON','DISABLE','ENABLE','HOME TO SENSOR','HOME TO TORQUE','MOVE TO POSITION','JOG','MOVE TO TORQUE','RESET','SET COUNT']; //List of usable actions found in FB_MultiMotorController.
 	nActionIndex 		: INT;
 	nPrevActionIndex 	: INT;
 	pMotorRef1 			: POINTER TO FB_teknicMotorEC;
@@ -27,10 +27,11 @@ VAR
 	bHideSetPos				: BOOL; //Hides Set Position Entry based on selected action
 	bHideSetTorq			: BOOL; //Hides Set Torque Entry based on selected action
 	
-	aMotorActive 	: ARRAY[1..4] OF BOOL;
-	aMotorError 	: ARRAY[1..4] OF BOOL;
-	aMotorErrorId 	: ARRAY[1..4] OF UDINT;
-	aMotorDone 		: ARRAY[1..4] OF BOOL;
+	aMotorActive 	: ARRAY[1..4] OF BOOL; // Tracks user selected motors
+	aMotorError 	: ARRAY[1..4] OF BOOL; // Indictates error for current action
+	aMotorErrorId 	: ARRAY[1..4] OF UDINT; //Indicates error Id for current action
+	aMotorDone 		: ARRAY[1..4] OF BOOL; //Indicates action is done
+	aMotorInverted  : ARRAY[1..4] OF BOOL; //Indicates whether the motor is inverted
 	
 	sMotorDisp1 : STRING; // Used to dynamically change the title of motor 1. 
 	sMotorDisp2 : STRING;
@@ -176,7 +177,7 @@ aMotorEnabledRef[2] := pMotorRef2;
 aMotorEnabledRef[3] := pMotorRef3;
 aMotorEnabledRef[4] := pMotorRef4;
 
-// === Update Motor Displays and Position,Torque, and Speed. === //
+// === Update Motor Displays and Position,Torque,Inverted,and Speed. === //
 FOR nCounter := 1 TO 4 BY 1 DO
 	IF aMotorEnable[nCounter] THEN
 		aDispFontColor[nCounter] := 16#FFFFFFFF;
@@ -200,6 +201,12 @@ END_FOR
 FOR nCounter := 1 TO 4 BY 1 DO
 	IF aMotorRef[nCounter] <> 0 THEN
 		aMotorTorque[nCounter] := aMotorRef[nCounter]^.fbMotor.NcToPlc.ActTorque;
+	END_IF
+END_FOR
+
+FOR nCounter := 1 TO 4 BY 1 DO
+	IF aMotorRef[nCounter] <> 0 THEN
+		aMotorInverted[nCounter] := aMotorRef[nCounter]^.isMotorInverted;
 	END_IF
 END_FOR
 
@@ -423,6 +430,24 @@ CASE nActionIndex OF
 				END_IF
 			END_FOR
 		END_IF
+		
+	11:// homeSetToCount
+		bHideSetPos	 := FALSE;
+		IF bExecute THEN
+			FOR i := 1 TO 4 BY 1 DO
+				IF aMotorEnabledRef[i] <> 0 THEN
+					CASE aMotorEnabledRef[i]^.homeSetToCount(aMotorSetPos[i]) OF
+						1:// Done
+							aMotorDone[i] := TRUE;
+						2:// Active
+							aMotorActive[i] := TRUE;
+						13:// Error
+							aMotorError[i] := TRUE;	
+							aMotorErrorId[i] := aMotorEnabledRef[i]^.motorErrorId;
+					END_CASE
+				END_IF
+			END_FOR
+		END_IF
 END_CASE
 
 
@@ -546,7 +571,9 @@ END_IF
       <LineId Id="200" Count="0" />
       <LineId Id="207" Count="4" />
       <LineId Id="206" Count="0" />
+      <LineId Id="694" Count="4" />
       <LineId Id="265" Count="0" />
+      <LineId Id="699" Count="0" />
       <LineId Id="251" Count="0" />
       <LineId Id="250" Count="0" />
       <LineId Id="252" Count="0" />
@@ -638,6 +665,11 @@ END_IF
       <LineId Id="489" Count="2" />
       <LineId Id="493" Count="10" />
       <LineId Id="387" Count="0" />
+      <LineId Id="700" Count="0" />
+      <LineId Id="702" Count="0" />
+      <LineId Id="717" Count="0" />
+      <LineId Id="703" Count="13" />
+      <LineId Id="701" Count="0" />
       <LineId Id="290" Count="0" />
       <LineId Id="628" Count="1" />
       <LineId Id="61" Count="0" />
