@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.13">
   <Visu Name="eflexScreen" Id="{9761f504-d517-4457-b961-c4b8cc78316e}">
     <XmlArchive>
       <Data>
@@ -297,7 +297,7 @@
                     </o>
                     <o>
                       <v n="Id">390574330L</v>
-                      <v n="Value">"HOME"</v>
+                      <v n="Value">"MAIN"</v>
                     </o>
                     <o>
                       <v n="Id">2597686782L</v>
@@ -305,7 +305,7 @@
                     </o>
                     <o>
                       <v n="Id">823443203L</v>
-                      <v n="Value">"636"</v>
+                      <v n="Value">"56"</v>
                     </o>
                   </l>
                 </o>

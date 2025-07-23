@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.13">
   <Visu Name="mainScreen" Id="{38e0b119-67a0-4a4d-bbd0-34c620d1c795}">
     <XmlArchive>
       <Data>
