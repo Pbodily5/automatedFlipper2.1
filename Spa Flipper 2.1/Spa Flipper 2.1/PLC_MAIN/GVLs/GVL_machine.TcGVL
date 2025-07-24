@@ -35,6 +35,15 @@ VAR_GLOBAL
 	///////////////////////SETTINGS SCREEN//////////////////////
 	sEditMessage	: STRING(1024) := 'Changing this value will effect program parameters. Only change this value if you understand what effect this will have.';
 	sEditTitle 		: STRING := 'CAUTION';
+	sDescTitle		: STRING := 'Description';
+	sConvHeightMsg 	: STRING(1024) := 'Table height from ground to top of table to recieve spa from conveyor';
+	sClampHeightMsg : STRING(1024) := 'Table height from ground to top of table so that spa lip is even with clamp frame for centering'; 
+	sDownHeightMsg : STRING(1024) := 'Table height from gount to top of table when the table is all the way down';
+	sCenterTorqueMsg : STRING(1024) := 'Torque width motors move to when centering the spa';
+	sClampOnTorqueMsg : STRING(1024) := 'Torque clamp motors use when clamping onto spa lip';
+	sClampOpenDistMsg : STRING(1024) := 'Distance between clamp frame jaws when opened all the way';
+	sLftRotHomeSetMsg : STRING(1024) := 'Offset counts set on the motor when homing is complete';
+	sRhtRotHomeSetMsg : STRING(1024) := 'Offset counts set on the motor when homing is complete';
 	
 	// === ERROR LOGGING ===
 	aErrorData				: ARRAY[1..5,1..23] OF STRING;
