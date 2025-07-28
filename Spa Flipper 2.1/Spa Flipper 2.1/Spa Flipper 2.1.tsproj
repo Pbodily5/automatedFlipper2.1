@@ -991,6 +991,9 @@ External Setpoint Generation:
 				<Cpu CpuId="3"/>
 				<IoIdleTask Priority="8" Affinity="#x00000004"/>
 			</Settings>
+			<Licenses>
+				<Target BkhfOrder="01605391"/>
+			</Licenses>
 			<Tasks>
 				<Task Id="3" Priority="10" CycleTime="50000" AmsPort="350" AdtTasks="true">
 					<Name>PlcTask</Name>
