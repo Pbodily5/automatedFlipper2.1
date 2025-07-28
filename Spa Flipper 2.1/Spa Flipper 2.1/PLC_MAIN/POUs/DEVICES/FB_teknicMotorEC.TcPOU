@@ -27,6 +27,8 @@ VAR
 	
 	jogTorque			: LREAL;
 	
+	bHasHomeSensor		: BOOL;
+	
 	//State Var
 	nMoveState 				: INT;
 	nMoveStateTorque		: INT;
@@ -144,7 +146,6 @@ VAR
 	torqueDirection		: INT;
 	torqueTime			: TIME := T#200MS;
 
-	
 	//Gear Coupling
 	fbMotorGearIn : MC_GearIn;
 	fbMotorGearOut: MC_GearOut;
@@ -167,14 +168,18 @@ VAR
 	
 	sModeDisp 		: STRING;
 	fbReadModeTimer	: TON;
-		
+	
+	//Home to Torque	
 	fbHomeToTorque		: FB_homeToTorque;
 	stHomeToTorqueOut 	: ST_mcOutputs;
 	direction			: INT; // 0- PositiveDirection, 1- NegativeDirection
 	homeTimeLimit		: TIME := T#2M;
-	//homeBackOffPos		: LREAL := 1.5;
 	homeBackOffPos		: LREAL := 10;
-
+	
+	//Home to Sensor Custom 
+	fbHomeToSensorCustom : FB_homeToSensorCustom;
+	stHomeToSensorCustomOut : ST_McOutputs;
+	
 	bUsingStopReset: BOOL;
 END_VAR
 ]]></Declaration>
@@ -1633,6 +1638,401 @@ fbMotorJog.JogBackwards := FALSE;
                     </l2>
                     <l2 n="Connectors" />
                     <v n="Id">26L</v>
+                  </o>
+                  <o>
+                    <v n="ILActive">false</v>
+                    <v n="FBDValid">false</v>
+                    <v n="ILValid">false</v>
+                    <l2 n="ILLines" />
+                    <v n="Comment">""</v>
+                    <v n="Title">""</v>
+                    <v n="Label">""</v>
+                    <v n="OutCommented">false</v>
+                    <l2 n="NetworkItems" cet="BoxTreeAssign">
+                      <o>
+                        <o n="OutputItems" t="OutputItemList">
+                          <l2 n="OutputItems" cet="Operand">
+                            <o>
+                              <v n="Operand">"stHomeToSensorCustomOut.Done"</v>
+                              <v n="Type">"BOOL"</v>
+                              <v n="Comment">""</v>
+                              <v n="SymbolComment">""</v>
+                              <v n="Address">""</v>
+                              <o n="Flags" t="Flags">
+                                <v n="Flags">0</v>
+                                <v n="Fixed">false</v>
+                                <v n="Extensible">false</v>
+                              </o>
+                              <v n="LValue">true</v>
+                              <v n="Boolean">false</v>
+                              <v n="IsInstance">false</v>
+                              <v n="Id">140L</v>
+                            </o>
+                          </l2>
+                        </o>
+                        <o n="Flags" t="Flags">
+                          <v n="Flags">0</v>
+                          <v n="Fixed">false</v>
+                          <v n="Extensible">false</v>
+                        </o>
+                        <o n="RValue" t="BoxTreeBox">
+                          <v n="BoxType">"FB_homeToSensorCustom"</v>
+                          <o n="Instance" t="Operand">
+                            <v n="Operand">"fbHomeToSensorCustom"</v>
+                            <v n="Type">"FB_homeToSensorCustom"</v>
+                            <v n="Comment">""</v>
+                            <v n="SymbolComment">""</v>
+                            <v n="Address">""</v>
+                            <o n="Flags" t="Flags">
+                              <v n="Flags">0</v>
+                              <v n="Fixed">false</v>
+                              <v n="Extensible">false</v>
+                            </o>
+                            <v n="LValue">false</v>
+                            <v n="Boolean">false</v>
+                            <v n="IsInstance">true</v>
+                            <v n="Id">113L</v>
+                          </o>
+                          <o n="OutputItems" t="OutputItemList">
+                            <l2 n="OutputItems" cet="Operand">
+                              <n />
+                              <o>
+                                <v n="Operand">"stHomeToSensorCustomOut.Busy"</v>
+                                <v n="Type">"BOOL"</v>
+                                <v n="Comment">""</v>
+                                <v n="SymbolComment">""</v>
+                                <v n="Address">""</v>
+                                <o n="Flags" t="Flags">
+                                  <v n="Flags">0</v>
+                                  <v n="Fixed">false</v>
+                                  <v n="Extensible">false</v>
+                                </o>
+                                <v n="LValue">true</v>
+                                <v n="Boolean">false</v>
+                                <v n="IsInstance">false</v>
+                                <v n="Id">115L</v>
+                              </o>
+                              <o>
+                                <v n="Operand">"stHomeToSensorCustomOut.Active"</v>
+                                <v n="Type">"BOOL"</v>
+                                <v n="Comment">""</v>
+                                <v n="SymbolComment">""</v>
+                                <v n="Address">""</v>
+                                <o n="Flags" t="Flags">
+                                  <v n="Flags">0</v>
+                                  <v n="Fixed">false</v>
+                                  <v n="Extensible">false</v>
+                                </o>
+                                <v n="LValue">true</v>
+                                <v n="Boolean">false</v>
+                                <v n="IsInstance">false</v>
+                                <v n="Id">116L</v>
+                              </o>
+                              <o>
+                                <v n="Operand">"stHomeToSensorCustomOut.CommandAborted"</v>
+                                <v n="Type">"BOOL"</v>
+                                <v n="Comment">""</v>
+                                <v n="SymbolComment">""</v>
+                                <v n="Address">""</v>
+                                <o n="Flags" t="Flags">
+                                  <v n="Flags">0</v>
+                                  <v n="Fixed">false</v>
+                                  <v n="Extensible">false</v>
+                                </o>
+                                <v n="LValue">true</v>
+                                <v n="Boolean">false</v>
+                                <v n="IsInstance">false</v>
+                                <v n="Id">117L</v>
+                              </o>
+                              <o>
+                                <v n="Operand">"stHomeToSensorCustomOut.Error"</v>
+                                <v n="Type">"BOOL"</v>
+                                <v n="Comment">""</v>
+                                <v n="SymbolComment">""</v>
+                                <v n="Address">""</v>
+                                <o n="Flags" t="Flags">
+                                  <v n="Flags">0</v>
+                                  <v n="Fixed">false</v>
+                                  <v n="Extensible">false</v>
+                                </o>
+                                <v n="LValue">true</v>
+                                <v n="Boolean">false</v>
+                                <v n="IsInstance">false</v>
+                                <v n="Id">118L</v>
+                              </o>
+                              <o>
+                                <v n="Operand">"stHomeToSensorCustomOut.ErrorID"</v>
+                                <v n="Type">"UDINT"</v>
+                                <v n="Comment">""</v>
+                                <v n="SymbolComment">""</v>
+                                <v n="Address">""</v>
+                                <o n="Flags" t="Flags">
+                                  <v n="Flags">0</v>
+                                  <v n="Fixed">false</v>
+                                  <v n="Extensible">false</v>
+                                </o>
+                                <v n="LValue">true</v>
+                                <v n="Boolean">false</v>
+                                <v n="IsInstance">false</v>
+                                <v n="Id">119L</v>
+                              </o>
+                            </l2>
+                          </o>
+                          <o n="Flags" t="Flags">
+                            <v n="Flags">0</v>
+                            <v n="Fixed">false</v>
+                            <v n="Extensible">false</v>
+                          </o>
+                          <n n="InputFlags" />
+                          <l2 n="InputItems" cet="BoxTreeOperand">
+                            <o>
+                              <o n="Operand" t="Operand">
+                                <v n="Operand">"fbMotor"</v>
+                                <v n="Type">"axis_REF"</v>
+                                <v n="Comment">""</v>
+                                <v n="SymbolComment">""</v>
+                                <v n="Address">""</v>
+                                <o n="Flags" t="Flags">
+                                  <v n="Flags">0</v>
+                                  <v n="Fixed">false</v>
+                                  <v n="Extensible">false</v>
+                                </o>
+                                <v n="LValue">false</v>
+                                <v n="Boolean">false</v>
+                                <v n="IsInstance">false</v>
+                                <v n="Id">121L</v>
+                              </o>
+                              <v n="Id">120L</v>
+                            </o>
+                            <o>
+                              <o n="Operand" t="Operand">
+                                <v n="Operand">"fbHomeToSensorCustom.Execute"</v>
+                                <v n="Type">"BOOL"</v>
+                                <v n="Comment">""</v>
+                                <v n="SymbolComment">""</v>
+                                <v n="Address">""</v>
+                                <o n="Flags" t="Flags">
+                                  <v n="Flags">0</v>
+                                  <v n="Fixed">false</v>
+                                  <v n="Extensible">false</v>
+                                </o>
+                                <v n="LValue">false</v>
+                                <v n="Boolean">false</v>
+                                <v n="IsInstance">false</v>
+                                <v n="Id">123L</v>
+                              </o>
+                              <v n="Id">122L</v>
+                            </o>
+                            <o>
+                              <o n="Operand" t="Operand">
+                                <v n="Operand">"direction"</v>
+                                <v n="Type">"INT"</v>
+                                <v n="Comment">""</v>
+                                <v n="SymbolComment">""</v>
+                                <v n="Address">""</v>
+                                <o n="Flags" t="Flags">
+                                  <v n="Flags">0</v>
+                                  <v n="Fixed">false</v>
+                                  <v n="Extensible">false</v>
+                                </o>
+                                <v n="LValue">false</v>
+                                <v n="Boolean">false</v>
+                                <v n="IsInstance">false</v>
+                                <v n="Id">125L</v>
+                              </o>
+                              <v n="Id">124L</v>
+                            </o>
+                            <o>
+                              <o n="Operand" t="Operand">
+                                <v n="Operand">"homeVelocity"</v>
+                                <v n="Type">"LREAL"</v>
+                                <v n="Comment">""</v>
+                                <v n="SymbolComment">""</v>
+                                <v n="Address">""</v>
+                                <o n="Flags" t="Flags">
+                                  <v n="Flags">0</v>
+                                  <v n="Fixed">false</v>
+                                  <v n="Extensible">false</v>
+                                </o>
+                                <v n="LValue">false</v>
+                                <v n="Boolean">false</v>
+                                <v n="IsInstance">false</v>
+                                <v n="Id">127L</v>
+                              </o>
+                              <v n="Id">126L</v>
+                            </o>
+                            <o>
+                              <o n="Operand" t="Operand">
+                                <v n="Operand">"fMoveAccl"</v>
+                                <v n="Type">"LREAL"</v>
+                                <v n="Comment">""</v>
+                                <v n="SymbolComment">""</v>
+                                <v n="Address">""</v>
+                                <o n="Flags" t="Flags">
+                                  <v n="Flags">0</v>
+                                  <v n="Fixed">false</v>
+                                  <v n="Extensible">false</v>
+                                </o>
+                                <v n="LValue">false</v>
+                                <v n="Boolean">false</v>
+                                <v n="IsInstance">false</v>
+                                <v n="Id">129L</v>
+                              </o>
+                              <v n="Id">128L</v>
+                            </o>
+                            <o>
+                              <o n="Operand" t="Operand">
+                                <v n="Operand">"fMoveDcl"</v>
+                                <v n="Type">"LREAL"</v>
+                                <v n="Comment">""</v>
+                                <v n="SymbolComment">""</v>
+                                <v n="Address">""</v>
+                                <o n="Flags" t="Flags">
+                                  <v n="Flags">0</v>
+                                  <v n="Fixed">false</v>
+                                  <v n="Extensible">false</v>
+                                </o>
+                                <v n="LValue">false</v>
+                                <v n="Boolean">false</v>
+                                <v n="IsInstance">false</v>
+                                <v n="Id">131L</v>
+                              </o>
+                              <v n="Id">130L</v>
+                            </o>
+                            <o>
+                              <o n="Operand" t="Operand">
+                                <v n="Operand">"homeSetPosition"</v>
+                                <v n="Type">"LREAL"</v>
+                                <v n="Comment">""</v>
+                                <v n="SymbolComment">""</v>
+                                <v n="Address">""</v>
+                                <o n="Flags" t="Flags">
+                                  <v n="Flags">0</v>
+                                  <v n="Fixed">false</v>
+                                  <v n="Extensible">false</v>
+                                </o>
+                                <v n="LValue">false</v>
+                                <v n="Boolean">false</v>
+                                <v n="IsInstance">false</v>
+                                <v n="Id">133L</v>
+                              </o>
+                              <v n="Id">132L</v>
+                            </o>
+                            <o>
+                              <o n="Operand" t="Operand">
+                                <v n="Operand">"homeTimeLimit"</v>
+                                <v n="Type">"TIME"</v>
+                                <v n="Comment">""</v>
+                                <v n="SymbolComment">""</v>
+                                <v n="Address">""</v>
+                                <o n="Flags" t="Flags">
+                                  <v n="Flags">0</v>
+                                  <v n="Fixed">false</v>
+                                  <v n="Extensible">false</v>
+                                </o>
+                                <v n="LValue">false</v>
+                                <v n="Boolean">false</v>
+                                <v n="IsInstance">false</v>
+                                <v n="Id">135L</v>
+                              </o>
+                              <v n="Id">134L</v>
+                            </o>
+                            <o>
+                              <o n="Operand" t="Operand">
+                                <v n="Operand">"homeBackOffPos"</v>
+                                <v n="Type">"LREAL"</v>
+                                <v n="Comment">""</v>
+                                <v n="SymbolComment">""</v>
+                                <v n="Address">""</v>
+                                <o n="Flags" t="Flags">
+                                  <v n="Flags">0</v>
+                                  <v n="Fixed">false</v>
+                                  <v n="Extensible">false</v>
+                                </o>
+                                <v n="LValue">false</v>
+                                <v n="Boolean">false</v>
+                                <v n="IsInstance">false</v>
+                                <v n="Id">137L</v>
+                              </o>
+                              <v n="Id">136L</v>
+                            </o>
+                            <o>
+                              <o n="Operand" t="Operand">
+                                <v n="Operand">"bHomeSensor"</v>
+                                <v n="Type">"BOOL"</v>
+                                <v n="Comment">""</v>
+                                <v n="SymbolComment">""</v>
+                                <v n="Address">""</v>
+                                <o n="Flags" t="Flags">
+                                  <v n="Flags">0</v>
+                                  <v n="Fixed">false</v>
+                                  <v n="Extensible">false</v>
+                                </o>
+                                <v n="LValue">false</v>
+                                <v n="Boolean">false</v>
+                                <v n="IsInstance">false</v>
+                                <v n="Id">139L</v>
+                              </o>
+                              <v n="Id">138L</v>
+                            </o>
+                          </l2>
+                          <o n="InputParam" t="ParamList">
+                            <l2 n="Names" cet="String">
+                              <v>Axis</v>
+                              <v>Execute</v>
+                              <v>Direction</v>
+                              <v>Velocity</v>
+                              <v>Acceleration</v>
+                              <v>Deceleration</v>
+                              <v>SetPosition</v>
+                              <v>TimeLimit</v>
+                              <v>BackOffPos</v>
+                              <v>homeSensor</v>
+                            </l2>
+                            <l2 n="Types" cet="String">
+                              <v>AXIS_REF[REF]</v>
+                              <v>BOOL</v>
+                              <v>INT</v>
+                              <v>LREAL</v>
+                              <v>LREAL</v>
+                              <v>LREAL</v>
+                              <v>LREAL</v>
+                              <v>TIME</v>
+                              <v>LREAL</v>
+                              <v>BOOL</v>
+                            </l2>
+                          </o>
+                          <o n="OutputParam" t="ParamList">
+                            <l2 n="Names" cet="String">
+                              <v>Done</v>
+                              <v>Busy</v>
+                              <v>Active</v>
+                              <v>CommandAborted</v>
+                              <v>Error</v>
+                              <v>ErrorID</v>
+                            </l2>
+                            <l2 n="Types" cet="String">
+                              <v>BOOL</v>
+                              <v>BOOL</v>
+                              <v>BOOL</v>
+                              <v>BOOL</v>
+                              <v>BOOL</v>
+                              <v>UDINT</v>
+                            </l2>
+                          </o>
+                          <v n="CallType" t="Operator">FunctionBlock</v>
+                          <v n="EN">false</v>
+                          <v n="ENO">false</v>
+                          <n n="STSnippet" />
+                          <v n="ContainsExtensibleInputs">false</v>
+                          <v n="ProvidesSTSnippet">false</v>
+                          <v n="Id">114L</v>
+                        </o>
+                        <v n="Id">141L</v>
+                      </o>
+                    </l2>
+                    <l2 n="Connectors" />
+                    <v n="Id">56L</v>
                   </o>
                 </l2>
                 <v n="BranchCounter">0</v>
@@ -7544,6 +7944,92 @@ IF bIdleDisabled THEN
 END_IF]]></ST>
       </Implementation>
     </Method>
+    <Method Name="homeToSensorCustom" Id="{e80de9e2-7d3f-4569-a9e6-2d9c68a96c02}">
+      <Declaration><![CDATA[METHOD homeToSensorCustom : INT //0:Not done, 1:done, 2:Active, 13: error
+VAR_INPUT
+END_VAR
+
+(* Need to figure out torque value for homing.
+Need to determine which direction of travel to enable*)
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[////////////////////////////////////////////////////////////
+bIdle := FALSE;
+IF bIdleDisabled THEN
+	IF NOT bMotorHomeStatus THEN
+		homeToSensorCustom := 0;
+		
+		IF bMotorInverted THEN
+			direction := 0;
+		ELSE 
+			direction := 1;
+		END_IF
+		
+		fbhomeToSensorCustom.Execute := TRUE;
+		CASE checkOutputs(stHomeToSensorCustomOut) OF 
+			1:// Done
+				fbHomeToSensorCustom.Execute := FALSE;
+				bMotorHomeStatus := fbMotor.Status.Homed;
+				homeToSensorCustom := 1; 
+			2:// Active
+				homeToSensorCustom := 2;
+			3:// Busy
+				homeToSensorCustom := 3;
+			4:// Command Aborted
+			13:// Error
+				stError.errorState := MCHOME;
+				stError.errorLoc := 'homeToSensorCustom';
+				setError(stHomeToSensorCustomOut);
+				homeToSensorCustom := 13;
+		END_CASE
+	ELSE
+		CASE nHomeState OF 
+			0: // Read soft limit switch to set home pos. 
+				IF bMotorInverted THEN
+					eParameter := AxisMaxSoftPosLimit;
+				ELSE 
+					eParameter := AxisMinSoftPosLimit;
+				END_IF
+				
+				fbReadRealParam.Enable := TRUE;
+				
+				IF NOT stReadParamOut.Busy AND stReadParamOut.Done THEN
+					fbReadRealParam.Enable := FALSE;
+					fPosition := fReadValue;
+					nHomeState := nHomeState + 1;
+				ELSIF NOT stReadParamOut.Busy AND stReadParamOut.Error THEN
+					homeToSensorCustom := 13;
+					fbReadRealParam.Enable := FALSE;
+					nHomeState := 0;
+				END_IF
+		
+			1: // Execute Move to Home Pos. 
+			
+			fbMotorMoveAbsolute.Execute := TRUE;
+			CASE checkOutputs(stMotorMoveAbsoluteOut) OF 
+				1:// Done
+					fbMotorMoveAbsolute.Execute := FALSE;
+					nHomeState := 0;
+					homeToSensorCustom := 1;
+				2:// Active
+					homeToSensorCustom := 2;
+				3:// Busy
+					homeToSensorCustom := 3;
+				4:// Command Aborted
+					fbMotorMoveAbsolute.Execute := FALSE;
+					nHomeState := 0;
+				13:// Error
+					stError.errorState := MCMOVEABSOLUTE;
+					stError.errorLoc := 'homeToSensorCustom_0';
+					setError(stMotorMoveAbsoluteOut);
+					nHomeState := 0;
+					homeToSensorCustom := 13;
+			END_CASE
+		END_CASE
+	END_IF
+END_IF]]></ST>
+      </Implementation>
+    </Method>
     <Method Name="homeToTorque" Id="{daa049df-85ae-4364-90c0-22ed16b32c82}">
       <Declaration><![CDATA[METHOD homeToTorque : INT //0:Not done, 1:done, 2:Active, 13: error
 VAR_INPUT
@@ -7649,6 +8135,8 @@ VAR_INPUT
 	homeTorqueLimitIn		: LREAL; //Torque limit to home to when using homeToTorque method. 
 	
 	jogTorqueIn				: LREAL; // Torque used to limit jog moves. 
+	
+	bHasHomeSensorIn		:BOOL; // Does this motor have a homing sensor to home to?  
 END_VAR
 ]]></Declaration>
       <Implementation>
@@ -7687,6 +8175,8 @@ CASE nInitState OF
 		homeTorqueLimit		:= homeTorqueLimitIn;
 		
 		jogTorque := jogTorqueIn;
+		
+		bHasHomeSensor := bHasHomeSensorIn;
 		
 		IF NOT bMotorInverted THEN
 			stHomingOptions.SearchDirection := MC_Negative_Direction;
@@ -8240,5 +8730,137 @@ END_CASE
 ]]></ST>
       </Implementation>
     </Method>
+    <LineIds Name="FB_teknicMotorEC">
+      <LineId Id="3" Count="62" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_teknicMotorEC.brakeOff">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_teknicMotorEC.brakeOn">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_teknicMotorEC.camSensor.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_teknicMotorEC.checkOutputs">
+      <LineId Id="3" Count="10" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_teknicMotorEC.coupleToAxis">
+      <LineId Id="3" Count="20" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_teknicMotorEC.decoupleAxis">
+      <LineId Id="3" Count="16" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_teknicMotorEC.disable">
+      <LineId Id="3" Count="13" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_teknicMotorEC.distance.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_teknicMotorEC.enable">
+      <LineId Id="3" Count="12" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_teknicMotorEC.estop">
+      <LineId Id="3" Count="64" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_teknicMotorEC.homeSetToCount">
+      <LineId Id="3" Count="24" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_teknicMotorEC.homeTorqueLimitIn.Set">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_teknicMotorEC.homeToSensor">
+      <LineId Id="3" Count="100" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_teknicMotorEC.homeToSensorCustom">
+      <LineId Id="3" Count="73" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_teknicMotorEC.homeToTorque">
+      <LineId Id="3" Count="73" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_teknicMotorEC.init">
+      <LineId Id="3" Count="34" />
+      <LineId Id="77" Count="1" />
+      <LineId Id="38" Count="17" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_teknicMotorEC.isBusy.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_teknicMotorEC.isEnabled.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_teknicMotorEC.isMotorInverted.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_teknicMotorEC.isStopped.Get">
+      <LineId Id="3" Count="0" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_teknicMotorEC.motorError.Get">
+      <LineId Id="3" Count="3" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_teknicMotorEC.motorErrorId.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_teknicMotorEC.motorIdle.Set">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_teknicMotorEC.moveTo">
+      <LineId Id="3" Count="49" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_teknicMotorEC.moveToJog">
+      <LineId Id="3" Count="18" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_teknicMotorEC.moveToSensor">
+      <LineId Id="3" Count="21" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_teknicMotorEC.moveToTorque">
+      <LineId Id="3" Count="35" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_teknicMotorEC.readRealParameter">
+      <LineId Id="3" Count="12" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_teknicMotorEC.removeStop">
+      <LineId Id="3" Count="32" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_teknicMotorEC.reset">
+      <LineId Id="3" Count="53" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_teknicMotorEC.resetMotorCommands">
+      <LineId Id="3" Count="26" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_teknicMotorEC.setError">
+      <LineId Id="3" Count="1" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_teknicMotorEC.stop">
+      <LineId Id="3" Count="69" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_teknicMotorEC.writeRealParameter">
+      <LineId Id="3" Count="13" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
   </POU>
 </TcPlcObject>

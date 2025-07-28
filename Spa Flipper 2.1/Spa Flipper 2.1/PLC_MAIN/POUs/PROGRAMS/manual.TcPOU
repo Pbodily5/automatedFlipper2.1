@@ -579,7 +579,7 @@ ELSE // No Estop or Light Curtain
 				
 			HOMING:
 				IF NOT aMoveFinishWidth[0] THEN
-					CASE GVL_devices.fbLftWidthMotor.homeToSensor(0) OF 
+					CASE GVL_devices.fbLftWidthMotor.homeToSensorCustom() OF 
 						1:// Done
 							aMoveFinishWidth[0] := TRUE;
 						13:// Error
@@ -589,7 +589,7 @@ ELSE // No Estop or Light Curtain
 					END_CASE
 				END_IF
 				IF NOT aMoveFinishWidth[1] THEN
-					CASE GVL_devices.fbRhtWidthMotor.homeToSensor(0) OF 
+					CASE GVL_devices.fbRhtWidthMotor.homeToSensorCustom() OF 
 						1:// Done
 							aMoveFinishWidth[1] := TRUE;
 						13:// Error	

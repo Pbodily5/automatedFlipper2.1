@@ -34,7 +34,8 @@ IF fbWaitInit.Q THEN
 								homeVelocityIn:= 7, 
 								homeSetPositionIn:= 0, 
 								homeTorqueLimitIn:= 8,
-								jogTorqueIn := 100);
+								jogTorqueIn := 100,
+								bHasHomeSensorIn := FALSE);
 		END_IF
 		IF NOT aMoveFinish[2] THEN
 			aMoveFinish[2] := GVL_devices.fbColumn2Motor.init(
@@ -49,7 +50,8 @@ IF fbWaitInit.Q THEN
 								homeVelocityIn:= 7, 
 								homeSetPositionIn:= 0, 
 								homeTorqueLimitIn:= 8,
-								jogTorqueIn := 100);
+								jogTorqueIn := 100,
+								bHasHomeSensorIn := TRUE);
 		END_IF
 		IF NOT aMoveFinish[3] THEN
 			aMoveFinish[3] := GVL_devices.fbColumn3Motor.init(
@@ -64,7 +66,8 @@ IF fbWaitInit.Q THEN
 								homeVelocityIn:= 7, 
 								homeSetPositionIn:= 0, 
 								homeTorqueLimitIn:= 8,
-								jogTorqueIn := 100);
+								jogTorqueIn := 100,
+								bHasHomeSensorIn := FALSE);
 		END_IF
 		IF NOT aMoveFinish[4] THEN
 			aMoveFinish[4] := GVL_devices.fbLftClampMotor.init(
@@ -79,7 +82,8 @@ IF fbWaitInit.Q THEN
 								homeVelocityIn:= 7, 
 								homeSetPositionIn:= 0, 
 								homeTorqueLimitIn:= 20,
-								jogTorqueIn := 35);
+								jogTorqueIn := 35,
+								bHasHomeSensorIn := FALSE);
 		END_IF
 		IF NOT aMoveFinish[5] THEN
 			aMoveFinish[5] := GVL_devices.fbRhtClampMotor.init(
@@ -94,7 +98,8 @@ IF fbWaitInit.Q THEN
 								homeVelocityIn:= 7, 
 								homeSetPositionIn:= 0, 
 								homeTorqueLimitIn:= 40,
-								jogTorqueIn := 35);
+								jogTorqueIn := 35,
+								bHasHomeSensorIn := FALSE);
 		END_IF
 		IF NOT aMoveFinish[6] THEN
 			aMoveFinish[6] := GVL_devices.fbLftRotationMotor.init(
@@ -109,7 +114,8 @@ IF fbWaitInit.Q THEN
 								homeVelocityIn:= 3, 
 								homeSetPositionIn:= GVL_persistent.fLftRotationHomePos, 
 								homeTorqueLimitIn:= 20,
-								jogTorqueIn := 100);
+								jogTorqueIn := 100,
+								bHasHomeSensorIn := FALSE);
 		END_IF
 		IF NOT aMoveFinish[7] THEN
 			aMoveFinish[7] := GVL_devices.fbRhtRotationMotor.init(
@@ -124,7 +130,8 @@ IF fbWaitInit.Q THEN
 								homeVelocityIn:= 3, 
 								homeSetPositionIn:= GVL_persistent.fRhtRotationHomePos,
 								homeTorqueLimitIn:= 20,
-								jogTorqueIn := 100);
+								jogTorqueIn := 100,
+								bHasHomeSensorIn := FALSE);
 		END_IF
 		IF NOT aMoveFinish[8] THEN
 			aMoveFinish[8] := GVL_devices.fbLftWidthMotor.init(
@@ -139,7 +146,8 @@ IF fbWaitInit.Q THEN
 								homeVelocityIn:= 10, 
 								homeSetPositionIn:= 0, 
 								homeTorqueLimitIn:= 15,
-								jogTorqueIn := 30);
+								jogTorqueIn := 30,
+								bHasHomeSensorIn := TRUE);
 		END_IF
 		IF NOT aMoveFinish[9] THEN
 			aMoveFinish[9] := GVL_devices.fbRhtWidthMotor.init(
@@ -154,7 +162,8 @@ IF fbWaitInit.Q THEN
 								homeVelocityIn:= 10, 
 								homeSetPositionIn:= 0, 
 								homeTorqueLimitIn:= 15,
-								jogTorqueIn := 30);
+								jogTorqueIn := 30,
+								bHasHomeSensorIn := TRUE);
 		END_IF
 		IF NOT aMoveFinish[0] THEN
 			aMoveFinish[0] := GVL_devices.fbColumn0Motor.init(
@@ -169,7 +178,8 @@ IF fbWaitInit.Q THEN
 								homeVelocityIn:= 7, 
 								homeSetPositionIn:= 0, 
 								homeTorqueLimitIn:= 8,
-								jogTorqueIn := 100);
+								jogTorqueIn := 100,
+								bHasHomeSensorIn := TRUE);
 		END_IF
 		
 		IF F_checkMoveFinish(aMoveFinish,10,FALSE) THEN
@@ -179,7 +189,7 @@ IF fbWaitInit.Q THEN
 			GVL_machine.bMotorInitFailedDisp := FALSE;
 			GVL_machine.bMotorsInitialized := TRUE;
 			bMotorsInit := TRUE;
-		ELSE
+		ELSE // Start Timeout Timer
 			fbMotorTimeout.IN := TRUE;
 			IF fbMotorTimeout.Q THEN
 				fbWaitInit(IN := FALSE);
@@ -196,5 +206,29 @@ IF fbWaitInit.Q THEN
 	END_IF
 END_IF]]></ST>
     </Implementation>
+    <LineIds Name="motorsInit">
+      <LineId Id="3" Count="21" />
+      <LineId Id="194" Count="0" />
+      <LineId Id="25" Count="14" />
+      <LineId Id="195" Count="0" />
+      <LineId Id="40" Count="14" />
+      <LineId Id="196" Count="0" />
+      <LineId Id="55" Count="14" />
+      <LineId Id="197" Count="0" />
+      <LineId Id="70" Count="14" />
+      <LineId Id="198" Count="0" />
+      <LineId Id="85" Count="14" />
+      <LineId Id="199" Count="0" />
+      <LineId Id="100" Count="14" />
+      <LineId Id="200" Count="0" />
+      <LineId Id="115" Count="14" />
+      <LineId Id="204" Count="0" />
+      <LineId Id="130" Count="14" />
+      <LineId Id="205" Count="0" />
+      <LineId Id="145" Count="14" />
+      <LineId Id="206" Count="0" />
+      <LineId Id="160" Count="23" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
   </POU>
 </TcPlcObject>

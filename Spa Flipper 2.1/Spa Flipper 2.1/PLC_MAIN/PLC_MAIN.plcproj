@@ -104,6 +104,9 @@
     <Compile Include="POUs\FUNCTIONS\FB_homeToTorque.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="POUs\FUNCTIONS\FB_homeToSensorCustom.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="POUs\FUNCTIONS\FB_ignitionClientHandler.TcPOU">
       <SubType>Code</SubType>
     </Compile>
