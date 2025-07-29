@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<TcLicenseInfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.beckhoff.com/schemas/2011/11/TcLicenseInfo">
+	<TargetInfo>
+		<TcTargetDesc>
+			<TargetType>CX52x0-WIN 10.0</TargetType>
+			<TargetVersion>
+				<Version>3</Version>
+				<Revision>1</Revision>
+				<Build>4024</Build>
+			</TargetVersion>
+			<TargetFeatures>
+				<Level>CP</Level>
+				<NetId>5.151.65.180.1.1</NetId>
+			</TargetFeatures>
+			<Hardware>
+				<Model>CX5240-0195</Model>
+				<SerialNo>000tkm4i</SerialNo>
+				<CPUVersion>3.1</CPUVersion>
+				<Date>16.1.25</Date>
+				<CPUArchitecture>0</CPUArchitecture>
+			</Hardware>
+			<OsImage>
+				<ImageDevice>CX52x0</ImageDevice>
+				<ImageVersion>2024-03-00046</ImageVersion>
+				<ImageLevel>CX1800-0911-1015</ImageLevel>
+				<OsName>Windows 10 Enterprise LTSC 2021</OsName>
+				<OsVersion>10.0</OsVersion>
+			</OsImage>
+		</TcTargetDesc>
+	</TargetInfo>
+	<LicenseInfo>
+		<SystemId Level="50" SerialNo="000tkm4i" MacAddress="0001059741b4">{B1E4E35C-4F67-EA98-FEC2-D3D0598BB50D}</SystemId>
+		<PurchaseOrder><![CDATA[01605291]]></PurchaseOrder>
+		<IssueTime>2025-07-29T22:24:00</IssueTime>
+		<License>
+			<LicenseId>{66689887-CCBD-452C-AC9A-039D997C6E66}</LicenseId>
+			<Name>TC3 PLC</Name>
+			<OrderNo>TC1200</OrderNo>
+		</License>
+		<License>
+			<LicenseId>{520DE751-9DB6-47CB-8240-BD5C466E7E64}</LicenseId>
+			<Name>TC3 NC PTP</Name>
+			<OrderNo>TF5000</OrderNo>
+		</License>
+		<License>
+			<LicenseId>{FDE02854-39A7-440C-9EAE-C234A16A3CED}</LicenseId>
+			<Name>TC3 PLC-HMI</Name>
+			<OrderNo>TF1800</OrderNo>
+		</License>
+		<License>
+			<LicenseId>{0ABFD2B0-EAE1-4DC7-AABE-03093B0786B7}</LicenseId>
+			<Name>TC3 IoT Communication (MQTT)</Name>
+			<OrderNo>TF6701</OrderNo>
+		</License>
+	</LicenseInfo>
+</TcLicenseInfo>

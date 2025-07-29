@@ -992,7 +992,7 @@ External Setpoint Generation:
 				<IoIdleTask Priority="8" Affinity="#x00000004"/>
 			</Settings>
 			<Licenses>
-				<Target BkhfOrder="01605391"/>
+				<Target BkhfOrder="01605291"/>
 			</Licenses>
 			<Tasks>
 				<Task Id="3" Priority="10" CycleTime="50000" AmsPort="350" AdtTasks="true">
@@ -1008,7 +1008,7 @@ External Setpoint Generation:
 		</Motion>
 		<Plc>
 			<Project GUID="{6036E6EF-E0ED-4D41-BFCF-5B60AD71A3FE}" Name="PLC_MAIN" PrjFilePath="PLC_MAIN\PLC_MAIN.plcproj" TmcFilePath="PLC_MAIN\PLC_MAIN.tmc" ReloadTmc="true" AmsPort="851" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="PLC_MAIN\PLC_MAIN.tmc" TmcHash="{041289B1-992E-20AA-7858-BFEBE404B22A}">
+				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="PLC_MAIN\PLC_MAIN.tmc" TmcHash="{F4A27653-7597-B505-0446-A2FF1CB62D48}">
 					<Name>PLC_MAIN Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 					<Vars VarGrpType="1">

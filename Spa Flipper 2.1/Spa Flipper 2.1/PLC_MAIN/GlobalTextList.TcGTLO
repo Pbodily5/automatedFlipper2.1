@@ -66,6 +66,11 @@
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"228"</v>
+              <v n="TextDefault">"Admin"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"94"</v>
               <v n="TextDefault">"AUTO"</v>
               <l n="LanguageTexts" t="ArrayList" />
@@ -560,8 +565,18 @@ Please wait..."</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"166"</v>
+              <v n="TextDefault">"None"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"1483"</v>
               <v n="TextDefault">"OPERATIONAL"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"1573"</v>
+              <v n="TextDefault">"Operator"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
@@ -678,6 +693,11 @@ PROGRAM"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"1224"</v>
+              <v n="TextDefault">"Service"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"874"</v>
               <v n="TextDefault">"Set Position"</v>
               <l n="LanguageTexts" t="ArrayList" />
@@ -788,6 +808,11 @@ PROGRAM"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"42"</v>
+              <v n="TextDefault">"Supervisor"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"83"</v>
               <v n="TextDefault">"TABLE"</v>
               <l n="LanguageTexts" t="ArrayList" />
@@ -806,6 +831,11 @@ PROGRAM"</v>
               <v n="TextID">"77"</v>
               <v n="TextDefault">"Table Height : 
 %5.2f"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"1466"</v>
+              <v n="TextDefault">"Team Lead"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
