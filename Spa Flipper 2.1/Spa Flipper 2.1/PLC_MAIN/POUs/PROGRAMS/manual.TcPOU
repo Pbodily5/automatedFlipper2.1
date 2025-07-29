@@ -42,7 +42,8 @@ VAR
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[///////////////////////// PAGE CHANGE TO MANUAL //////////////////////////////
+      <ST><![CDATA[// Both manualScreen and manualBypassedScreen use this program for their functionality. Only difference is buttons are not hidden on manualBypassedScreen. 
+///////////////////////// PAGE CHANGE TO MANUAL //////////////////////////////
 IF GVL_machine.bPageChange THEN 
 	eRotationState 	:= STEADYSTATE;
 	eColumnState 	:= STEADYSTATE;
@@ -628,9 +629,5 @@ ELSE // No Estop or Light Curtain
 		END_CASE
 END_IF]]></ST>
     </Implementation>
-    <LineIds Name="manual">
-      <LineId Id="3" Count="583" />
-      <LineId Id="2" Count="0" />
-    </LineIds>
   </POU>
 </TcPlcObject>

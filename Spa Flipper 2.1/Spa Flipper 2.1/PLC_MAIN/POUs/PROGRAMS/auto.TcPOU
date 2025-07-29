@@ -444,7 +444,7 @@ IF NOT bDispContinueProg THEN
 		CLAMPRETURN:
 			sPromptDisp := 'Clamps Moving Out';
 			IF NOT aMoveFinish[0] THEN
-				CASE GVL_devices.fbLftWidthMotor.homeToSensor(0) OF
+				CASE GVL_devices.fbLftWidthMotor.homeToSensorCustom() OF
 					1:// Done
 						aMoveFinish[0] := TRUE;
 					13:// Error
@@ -453,7 +453,7 @@ IF NOT bDispContinueProg THEN
 				END_CASE 
 			END_IF
 			IF NOT aMoveFinish[1] THEN
-				CASE GVL_devices.fbRhtWidthMotor.homeToSensor(0) OF 
+				CASE GVL_devices.fbRhtWidthMotor.homeToSensorCustom() OF 
 					1: //Done
 						aMoveFinish[1] := TRUE;
 					13: //Error\
@@ -966,7 +966,7 @@ CASE nHomeMachineState OF
 		END_IF
 		
 		IF NOT aMoveFinish[2] THEN
-			CASE GVL_devices.fbLftWidthMotor.homeToSensor(0) OF 
+			CASE GVL_devices.fbLftWidthMotor.homeToSensorCustom() OF 
 				1:// Done
 					aMoveFinish[2] := TRUE;
 				13:// Error
@@ -975,7 +975,7 @@ CASE nHomeMachineState OF
 			END_CASE
 		END_IF
 		IF NOT aMoveFinish[3] THEN
-			CASE GVL_devices.fbRhtWidthMotor.homeToSensor(0) OF 
+			CASE GVL_devices.fbRhtWidthMotor.homeToSensorCustom() OF 
 				1:// Done
 					aMoveFinish[3] := TRUE;
 				13:// Error
@@ -983,7 +983,7 @@ CASE nHomeMachineState OF
 					GVL_machine.bErrorPresent := TRUE;
 			END_CASE
 		END_IF
-		IF aMoveFinish[0] AND aMoveFinish[2] THEN
+		IF aMoveFinish[2] THEN
 			IF NOT aMoveFinish[4] THEN
 				CASE GVL_devices.fbLftRotationMotor.homeToTorque() OF 
 					1:// Done
@@ -1015,7 +1015,7 @@ CASE nHomeMachineState OF
 			END_IF
 		END_IF
 		
-		IF aMoveFinish[1] AND aMoveFinish[3] THEN
+		IF aMoveFinish[3] THEN
 			IF NOT aMoveFinish[5] THEN
 				CASE GVL_devices.fbRhtRotationMotor.homeToTorque() OF 
 					1:// Done

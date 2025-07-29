@@ -1666,7 +1666,7 @@ fbMotorJog.JogBackwards := FALSE;
                               <v n="LValue">true</v>
                               <v n="Boolean">false</v>
                               <v n="IsInstance">false</v>
-                              <v n="Id">140L</v>
+                              <v n="Id">171L</v>
                             </o>
                           </l2>
                         </o>
@@ -1691,7 +1691,7 @@ fbMotorJog.JogBackwards := FALSE;
                             <v n="LValue">false</v>
                             <v n="Boolean">false</v>
                             <v n="IsInstance">true</v>
-                            <v n="Id">113L</v>
+                            <v n="Id">142L</v>
                           </o>
                           <o n="OutputItems" t="OutputItemList">
                             <l2 n="OutputItems" cet="Operand">
@@ -1710,7 +1710,7 @@ fbMotorJog.JogBackwards := FALSE;
                                 <v n="LValue">true</v>
                                 <v n="Boolean">false</v>
                                 <v n="IsInstance">false</v>
-                                <v n="Id">115L</v>
+                                <v n="Id">144L</v>
                               </o>
                               <o>
                                 <v n="Operand">"stHomeToSensorCustomOut.Active"</v>
@@ -1726,7 +1726,7 @@ fbMotorJog.JogBackwards := FALSE;
                                 <v n="LValue">true</v>
                                 <v n="Boolean">false</v>
                                 <v n="IsInstance">false</v>
-                                <v n="Id">116L</v>
+                                <v n="Id">145L</v>
                               </o>
                               <o>
                                 <v n="Operand">"stHomeToSensorCustomOut.CommandAborted"</v>
@@ -1742,7 +1742,7 @@ fbMotorJog.JogBackwards := FALSE;
                                 <v n="LValue">true</v>
                                 <v n="Boolean">false</v>
                                 <v n="IsInstance">false</v>
-                                <v n="Id">117L</v>
+                                <v n="Id">146L</v>
                               </o>
                               <o>
                                 <v n="Operand">"stHomeToSensorCustomOut.Error"</v>
@@ -1758,7 +1758,7 @@ fbMotorJog.JogBackwards := FALSE;
                                 <v n="LValue">true</v>
                                 <v n="Boolean">false</v>
                                 <v n="IsInstance">false</v>
-                                <v n="Id">118L</v>
+                                <v n="Id">147L</v>
                               </o>
                               <o>
                                 <v n="Operand">"stHomeToSensorCustomOut.ErrorID"</v>
@@ -1774,7 +1774,7 @@ fbMotorJog.JogBackwards := FALSE;
                                 <v n="LValue">true</v>
                                 <v n="Boolean">false</v>
                                 <v n="IsInstance">false</v>
-                                <v n="Id">119L</v>
+                                <v n="Id">148L</v>
                               </o>
                             </l2>
                           </o>
@@ -1800,9 +1800,9 @@ fbMotorJog.JogBackwards := FALSE;
                                 <v n="LValue">false</v>
                                 <v n="Boolean">false</v>
                                 <v n="IsInstance">false</v>
-                                <v n="Id">121L</v>
+                                <v n="Id">150L</v>
                               </o>
-                              <v n="Id">120L</v>
+                              <v n="Id">149L</v>
                             </o>
                             <o>
                               <o n="Operand" t="Operand">
@@ -1819,9 +1819,9 @@ fbMotorJog.JogBackwards := FALSE;
                                 <v n="LValue">false</v>
                                 <v n="Boolean">false</v>
                                 <v n="IsInstance">false</v>
-                                <v n="Id">123L</v>
+                                <v n="Id">152L</v>
                               </o>
-                              <v n="Id">122L</v>
+                              <v n="Id">151L</v>
                             </o>
                             <o>
                               <o n="Operand" t="Operand">
@@ -1838,9 +1838,9 @@ fbMotorJog.JogBackwards := FALSE;
                                 <v n="LValue">false</v>
                                 <v n="Boolean">false</v>
                                 <v n="IsInstance">false</v>
-                                <v n="Id">125L</v>
+                                <v n="Id">154L</v>
                               </o>
-                              <v n="Id">124L</v>
+                              <v n="Id">153L</v>
                             </o>
                             <o>
                               <o n="Operand" t="Operand">
@@ -1857,9 +1857,9 @@ fbMotorJog.JogBackwards := FALSE;
                                 <v n="LValue">false</v>
                                 <v n="Boolean">false</v>
                                 <v n="IsInstance">false</v>
-                                <v n="Id">127L</v>
+                                <v n="Id">156L</v>
                               </o>
-                              <v n="Id">126L</v>
+                              <v n="Id">155L</v>
                             </o>
                             <o>
                               <o n="Operand" t="Operand">
@@ -1876,9 +1876,9 @@ fbMotorJog.JogBackwards := FALSE;
                                 <v n="LValue">false</v>
                                 <v n="Boolean">false</v>
                                 <v n="IsInstance">false</v>
-                                <v n="Id">129L</v>
+                                <v n="Id">158L</v>
                               </o>
-                              <v n="Id">128L</v>
+                              <v n="Id">157L</v>
                             </o>
                             <o>
                               <o n="Operand" t="Operand">
@@ -1895,9 +1895,9 @@ fbMotorJog.JogBackwards := FALSE;
                                 <v n="LValue">false</v>
                                 <v n="Boolean">false</v>
                                 <v n="IsInstance">false</v>
-                                <v n="Id">131L</v>
+                                <v n="Id">160L</v>
                               </o>
-                              <v n="Id">130L</v>
+                              <v n="Id">159L</v>
                             </o>
                             <o>
                               <o n="Operand" t="Operand">
@@ -1914,9 +1914,9 @@ fbMotorJog.JogBackwards := FALSE;
                                 <v n="LValue">false</v>
                                 <v n="Boolean">false</v>
                                 <v n="IsInstance">false</v>
-                                <v n="Id">133L</v>
+                                <v n="Id">162L</v>
                               </o>
-                              <v n="Id">132L</v>
+                              <v n="Id">161L</v>
                             </o>
                             <o>
                               <o n="Operand" t="Operand">
@@ -1933,9 +1933,28 @@ fbMotorJog.JogBackwards := FALSE;
                                 <v n="LValue">false</v>
                                 <v n="Boolean">false</v>
                                 <v n="IsInstance">false</v>
-                                <v n="Id">135L</v>
+                                <v n="Id">164L</v>
                               </o>
-                              <v n="Id">134L</v>
+                              <v n="Id">163L</v>
+                            </o>
+                            <o>
+                              <o n="Operand" t="Operand">
+                                <v n="Operand">"homeTorqueLimit"</v>
+                                <v n="Type">"LREAL"</v>
+                                <v n="Comment">""</v>
+                                <v n="SymbolComment">""</v>
+                                <v n="Address">""</v>
+                                <o n="Flags" t="Flags">
+                                  <v n="Flags">0</v>
+                                  <v n="Fixed">false</v>
+                                  <v n="Extensible">false</v>
+                                </o>
+                                <v n="LValue">false</v>
+                                <v n="Boolean">false</v>
+                                <v n="IsInstance">false</v>
+                                <v n="Id">166L</v>
+                              </o>
+                              <v n="Id">165L</v>
                             </o>
                             <o>
                               <o n="Operand" t="Operand">
@@ -1952,9 +1971,9 @@ fbMotorJog.JogBackwards := FALSE;
                                 <v n="LValue">false</v>
                                 <v n="Boolean">false</v>
                                 <v n="IsInstance">false</v>
-                                <v n="Id">137L</v>
+                                <v n="Id">168L</v>
                               </o>
-                              <v n="Id">136L</v>
+                              <v n="Id">167L</v>
                             </o>
                             <o>
                               <o n="Operand" t="Operand">
@@ -1971,9 +1990,9 @@ fbMotorJog.JogBackwards := FALSE;
                                 <v n="LValue">false</v>
                                 <v n="Boolean">false</v>
                                 <v n="IsInstance">false</v>
-                                <v n="Id">139L</v>
+                                <v n="Id">170L</v>
                               </o>
-                              <v n="Id">138L</v>
+                              <v n="Id">169L</v>
                             </o>
                           </l2>
                           <o n="InputParam" t="ParamList">
@@ -1986,6 +2005,7 @@ fbMotorJog.JogBackwards := FALSE;
                               <v>Deceleration</v>
                               <v>SetPosition</v>
                               <v>TimeLimit</v>
+                              <v>TorqueLimit</v>
                               <v>BackOffPos</v>
                               <v>homeSensor</v>
                             </l2>
@@ -1998,6 +2018,7 @@ fbMotorJog.JogBackwards := FALSE;
                               <v>LREAL</v>
                               <v>LREAL</v>
                               <v>TIME</v>
+                              <v>LREAL</v>
                               <v>LREAL</v>
                               <v>BOOL</v>
                             </l2>
@@ -2026,9 +2047,9 @@ fbMotorJog.JogBackwards := FALSE;
                           <n n="STSnippet" />
                           <v n="ContainsExtensibleInputs">false</v>
                           <v n="ProvidesSTSnippet">false</v>
-                          <v n="Id">114L</v>
+                          <v n="Id">143L</v>
                         </o>
-                        <v n="Id">141L</v>
+                        <v n="Id">172L</v>
                       </o>
                     </l2>
                     <l2 n="Connectors" />
@@ -8730,137 +8751,5 @@ END_CASE
 ]]></ST>
       </Implementation>
     </Method>
-    <LineIds Name="FB_teknicMotorEC">
-      <LineId Id="3" Count="62" />
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_teknicMotorEC.brakeOff">
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_teknicMotorEC.brakeOn">
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_teknicMotorEC.camSensor.Get">
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_teknicMotorEC.checkOutputs">
-      <LineId Id="3" Count="10" />
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_teknicMotorEC.coupleToAxis">
-      <LineId Id="3" Count="20" />
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_teknicMotorEC.decoupleAxis">
-      <LineId Id="3" Count="16" />
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_teknicMotorEC.disable">
-      <LineId Id="3" Count="13" />
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_teknicMotorEC.distance.Get">
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_teknicMotorEC.enable">
-      <LineId Id="3" Count="12" />
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_teknicMotorEC.estop">
-      <LineId Id="3" Count="64" />
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_teknicMotorEC.homeSetToCount">
-      <LineId Id="3" Count="24" />
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_teknicMotorEC.homeTorqueLimitIn.Set">
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_teknicMotorEC.homeToSensor">
-      <LineId Id="3" Count="100" />
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_teknicMotorEC.homeToSensorCustom">
-      <LineId Id="3" Count="73" />
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_teknicMotorEC.homeToTorque">
-      <LineId Id="3" Count="73" />
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_teknicMotorEC.init">
-      <LineId Id="3" Count="34" />
-      <LineId Id="77" Count="1" />
-      <LineId Id="38" Count="17" />
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_teknicMotorEC.isBusy.Get">
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_teknicMotorEC.isEnabled.Get">
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_teknicMotorEC.isMotorInverted.Get">
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_teknicMotorEC.isStopped.Get">
-      <LineId Id="3" Count="0" />
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_teknicMotorEC.motorError.Get">
-      <LineId Id="3" Count="3" />
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_teknicMotorEC.motorErrorId.Get">
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_teknicMotorEC.motorIdle.Set">
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_teknicMotorEC.moveTo">
-      <LineId Id="3" Count="49" />
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_teknicMotorEC.moveToJog">
-      <LineId Id="3" Count="18" />
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_teknicMotorEC.moveToSensor">
-      <LineId Id="3" Count="21" />
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_teknicMotorEC.moveToTorque">
-      <LineId Id="3" Count="35" />
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_teknicMotorEC.readRealParameter">
-      <LineId Id="3" Count="12" />
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_teknicMotorEC.removeStop">
-      <LineId Id="3" Count="32" />
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_teknicMotorEC.reset">
-      <LineId Id="3" Count="53" />
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_teknicMotorEC.resetMotorCommands">
-      <LineId Id="3" Count="26" />
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_teknicMotorEC.setError">
-      <LineId Id="3" Count="1" />
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_teknicMotorEC.stop">
-      <LineId Id="3" Count="69" />
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_teknicMotorEC.writeRealParameter">
-      <LineId Id="3" Count="13" />
-      <LineId Id="2" Count="0" />
-    </LineIds>
   </POU>
 </TcPlcObject>
