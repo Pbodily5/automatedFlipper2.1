@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<safetyApplication Crc="1636707806" xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" dslVersion="1.5.0.0" Id="c31fffe1-f283-4eeb-ba25-1300dadd29e5" name="" mapState="false" mapDiag="false" groupOrderId="0" passificationAllowed="false" temporaryDeactivationAllowed="false" permamentDeactivationAllowed="false" xmlid="0" analogFBOutputReplacementValues="Zero" verifyAnalogFBInputsIfStart="false" userFbId="00000000-0000-0000-0000-000000000000" xmlns="http://schemas.microsoft.com/dsltools/SafetyApplicationLanguage">
+<safetyApplication Crc="1847373361" xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" dslVersion="1.5.0.0" Id="c31fffe1-f283-4eeb-ba25-1300dadd29e5" name="" mapState="false" mapDiag="false" groupOrderId="0" passificationAllowed="false" temporaryDeactivationAllowed="false" permamentDeactivationAllowed="false" xmlid="0" analogFBOutputReplacementValues="Zero" verifyAnalogFBInputsIfStart="false" userFbId="00000000-0000-0000-0000-000000000000" xmlns="http://schemas.microsoft.com/dsltools/SafetyApplicationLanguage">
   <networks>
     <safetyApplicationHasNetworks Id="7a8d216e-3c21-45e2-b07f-239b6b246af7">
       <Network Id="f851133c-16ab-41db-aa61-140a3c6152c6" name="Network1" networkName="Network1" intId="1" networkOrderId="0">
@@ -1461,6 +1461,70 @@
               <usages>
                 <variableUsagesHasUsages Id="2e8bdb75-d9a5-4046-9538-af98c2ac5446">
                   <aliasDeviceIoUsage Id="ac6791b3-3035-424b-9b10-dc1330efd405" sdsId="10" channelId="1" functionId="1131179972" />
+                </variableUsagesHasUsages>
+              </usages>
+            </variableUsages>
+          </variableHasTargetUsages>
+        </targetUsages>
+      </variable>
+    </safetyApplicationHasVariables>
+    <safetyApplicationHasVariables Id="a9b27826-4abb-4c35-bc92-6a3d678d8728">
+      <variable Id="10de33e3-3804-41ac-a526-a6d2b078cf25" name="bLftCurtainMuteLamp" isLocal="false">
+        <sourceUsages>
+          <variableHasSourceUsages Id="96f6807b-5a93-449f-a4e4-b59090cc8480">
+            <variableUsages Id="66cf7aec-d9c5-4364-9a0a-afba1a8c3599">
+              <usages>
+                <variableUsagesHasUsages Id="ee44f6ed-fdbf-476e-bab8-059499a57c01">
+                  <fbPortUsage Id="b880ec52-6a69-46a8-a6ba-4e3711bf510b">
+                    <functionBlockPort>
+                      <fbPortUsageReferencesFunctionBlockPort Id="44781999-8900-460e-a052-512e9a6434d8">
+                        <outPortMoniker name="//Network1/FBAnd1/AndOut" />
+                      </fbPortUsageReferencesFunctionBlockPort>
+                    </functionBlockPort>
+                  </fbPortUsage>
+                </variableUsagesHasUsages>
+              </usages>
+            </variableUsages>
+          </variableHasSourceUsages>
+        </sourceUsages>
+        <targetUsages>
+          <variableHasTargetUsages Id="abc977ec-4034-4664-b91f-67bc1efd58fc">
+            <variableUsages Id="fb97d8ea-b888-4d17-9eb5-73460c85e915">
+              <usages>
+                <variableUsagesHasUsages Id="47317403-4050-417f-924d-bdf9a1467f04">
+                  <aliasDeviceIoUsage Id="15e9175c-67ca-4ac9-b9cc-d84a033e3edc" sdsId="21" channelId="4" functionId="1879114753" />
+                </variableUsagesHasUsages>
+              </usages>
+            </variableUsages>
+          </variableHasTargetUsages>
+        </targetUsages>
+      </variable>
+    </safetyApplicationHasVariables>
+    <safetyApplicationHasVariables Id="a6590c46-c6f8-49ee-9c1e-fc83be9765a3">
+      <variable Id="3bacf246-f95b-4d9c-86a0-ae7d15f6635b" name="bRhtCurtainMuteLamp" isLocal="false">
+        <sourceUsages>
+          <variableHasSourceUsages Id="c0636d18-38da-4edc-99b0-44885dcb2499">
+            <variableUsages Id="75e072e3-ecb5-4422-babd-3855f481e05f">
+              <usages>
+                <variableUsagesHasUsages Id="1168ff3c-2013-46ed-bfd8-45b1d3dba6bf">
+                  <fbPortUsage Id="0677a52d-da3c-486a-af20-ac55c6858c12">
+                    <functionBlockPort>
+                      <fbPortUsageReferencesFunctionBlockPort Id="12119789-3f03-4829-9be1-1fcb31f5b3e4">
+                        <outPortMoniker name="//Network1/FBAnd1/AndOut" />
+                      </fbPortUsageReferencesFunctionBlockPort>
+                    </functionBlockPort>
+                  </fbPortUsage>
+                </variableUsagesHasUsages>
+              </usages>
+            </variableUsages>
+          </variableHasSourceUsages>
+        </sourceUsages>
+        <targetUsages>
+          <variableHasTargetUsages Id="cdafaeed-6af0-4848-84e1-de2aecfa2a71">
+            <variableUsages Id="c37fdf9a-8da4-4d4a-9df7-9203cad28387">
+              <usages>
+                <variableUsagesHasUsages Id="c43a91fd-6114-4282-944a-0363793da352">
+                  <aliasDeviceIoUsage Id="2a3c0833-8061-4891-8413-74f4645ede7a" sdsId="21" channelId="3" functionId="1879114497" />
                 </variableUsagesHasUsages>
               </usages>
             </variableUsages>
