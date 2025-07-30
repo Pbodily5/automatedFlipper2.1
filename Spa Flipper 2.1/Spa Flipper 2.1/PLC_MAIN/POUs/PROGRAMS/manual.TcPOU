@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.13">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
   <POU Name="manual" Id="{1799650c-bf49-426f-9c07-03bbde2eec39}" SpecialFunc="None">
     <Declaration><![CDATA[PROGRAM manual
 VAR
@@ -311,7 +311,7 @@ ELSE // No Estop or Light Curtain
 				END_IF
 				
 			HOMING:
-				IF GVL_devices.fbColumn0Motor.fbMotor.Status.Homed AND GVL_devices.fbColumn2Motor.fbMotor.Status.Homed THEN
+				(*IF GVL_devices.fbColumn0Motor.fbMotor.Status.Homed AND GVL_devices.fbColumn2Motor.fbMotor.Status.Homed THEN
 					writeParameter := AxisMaxSoftPosLimit;
 					IF NOT aMoveFinishColumn[0] THEN
 						CASE GVL_devices.fbColumn2Motor.writeRealParameter(writeParameter,1) OF 
@@ -395,6 +395,51 @@ ELSE // No Estop or Light Curtain
 						eColumnState := STEADYSTATE;
 					END_IF
 					
+				END_IF*)
+				IF NOT aMoveFinishColumn[0] THEN
+					IF GVL_devices.fbColumn1Motor.fbMotor.Status.Coupled THEN
+						GVL_devices.fbColumn0Motor.motorIdle := FALSE;
+						GVL_devices.fbColumn1Motor.motorIdle := FALSE;
+						CASE GVL_devices.fbColumn0Motor.homeToSensor(0) OF 
+							1:// Done
+								aMoveFinishColumn[0] := TRUE;
+							13:// Error
+								GVL_machine.motorErrorList := COLUMN0;
+								GVL_machine.bErrorPresent := TRUE;
+						END_CASE
+					ELSE
+						CASE GVL_devices.fbColumn1Motor.coupleToAxis(GVL_devices.fbColumn0Motor.fbMotor) OF 
+							1:// Done
+							13: GVL_devices.fbColumn1Motor.reset();
+								GVL_machine.motorErrorList := COLUMN1;
+								GVL_machine.bErrorPresent := TRUE;
+						END_CASE
+					END_IF
+				END_IF
+				
+				IF NOT aMoveFinishColumn[1] THEN
+					IF GVL_devices.fbColumn3Motor.fbMotor.Status.Coupled THEN
+						GVL_devices.fbColumn2Motor.motorIdle := FALSE;
+						GVL_devices.fbColumn3Motor.motorIdle := FALSE;
+						CASE GVL_devices.fbColumn2Motor.homeToSensor(0) OF 
+							1:// Done
+								aMoveFinishColumn[1] := TRUE;
+							13://Error
+								GVL_machine.motorErrorList := COLUMN2;
+								GVL_machine.bErrorPresent := TRUE;
+						END_CASE
+					ELSE
+						CASE GVL_devices.fbColumn3Motor.coupleToAxis(GVL_devices.fbColumn2Motor.fbMotor) OF 
+							1://Done 
+							13: GVL_devices.fbColumn3Motor.reset();
+								GVL_machine.motorErrorList := COLUMN3;
+								GVL_machine.bErrorPresent := TRUE;
+						END_CASE
+					END_IF
+				END_IF
+				
+				IF F_checkMoveFinish(aMoveFinishColumn,2,FALSE) THEN
+					eColumnState := STEADYSTATE;
 				END_IF
 		END_CASE
 		
@@ -629,5 +674,18 @@ ELSE // No Estop or Light Curtain
 		END_CASE
 END_IF]]></ST>
     </Implementation>
+    <LineIds Name="manual">
+      <LineId Id="3" Count="353" />
+      <LineId Id="628" Count="18" />
+      <LineId Id="627" Count="0" />
+      <LineId Id="647" Count="0" />
+      <LineId Id="649" Count="18" />
+      <LineId Id="648" Count="0" />
+      <LineId Id="668" Count="0" />
+      <LineId Id="670" Count="1" />
+      <LineId Id="669" Count="0" />
+      <LineId Id="357" Count="230" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
   </POU>
 </TcPlcObject>
