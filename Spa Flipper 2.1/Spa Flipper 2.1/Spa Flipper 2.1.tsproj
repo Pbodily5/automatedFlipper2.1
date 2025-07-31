@@ -1538,8 +1538,8 @@ External Setpoint Generation:
 				<Link VarA="PlcTask Outputs^GVL_devices.fbLftClampMotor.bBrake" VarB="Channel 7^Output"/>
 				<Link VarA="PlcTask Outputs^GVL_devices.fbLftRotationMotor.bBrake" VarB="Channel 4^Output"/>
 				<Link VarA="PlcTask Outputs^GVL_devices.fbLtBars.bGreenLight" VarB="Channel 1^Output"/>
-				<Link VarA="PlcTask Outputs^GVL_devices.fbLtBars.bRedLight" VarB="Channel 3^Output"/>
-				<Link VarA="PlcTask Outputs^GVL_devices.fbLtBars.bYellowLight" VarB="Channel 2^Output"/>
+				<Link VarA="PlcTask Outputs^GVL_devices.fbLtBars.bRedLight" VarB="Channel 2^Output"/>
+				<Link VarA="PlcTask Outputs^GVL_devices.fbLtBars.bYellowLight" VarB="Channel 3^Output"/>
 				<Link VarA="PlcTask Outputs^GVL_devices.fbRhtClampMotor.bBrake" VarB="Channel 6^Output"/>
 				<Link VarA="PlcTask Outputs^GVL_devices.fbRhtRotationMotor.bBrake" VarB="Channel 5^Output"/>
 			</OwnerB>
