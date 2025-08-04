@@ -45,6 +45,7 @@ VAR
 	aMotorPos 		: ARRAY[1..4] OF LREAL; //Displays motors' positions
 	aMotorTorque 	: ARRAY[1..4] OF LREAL; //Displays motors' torques
 	aMotorSetPos 	: ARRAY[1..4] OF LREAL; //User set position for motors
+	aMotorCalcPos	: ARRAY[1..4] OF LREAL; // Used to calculate moves from aMotorSetPos when motor is inverted.
 	aMotorSetTorq 	: ARRAY[1..4] OF LREAL; //User set torque for motors
 	bHomeDirection  : BOOL; // Direction of moves.
 	nDirection 		: INT;	//Calculated direction based on inverted motor or not. 
@@ -340,7 +341,12 @@ CASE nActionIndex OF
 			FOR i := 1 TO 4 BY 1 DO
 				IF aMotorEnabledRef[i] <> 0 THEN
 					aMotorEnabledRef[i]^.homeTorqueLimitIn := aMotorTorque[i];
-					CASE aMotorEnabledRef[i]^.moveTo('NULL',aMotorSetPos[i]/25.4) OF
+					IF aMotorInverted[i] THEN
+						aMotorCalcPos[i] := -aMotorSetPos[i];
+					ELSE
+						aMotorCalcPos[i] := aMotorSetPos[i];
+					END_IF
+					CASE aMotorEnabledRef[i]^.moveTo('NULL',aMotorCalcPos[i]/25.4) OF
 						1:// Done
 							aMotorDone[i] := TRUE;
 						2,15:// Active
