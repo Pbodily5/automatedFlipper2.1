@@ -9,7 +9,7 @@ VAR
 	nAvgSensorCount : INT;
 	fPrevHeight		: REAL;
 	fLowBound 		: REAL := 257; // mm's at 4 mA on sensor
-	fHighBound		: REAL := 1169; // mm's at 20 mA on sensor
+	fHighBound		: REAL := 1226; // mm's at 20 mA on sensor
 END_VAR
 ]]></Declaration>
     <Implementation>
