@@ -1,8 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.13">
   <POU Name="MAIN" Id="{898c31ac-8209-4430-8256-484cd892e55e}" SpecialFunc="None">
     <Declaration><![CDATA[PROGRAM MAIN
 VAR
+	// === SAFETY HANDLING === //
 	eSafetyState 	: E_safetyState := INIT; //Current State of Safety Program in 'safetyHandler()' method
 	bSafetyInit 	: BOOL; //Initialization of safety program
 	sSafetyResetMsg : STRING := ''; //Msg to display the device that triggered the safety protocol
@@ -16,6 +17,8 @@ VAR
 	fbEstopTrig			: R_TRIG;
 	bBypassResetEstop 	: BOOL;
 	bHideLtCurtainDisable 	: BOOL;
+	fbLftCurtTrig			: R_TRIG; // Trigger for Lft Curtain Safety Buzzer Timer
+	fbLftCurtTim 			: TON; //Timer to run Lft Curtain Safety Buzzer
 	
 	fbPageExit 		: R_TRIG;
 	fbErrorPresent	: R_TRIG;
@@ -361,6 +364,21 @@ IF bSafetyInit THEN
 			END_IF
 		END_IF
 	END_IF
+	
+	// === Safety Buzzer Handling === //
+	fbLftCurtTim();
+	fbLftCurtTrig();
+	fbLftCurtTim.PT := T#6S;
+	fbLftCurtTrig.CLK := NOT GVL_devices.fbLtCurtains.bLftCurtainSigOk;
+	IF fbLftCurtTrig.Q THEN
+		fbLftCurtTim.IN := TRUE;
+		GVL_devices.safetyBuzzer := TRUE;
+	END_IF
+	
+	IF fbLftCurtTim.Q THEN
+		fbLftCurtTim.IN := FALSE;
+		GVL_devices.safetyBuzzer := FALSE;
+	END_IF
 END_IF
 
 ]]></ST>
@@ -387,23 +405,5 @@ END_FOR
 GVL_ignition.nNumClients := nCount;]]></ST>
       </Implementation>
     </Method>
-    <LineIds Name="MAIN">
-      <LineId Id="3" Count="125" />
-      <LineId Id="202" Count="1" />
-      <LineId Id="129" Count="40" />
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="MAIN.decoupleMotors">
-      <LineId Id="3" Count="8" />
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="MAIN.safetyHandler">
-      <LineId Id="3" Count="132" />
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="MAIN.updateIgnition">
-      <LineId Id="3" Count="11" />
-      <LineId Id="2" Count="0" />
-    </LineIds>
   </POU>
 </TcPlcObject>

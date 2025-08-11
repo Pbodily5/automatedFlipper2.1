@@ -7,6 +7,7 @@ VAR_GLOBAL
 	fbLtCurtains		: FB_ltCurtains;
 	fbEstop				: FB_estop;
 	fbTable 			: FB_table;
+	safetyBuzzer        AT %Q* : BOOL;
 	
 	fbLftWidthMotor 	: FB_teknicMotorEC;
 	fbRhtWidthMotor 	: FB_teknicMotorEC;

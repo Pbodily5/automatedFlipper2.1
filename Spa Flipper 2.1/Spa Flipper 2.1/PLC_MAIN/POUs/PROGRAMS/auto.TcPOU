@@ -468,6 +468,7 @@ IF NOT bDispContinueProg THEN
 			END_IF
 			
 		CONFIRMSPAUNLOAD:
+			bConfirmBtn := TRUE; // Bypass ConfirmSpaUnload Prompt
 			GVL_devices.fbLtCurtains.mute();
 			bHideConfirmBtn 	:= FALSE;
 			sPromptDisp := 'Unload Spa';
