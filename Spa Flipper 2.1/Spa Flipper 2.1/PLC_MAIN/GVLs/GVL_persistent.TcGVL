@@ -14,7 +14,7 @@
 	fClampOpenDist			: REAL := 6.5;		//Distance to which the clamp is open and clears the lip of the spa
 	fLftRotationHomePos 	: REAL := -66.14;	//Counts set to motor after homing to torque complete. Set in motorsInit Program.
 	fRhtRotationHomePos		: REAL := 63.1;		//Counts set to motor after homing to torque complete
-
+	fTempLftClampTorque		: REAL := 15; // Temporary Clamping for lft clamp until flange nuts are replaced
 
 END_VAR]]></Declaration>
   </GVL>

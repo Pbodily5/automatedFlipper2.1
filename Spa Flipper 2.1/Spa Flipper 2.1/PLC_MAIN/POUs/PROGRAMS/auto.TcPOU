@@ -277,7 +277,7 @@ IF NOT bDispContinueProg THEN
 		CLAMPSPA:
 			sPromptDisp := 'Clamping Spa';
 			IF NOT aMoveFinish[0] THEN
-				CASE GVL_devices.fbLftClampMotor.moveToTorque('NULL',GVL_persistent.fClampOnTorque,0) OF 
+				CASE GVL_devices.fbLftClampMotor.moveToTorque('NULL',GVL_persistent.fTempLftClampTorque,0) OF 
 					1:// Done
 						aMoveFinish[0] := TRUE;
 					13:// Error
@@ -301,6 +301,17 @@ IF NOT bDispContinueProg THEN
 			END_IF*)
 			
 			IF F_checkMoveFinish(aMoveFinish,2,FALSE) THEN
+				ePrevState := eState;
+				//eState := ROTATESPA;
+				eState := CONFIRMMANUALCLAMPING;
+			END_IF
+		
+		CONFIRMMANUALCLAMPING:
+			sPromptDisp := 'Confirm Clamp on Spa';
+			nFrameDisp := 2;
+			GVL_devices.fbLtCurtains.mute();
+			bHideConfirmBtn := FALSE;
+			IF bConfirmBtn THEN
 				ePrevState := eState;
 				eState := ROTATESPA;
 			END_IF

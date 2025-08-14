@@ -82,7 +82,7 @@ IF fbWaitInit.Q THEN
 								homeVelocityIn:= 10, 
 								homeSetPositionIn:= 0, 
 								homeTorqueLimitIn:= 20,
-								jogTorqueIn := 35,
+								jogTorqueIn := GVL_persistent.fTempLftClampTorque,
 								bHasHomeSensorIn := FALSE);
 		END_IF
 		IF NOT aMoveFinish[5] THEN
@@ -98,7 +98,7 @@ IF fbWaitInit.Q THEN
 								homeVelocityIn:= 10, 
 								homeSetPositionIn:= 0, 
 								homeTorqueLimitIn:= 40,
-								jogTorqueIn := 35,
+								jogTorqueIn := GVL_persistent.fClampOnTorque,
 								bHasHomeSensorIn := FALSE);
 		END_IF
 		IF NOT aMoveFinish[6] THEN

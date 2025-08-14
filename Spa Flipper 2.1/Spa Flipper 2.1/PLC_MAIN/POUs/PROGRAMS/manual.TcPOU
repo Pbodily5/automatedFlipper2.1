@@ -674,18 +674,5 @@ ELSE // No Estop or Light Curtain
 		END_CASE
 END_IF]]></ST>
     </Implementation>
-    <LineIds Name="manual">
-      <LineId Id="3" Count="353" />
-      <LineId Id="628" Count="18" />
-      <LineId Id="627" Count="0" />
-      <LineId Id="647" Count="0" />
-      <LineId Id="649" Count="18" />
-      <LineId Id="648" Count="0" />
-      <LineId Id="668" Count="0" />
-      <LineId Id="670" Count="1" />
-      <LineId Id="669" Count="0" />
-      <LineId Id="357" Count="230" />
-      <LineId Id="2" Count="0" />
-    </LineIds>
   </POU>
 </TcPlcObject>
