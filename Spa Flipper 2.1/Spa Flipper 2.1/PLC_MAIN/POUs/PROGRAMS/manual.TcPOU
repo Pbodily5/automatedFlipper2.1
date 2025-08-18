@@ -460,15 +460,15 @@ ELSE // No Estop or Light Curtain
 				
 			MOVEAWAYDIRECTION:
 				bHideClampingBtns := FALSE;
-			 //	GVL_devices.fbLftClampMotor.motorIdle:= FALSE;
-			//	GVL_devices.fbRhtClampMotor.motorIdle:= FALSE;
-				CASE GVL_devices.fbLftClampMotor.moveToJog(0) OF 
+				(*CASE GVL_devices.fbLftClampMotor.moveToJog(0) OF 
 					1:// Good
 					13:// Error
 						bClampingMoveStatus := TRUE;
 						GVL_machine.motorErrorList := LFTCLAMP;
 						GVL_machine.bErrorPresent := TRUE; 
-				END_CASE
+				END_CASE*)
+				GVL_devices.fbLftClampMotor.tempCylinderOpen();
+				
 				CASE GVL_devices.fbRhtClampMotor.moveToJog(1) OF
 					1:// Good
 					13:// Error
@@ -479,15 +479,15 @@ ELSE // No Estop or Light Curtain
 				
 			MOVEHOMEDIRECTION: 
 				bHideClampingBtns := FALSE;
-				//GVL_devices.fbLftClampMotor.motorIdle:= FALSE;
-				//GVL_devices.fbRhtClampMotor.motorIdle:= FALSE;
-				CASE GVL_devices.fbLftClampMotor.moveToJog(1) OF 
+				(*CASE GVL_devices.fbLftClampMotor.moveToJog(1) OF 
 					1://Good
 					13:// Error
 						bClampingMoveStatus := TRUE;
 						GVL_machine.motorErrorList := LFTCLAMP;
 						GVL_machine.bErrorPresent := TRUE; 
-				END_CASE
+				END_CASE*)
+				GVL_devices.fbLftClampMotor.tempCylinderClose();
+				
 				CASE GVL_devices.fbRhtClampMotor.moveToJog(0) OF
 					1:// Good
 					13:// Error
@@ -523,14 +523,17 @@ ELSE // No Estop or Light Curtain
 				
 			HOMING:
 				IF NOT aMoveFinishClamping[0] THEN
-					CASE GVL_devices.fbLftClampMotor.homeToTorque() OF 
+					(*CASE GVL_devices.fbLftClampMotor.homeToTorque() OF 
 						1:// Done
 							aMoveFinishClamping[0] := TRUE;
 						13:// Error
 							bClampingMoveStatus := TRUE;
 							GVL_machine.motorErrorList := LFTCLAMP;
 							GVL_machine.bErrorPresent := TRUE; 
-					END_CASE
+					END_CASE*)
+					IF GVL_devices.fbLftClampMotor.tempCylinderClose() THEN
+						aMoveFinishClamping[0] := TRUE;
+					END_IF
 				END_IF
 				IF NOT aMoveFinishClamping[1] THEN
 					CASE GVL_devices.fbRhtClampMotor.homeToTorque() OF 
@@ -547,7 +550,10 @@ ELSE // No Estop or Light Curtain
 				END_IF
 		END_CASE
 		//Initial Homing not done or Components not moving together
-		IF NOT GVL_devices.fbLftClampMotor.fbMotor.Status.Homed OR NOT GVL_devices.fbRhtClampMotor.fbMotor.Status.Homed OR fbCoupledClamping.Q THEN	
+		(*IF NOT GVL_devices.fbLftClampMotor.fbMotor.Status.Homed OR NOT GVL_devices.fbRhtClampMotor.fbMotor.Status.Homed OR fbCoupledClamping.Q THEN	
+			bHideClampingBtns := TRUE;
+		END_IF*)
+		IF NOT GVL_devices.fbRhtClampMotor.fbMotor.Status.Homed OR fbCoupledClamping.Q THEN	
 			bHideClampingBtns := TRUE;
 		END_IF
 		

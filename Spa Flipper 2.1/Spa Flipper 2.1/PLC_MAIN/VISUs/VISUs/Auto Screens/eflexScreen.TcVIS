@@ -2748,7 +2748,38 @@
                 <a n="LMGuids" et="Guid" />
                 <d n="SubElements" t="Hashtable" />
                 <v n="VisualElementId">18</v>
-                <l n="UserManagementAccessRights" t="ArrayList" />
+                <l n="UserManagementAccessRights" t="ArrayList" cet="VisuAccessRightInfo">
+                  <o>
+                    <v n="GroupName">"Admin"</v>
+                    <v n="GroupId">1</v>
+                    <v n="AccessRight" t="VisuAccessRightType">OnlyVisible</v>
+                  </o>
+                  <o>
+                    <v n="GroupName">"Service"</v>
+                    <v n="GroupId">2</v>
+                    <v n="AccessRight" t="VisuAccessRightType">OnlyVisible</v>
+                  </o>
+                  <o>
+                    <v n="GroupName">"Operator"</v>
+                    <v n="GroupId">3</v>
+                    <v n="AccessRight" t="VisuAccessRightType">OnlyVisible</v>
+                  </o>
+                  <o>
+                    <v n="GroupName">"None"</v>
+                    <v n="GroupId">0</v>
+                    <v n="AccessRight" t="VisuAccessRightType">OnlyVisible</v>
+                  </o>
+                  <o>
+                    <v n="GroupName">"Team Lead"</v>
+                    <v n="GroupId">4</v>
+                    <v n="AccessRight" t="VisuAccessRightType">OnlyVisible</v>
+                  </o>
+                  <o>
+                    <v n="GroupName">"Supervisor"</v>
+                    <v n="GroupId">5</v>
+                    <v n="AccessRight" t="VisuAccessRightType">OnlyVisible</v>
+                  </o>
+                </l>
               </o>
               <o>
                 <a n="ConfiguredComplexInputs" et="ComplexInput" />

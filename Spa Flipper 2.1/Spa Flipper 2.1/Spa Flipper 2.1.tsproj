@@ -1008,7 +1008,7 @@ External Setpoint Generation:
 		</Motion>
 		<Plc>
 			<Project GUID="{6036E6EF-E0ED-4D41-BFCF-5B60AD71A3FE}" Name="PLC_MAIN" PrjFilePath="PLC_MAIN\PLC_MAIN.plcproj" TmcFilePath="PLC_MAIN\PLC_MAIN.tmc" ReloadTmc="true" AmsPort="851" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="PLC_MAIN\PLC_MAIN.tmc" TmcHash="{EE5DBC41-57F6-1583-6768-602257970624}">
+				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="PLC_MAIN\PLC_MAIN.tmc" TmcHash="{A68C9593-F415-7747-D545-4F8BC9F8CDDC}">
 					<Name>PLC_MAIN Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 					<Vars VarGrpType="1">
@@ -1078,6 +1078,40 @@ External Setpoint Generation:
 						</Var>
 						<Var>
 							<Name>GVL_devices.fbTable.bLoadedSensor</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL_machine.bSafetyOk</Name>
+							<Comment><![CDATA[ Safety protocol enacted ]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL_machine.bFbRun</Name>
+							<Comment><![CDATA[ Safety Function Blocks are running]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL_machine.bInRun</Name>
+							<Comment><![CDATA[ Safety Program is Running]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL_machine.bFbErr</Name>
+							<Comment><![CDATA[ A Safety Function Block contains an error]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL_machine.bComErr</Name>
+							<Comment><![CDATA[ Safety program communication error]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL_machine.bOtherErr</Name>
+							<Comment><![CDATA[ Other safety error exist. (EDM FB)]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL_machine.bTestErr</Name>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
@@ -1240,40 +1274,6 @@ External Setpoint Generation:
 							<Name>GVL_devices.fbColumn3Motor.refMasterAxis.NcToPlc</Name>
 							<Type GUID="{25521FAA-EA5F-4C7F-8864-BBCCDACD2E98}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
 						</Var>
-						<Var>
-							<Name>GVL_machine.bSafetyOk</Name>
-							<Comment><![CDATA[ Safety protocol enacted ]]></Comment>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>GVL_machine.bFbRun</Name>
-							<Comment><![CDATA[ Safety Function Blocks are running]]></Comment>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>GVL_machine.bInRun</Name>
-							<Comment><![CDATA[ Safety Program is Running]]></Comment>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>GVL_machine.bFbErr</Name>
-							<Comment><![CDATA[ A Safety Function Block contains an error]]></Comment>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>GVL_machine.bComErr</Name>
-							<Comment><![CDATA[ Safety program communication error]]></Comment>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>GVL_machine.bOtherErr</Name>
-							<Comment><![CDATA[ Other safety error exist. (EDM FB)]]></Comment>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>GVL_machine.bTestErr</Name>
-							<Type>BOOL</Type>
-						</Var>
 					</Vars>
 					<Vars VarGrpType="2" AreaNo="1">
 						<Name>PlcTask Outputs</Name>
@@ -1330,8 +1330,28 @@ External Setpoint Generation:
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
+							<Name>GVL_machine.bRunSafety</Name>
+							<Comment><![CDATA[////////////////// SAFETY /////////////////////////////////]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL_machine.bSafetyErrorAck</Name>
+							<Comment><![CDATA[ Sequence to acknowledge safety error : False > True > False.]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL_machine.bSafetyBypass</Name>
+							<Comment><![CDATA[Used to Bypass entire safety PLC. Should Only be accessible with high level credentials. ]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
 							<Name>GVL_devices.fbLftWidthMotor.bBrake</Name>
 							<Comment><![CDATA[I/O]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL_devices.fbLftWidthMotor.bTempCylinder</Name>
+							<Comment><![CDATA[TEMP CODE UNTIL CYLINDER IS CHANGED BACK TO BALL SCREW.]]></Comment>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
@@ -1348,6 +1368,11 @@ External Setpoint Generation:
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
+							<Name>GVL_devices.fbRhtWidthMotor.bTempCylinder</Name>
+							<Comment><![CDATA[TEMP CODE UNTIL CYLINDER IS CHANGED BACK TO BALL SCREW.]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
 							<Name>GVL_devices.fbRhtWidthMotor.fbMotor.PlcToNc</Name>
 							<Type GUID="{96B75FEB-2D84-43BE-A3EC-D9A681F27D52}" Namespace="MC">PLCTONC_AXIS_REF</Type>
 						</Var>
@@ -1358,6 +1383,11 @@ External Setpoint Generation:
 						<Var>
 							<Name>GVL_devices.fbLftClampMotor.bBrake</Name>
 							<Comment><![CDATA[I/O]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL_devices.fbLftClampMotor.bTempCylinder</Name>
+							<Comment><![CDATA[TEMP CODE UNTIL CYLINDER IS CHANGED BACK TO BALL SCREW.]]></Comment>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
@@ -1374,6 +1404,11 @@ External Setpoint Generation:
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
+							<Name>GVL_devices.fbRhtClampMotor.bTempCylinder</Name>
+							<Comment><![CDATA[TEMP CODE UNTIL CYLINDER IS CHANGED BACK TO BALL SCREW.]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
 							<Name>GVL_devices.fbRhtClampMotor.fbMotor.PlcToNc</Name>
 							<Type GUID="{96B75FEB-2D84-43BE-A3EC-D9A681F27D52}" Namespace="MC">PLCTONC_AXIS_REF</Type>
 						</Var>
@@ -1384,6 +1419,11 @@ External Setpoint Generation:
 						<Var>
 							<Name>GVL_devices.fbLftRotationMotor.bBrake</Name>
 							<Comment><![CDATA[I/O]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL_devices.fbLftRotationMotor.bTempCylinder</Name>
+							<Comment><![CDATA[TEMP CODE UNTIL CYLINDER IS CHANGED BACK TO BALL SCREW.]]></Comment>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
@@ -1400,6 +1440,11 @@ External Setpoint Generation:
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
+							<Name>GVL_devices.fbRhtRotationMotor.bTempCylinder</Name>
+							<Comment><![CDATA[TEMP CODE UNTIL CYLINDER IS CHANGED BACK TO BALL SCREW.]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
 							<Name>GVL_devices.fbRhtRotationMotor.fbMotor.PlcToNc</Name>
 							<Type GUID="{96B75FEB-2D84-43BE-A3EC-D9A681F27D52}" Namespace="MC">PLCTONC_AXIS_REF</Type>
 						</Var>
@@ -1410,6 +1455,11 @@ External Setpoint Generation:
 						<Var>
 							<Name>GVL_devices.fbColumn0Motor.bBrake</Name>
 							<Comment><![CDATA[I/O]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL_devices.fbColumn0Motor.bTempCylinder</Name>
+							<Comment><![CDATA[TEMP CODE UNTIL CYLINDER IS CHANGED BACK TO BALL SCREW.]]></Comment>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
@@ -1426,6 +1476,11 @@ External Setpoint Generation:
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
+							<Name>GVL_devices.fbColumn1Motor.bTempCylinder</Name>
+							<Comment><![CDATA[TEMP CODE UNTIL CYLINDER IS CHANGED BACK TO BALL SCREW.]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
 							<Name>GVL_devices.fbColumn1Motor.fbMotor.PlcToNc</Name>
 							<Type GUID="{96B75FEB-2D84-43BE-A3EC-D9A681F27D52}" Namespace="MC">PLCTONC_AXIS_REF</Type>
 						</Var>
@@ -1436,6 +1491,11 @@ External Setpoint Generation:
 						<Var>
 							<Name>GVL_devices.fbColumn2Motor.bBrake</Name>
 							<Comment><![CDATA[I/O]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL_devices.fbColumn2Motor.bTempCylinder</Name>
+							<Comment><![CDATA[TEMP CODE UNTIL CYLINDER IS CHANGED BACK TO BALL SCREW.]]></Comment>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
@@ -1452,27 +1512,17 @@ External Setpoint Generation:
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
+							<Name>GVL_devices.fbColumn3Motor.bTempCylinder</Name>
+							<Comment><![CDATA[TEMP CODE UNTIL CYLINDER IS CHANGED BACK TO BALL SCREW.]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
 							<Name>GVL_devices.fbColumn3Motor.fbMotor.PlcToNc</Name>
 							<Type GUID="{96B75FEB-2D84-43BE-A3EC-D9A681F27D52}" Namespace="MC">PLCTONC_AXIS_REF</Type>
 						</Var>
 						<Var>
 							<Name>GVL_devices.fbColumn3Motor.refMasterAxis.PlcToNc</Name>
 							<Type GUID="{96B75FEB-2D84-43BE-A3EC-D9A681F27D52}" Namespace="MC">PLCTONC_AXIS_REF</Type>
-						</Var>
-						<Var>
-							<Name>GVL_machine.bRunSafety</Name>
-							<Comment><![CDATA[////////////////// SAFETY /////////////////////////////////]]></Comment>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>GVL_machine.bSafetyErrorAck</Name>
-							<Comment><![CDATA[ Sequence to acknowledge safety error : False > True > False.]]></Comment>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>GVL_machine.bSafetyBypass</Name>
-							<Comment><![CDATA[Used to Bypass entire safety PLC. Should Only be accessible with high level credentials. ]]></Comment>
-							<Type>BOOL</Type>
 						</Var>
 					</Vars>
 					<Contexts>
@@ -1540,6 +1590,7 @@ External Setpoint Generation:
 			</OwnerB>
 			<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 10 (EK1200)^Term 12 (EL2008)">
 				<Link VarA="PlcTask Outputs^GVL_devices.fbLftClampMotor.bBrake" VarB="Channel 7^Output"/>
+				<Link VarA="PlcTask Outputs^GVL_devices.fbLftClampMotor.bTempCylinder" VarB="Channel 8^Output"/>
 				<Link VarA="PlcTask Outputs^GVL_devices.fbLftRotationMotor.bBrake" VarB="Channel 4^Output"/>
 				<Link VarA="PlcTask Outputs^GVL_devices.fbLtBars.bGreenLight" VarB="Channel 1^Output"/>
 				<Link VarA="PlcTask Outputs^GVL_devices.fbLtBars.bRedLight" VarB="Channel 2^Output"/>

@@ -7,6 +7,7 @@ VAR
 	bBrake			AT %Q*  : BOOL;
 	bHomeSensor		AT %I*  : BOOL;
 	bClampSensor 	AT %I*  : BOOL;
+	bTempCylinder   AT %Q*  : BOOL; //TEMP CODE UNTIL CYLINDER IS CHANGED BACK TO BALL SCREW.
 	fHeightDisp				: REAL;
 	
 	//Init
@@ -144,7 +145,7 @@ VAR
 	stMotorTorqueOut 	: ST_mcOutputs;
 	fTorque 			: LREAL := 2;
 	torqueDirection		: INT;
-	torqueTime			: TIME := T#200MS;
+	torqueTime			: TIME := T#100MS;
 
 	//Gear Coupling
 	fbMotorGearIn : MC_GearIn;
@@ -8724,6 +8725,28 @@ CASE stopState OF
         END_CASE
 
 END_CASE]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="tempCylinderClose" Id="{1bc84c46-919b-4dd9-a122-e7574364ab2c}">
+      <Declaration><![CDATA[METHOD tempCylinderClose : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[tempCylinderClose := FALSE;
+bTempCylinder := FALSE;
+tempCylinderClose := TRUE;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="tempCylinderOpen" Id="{e733187d-f9ec-437f-b363-affdb576649a}">
+      <Declaration><![CDATA[METHOD tempCylinderOpen : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[tempCylinderOpen := FALSE;
+bTempCylinder := TRUE;
+tempCylinderOpen := TRUE;]]></ST>
       </Implementation>
     </Method>
     <Method Name="writeRealParameter" Id="{7f8a080a-cb42-492d-b4da-5aba7c8c4e82}">

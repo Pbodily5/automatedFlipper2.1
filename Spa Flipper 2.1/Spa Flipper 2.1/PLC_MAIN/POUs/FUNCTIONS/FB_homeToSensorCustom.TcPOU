@@ -101,12 +101,12 @@ CASE nState OF
 		END_IF
 		
 	1:// Check homeSensor
-		IF homeSensor THEN
+		(*IF homeSensor THEN
 			nState := 6;
 		ELSE 
 			nState := nState + 1;
-		END_IF
-	
+		END_IF*)
+		nState := nState + 1;
 	2:// Read soft limit switch to set back to when done
 		CASE Direction OF 
 			0: //mcPositiveDirection

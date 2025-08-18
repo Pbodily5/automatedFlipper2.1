@@ -210,13 +210,16 @@ IF NOT bDispContinueProg THEN
 				END_CASE
 			END_IF
 			IF aMoveFinish[6] AND NOT aMoveFinish[4] THEN
-				CASE GVL_devices.fbLftClampMotor.moveTo('NULL',GVL_persistent.fClampOpenDist) OF 
+				(*CASE GVL_devices.fbLftClampMotor.moveTo('NULL',GVL_persistent.fClampOpenDist) OF 
 					1:// Done
 						aMoveFinish[4] := TRUE;
 					13://Error
 						GVL_machine.motorErrorList := LFTCLAMP;
 						GVL_machine.bErrorPresent := TRUE;
-				END_CASE
+				END_CASE*)
+				IF GVL_devices.fbLftClampMotor.tempCylinderOpen() THEN
+					aMoveFinish[4] := TRUE;
+				END_IF
 			END_IF
 			IF aMoveFinish[7] AND NOT aMoveFinish[5] THEN
 				CASE GVL_devices.fbRhtClampMotor.moveTo('NULL',GVL_persistent.fClampOpenDist) OF 
@@ -277,13 +280,16 @@ IF NOT bDispContinueProg THEN
 		CLAMPSPA:
 			sPromptDisp := 'Clamping Spa';
 			IF NOT aMoveFinish[0] THEN
-				CASE GVL_devices.fbLftClampMotor.moveToTorque('NULL',GVL_persistent.fTempLftClampTorque,0) OF 
+				(*CASE GVL_devices.fbLftClampMotor.moveToTorque('NULL',GVL_persistent.fTempLftClampTorque,0) OF 
 					1:// Done
 						aMoveFinish[0] := TRUE;
 					13:// Error
 						GVL_machine.motorErrorList := LFTCLAMP;
 						GVL_machine.bErrorPresent := TRUE;
-				END_CASE
+				END_CASE*)
+				IF GVL_devices.fbLftClampMotor.tempCylinderClose() THEN
+					aMoveFinish[0] := TRUE;
+				END_IF
 			END_IF
 			IF NOT aMoveFinish[1] THEN
 				CASE GVL_devices.fbRhtClampMotor.moveToTorque('NULL',GVL_persistent.fClampOnTorque,1) OF
@@ -317,11 +323,16 @@ IF NOT bDispContinueProg THEN
 			END_IF
 			
 		ROTATESPA:
-			IF GVL_devices.fbLftClampMotor.distance > -20 THEN
+			(*IF GVL_devices.fbLftClampMotor.distance > -20 THEN
 				sSetPromptDisp := 'Lft clamp: $n Spa not clamped';
 				ePrevState := eState;
 				eState := PROGERRORSTOP;
 			ELSIF GVL_devices.fbRhtClampMotor.distance < 20 THEN
+				sSetPromptDisp := 'Rht clamp: $n Spa not clamped';
+				ePrevState := eState;
+				eState := PROGERRORSTOP;
+			END_IF*)
+			IF GVL_devices.fbRhtClampMotor.distance < 20 THEN
 				sSetPromptDisp := 'Rht clamp: $n Spa not clamped';
 				ePrevState := eState;
 				eState := PROGERRORSTOP;
@@ -429,13 +440,16 @@ IF NOT bDispContinueProg THEN
 			
 			IF aMoveFinish[1] THEN
 				IF NOT aMoveFinish[2] THEN
-					CASE GVL_devices.fbLftClampMotor.moveTo('NULL',9.5) OF 
+					(*CASE GVL_devices.fbLftClampMotor.moveTo('NULL',9.5) OF 
 						1: // Done
 							aMoveFinish[2] := TRUE;
 						13: // Error
 							GVL_machine.motorErrorList := LFTCLAMP;
 							GVL_machine.bErrorPresent := TRUE;
-					END_CASE
+					END_CASE*)
+					IF GVL_devices.fbLftClampMotor.tempCylinderOpen() THEN
+						aMoveFinish[2] := TRUE;
+					END_IF
 				END_IF
 				IF NOT aMoveFinish[3] THEN
 					CASE GVL_devices.fbRhtClampMotor.moveTo('NULL',9.5) OF 
@@ -842,10 +856,10 @@ IF GVL_devices.fbTable.tableHeight > GVL_persistent.fTableDownHeight + 35 THEN
 END_IF
 
 // === Compare clamp distances === //
-IF ABS(GVL_devices.fbRhtClampMotor.distance + GVL_devices.fbLftClampMotor.distance) > 20 THEN
+(*IF ABS(GVL_devices.fbRhtClampMotor.distance + GVL_devices.fbLftClampMotor.distance) > 20 THEN
 	bHideCheckDisp := FALSE;
 	sCheckDisp := 'Clamping: Clamps not aligned $n Check clamps';
-END_IF
+END_IF*)
 
 CASE eState OF 
 	CONFIRMINITHOMING://
@@ -910,10 +924,10 @@ CASE eState OF
 			sCheckDisp := 'Rht width sensor: $n Check spa is clamped';
 		END_IF
 		
-		IF GVL_devices.fbLftClampMotor.distance > -20 THEN
+		(*IF GVL_devices.fbLftClampMotor.distance > -20 THEN
 			bHideCheckDisp := FALSE;
 			sCheckDisp := 'Lft clamp: $n Spa not clamped';
-		END_IF
+		END_IF*)
 		IF GVL_devices.fbRhtClampMotor.distance < 20 THEN
 			bHideCheckDisp := FALSE;
 			sCheckDisp := 'Rht clamp: $n Spa not clamped';
@@ -921,10 +935,10 @@ CASE eState OF
 		
 		
 	ROTATESPA://
-		IF GVL_devices.fbLftClampMotor.distance > -20 THEN
+		(*IF GVL_devices.fbLftClampMotor.distance > -20 THEN
 			bHideCheckDisp := FALSE;
 			sCheckDisp := 'Lft clamp: $n Spa not clamped';
-		END_IF
+		END_IF*)
 		IF GVL_devices.fbRhtClampMotor.distance < 20 THEN
 			bHideCheckDisp := FALSE;
 			sCheckDisp := 'Rht clamp: $n Spa not clamped';
@@ -953,14 +967,17 @@ CASE nHomeMachineState OF
 	0:// Home Motors
 		IF aMoveFinish[2] THEN 
 			IF NOT aMoveFinish[0] THEN
-				CASE GVL_devices.fbLftClampMotor.homeToTorque() OF 
+				(*CASE GVL_devices.fbLftClampMotor.homeToTorque() OF 
 					1:// Done
 						aMoveFinish[0] := TRUE;
 					13:// Error
 						GVL_devices.fbLftClampMotor.reset();
 						GVL_machine.motorErrorList := LFTCLAMP;
 						GVL_machine.bErrorPresent := TRUE;
-				END_CASE
+				END_CASE*)
+				IF GVL_devices.fbLftClampMotor.tempCylinderClose() THEN
+					aMoveFinish[0] := TRUE;
+				END_IF
 			END_IF
 		END_IF
 		
