@@ -550,10 +550,13 @@
                   <v n="Name">"maint"</v>
                   <v n="FullName">"Maintenance"</v>
                   <v n="Password">"A6B1DBAAE2F42B1F52B44456B4256FBB"</v>
-                  <v n="Group">"Service"</v>
+                  <v n="Group">""</v>
                   <v n="IsDeactivated">false</v>
                   <v n="Description">""</v>
-                  <n n="Groups" />
+                  <l2 n="Groups" cet="String">
+                    <v>Admin</v>
+                    <v>Service</v>
+                  </l2>
                 </o>
                 <o>
                   <v n="Id">11</v>
@@ -601,6 +604,7 @@
                   <l n="UserMembers" t="ArrayList" cet="Int32">
                     <v>7</v>
                     <v>13</v>
+                    <v>10</v>
                   </l>
                 </o>
                 <o>
