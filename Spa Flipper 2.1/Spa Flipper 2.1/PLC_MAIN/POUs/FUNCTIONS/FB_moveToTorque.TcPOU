@@ -101,6 +101,7 @@ CASE nState OF
 		END_CASE
 			
 		IF ABS(axis.NcToPlc.ActTorque) > ABS(TorqueLimit) THEN
+			//fbDetectTime(IN := TRUE,PT := DetectionTorqueTime); 
 			fbDetectTime.IN := TRUE;
 			IF fbDetectTime.Q THEN
 				jog.JogForward := FALSE;
@@ -118,6 +119,7 @@ CASE nState OF
 			jog.JogBackwards := FALSE;
 		ELSE
 			fbDetectTime.IN := FALSE;
+			//fbDetectTime(IN := FALSE,PT := DetectionTorqueTime);
 		END_IF
 		
 	2: // Stop motor
@@ -1728,7 +1730,11 @@ END_IF]]></ST>
       </Implementation>
     </Action>
     <LineIds Name="FB_moveToTorque">
-      <LineId Id="3" Count="78" />
+      <LineId Id="3" Count="40" />
+      <LineId Id="139" Count="0" />
+      <LineId Id="44" Count="16" />
+      <LineId Id="140" Count="0" />
+      <LineId Id="61" Count="20" />
       <LineId Id="2" Count="0" />
     </LineIds>
   </POU>
