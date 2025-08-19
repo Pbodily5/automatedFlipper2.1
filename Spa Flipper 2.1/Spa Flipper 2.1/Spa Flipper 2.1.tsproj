@@ -1001,6 +1001,9 @@ External Setpoint Generation:
 				<Task Id="4" Priority="12" CycleTime="1000000" AmsPort="351" Affinity="#x00000001" DisableFpExceptions="true" AdtTasks="true">
 					<Name>VISU_TASK</Name>
 				</Task>
+				<Task Id="7" Priority="14" CycleTime="2000000" AmsPort="352" AdtTasks="true">
+					<Name>VISU_TASK1</Name>
+				</Task>
 			</Tasks>
 		</System>
 		<Motion>
@@ -1547,7 +1550,7 @@ External Setpoint Generation:
 					</Contexts>
 					<TaskPouOids>
 						<TaskPouOid Prio="10" OTCID="#x08502001"/>
-						<TaskPouOid Prio="12" OTCID="#x08502002"/>
+						<TaskPouOid Prio="30" OTCID="#x08502002"/>
 					</TaskPouOids>
 				</Instance>
 			</Project>
